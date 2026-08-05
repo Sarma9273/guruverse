@@ -1,22 +1,39 @@
-:root {
-  color-scheme: dark;
-}
+@import "./tokens.css";
+@import "./theme.css";
+@import "./typography.css";
 
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
+*::after{
+
+box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
+body{
+
+min-height:100vh;
+
+font-family:system-ui,sans-serif;
+
 }
 
-body {
-  min-height: 100vh;
-  background: #050816;
-  color: white;
-  font-family: system-ui, sans-serif;
+a{
+
+text-decoration:none;
+
+color:inherit;
+
+}
+
+img{
+
+display:block;
+
+max-width:100%;
+
 }
