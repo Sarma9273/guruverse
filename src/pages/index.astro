@@ -1,16 +1,9 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import { APP } from "@config/app";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomePage from "../features/home/HomePage.astro";
+import { APP } from "../config/app";
 ---
 
 <BaseLayout title={APP.name}>
-  <main
-    style="
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-    "
-  >
-    <h1>{APP.name}</h1>
-  </main>
+  <HomePage />
 </BaseLayout>

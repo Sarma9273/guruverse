@@ -1,0 +1,14 @@
+/* ==========================================================
+   GURUVERSE CONTAINER
+   ========================================================== */
+
+.gv-container{
+
+    width:min(
+        calc(100% - (var(--container-padding) * 2)),
+        var(--container-width)
+    );
+
+    margin-inline:auto;
+
+}

@@ -1,0 +1,159 @@
+---
+import Container from "../../../shared/components/Container";
+---
+<section id="hero" class="hero">
+
+    <Container>
+        <div class="hero__content">
+
+            <p class="hero__eyebrow">
+                WELCOME TO
+            </p>
+
+            <h1 class="hero__title">
+                GURUVERSE
+            </h1>
+
+            <p class="hero__subtitle">
+
+                An Interactive AI Engineering Universe
+
+            </p>
+
+            <p class="hero__description">
+
+                Exploring Artificial Intelligence, Cybersecurity,
+                Software Engineering, Research and Innovation through
+                immersive digital experiences.
+
+            </p>
+
+            <div class="hero__actions">
+
+                <a href="#projects" class="hero__button hero__button--primary">
+                    Explore Universe
+                </a>
+
+                <a href="#contact" class="hero__button hero__button--secondary">
+                    Contact Me
+                </a>
+
+            </div>
+
+        </div>
+    </Container>
+</section>
+
+<style>
+
+.hero{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+
+        calc(var(--space-12) + 80px)
+
+        var(--space-6)
+
+        var(--space-10);
+
+}
+
+.hero__content{
+
+    max-width:900px;
+
+    text-align:center;
+
+}
+
+.hero__eyebrow{
+
+    color:var(--color-primary);
+
+    letter-spacing:.4rem;
+
+    margin-bottom:var(--space-4);
+
+    font-weight:600;
+
+}
+
+.hero__title{
+
+    margin-bottom:var(--space-5);
+
+}
+
+.hero__subtitle{
+
+    font-size:1.5rem;
+
+    color:var(--color-text);
+
+    margin-bottom:var(--space-5);
+
+}
+
+.hero__description{
+
+    max-width:700px;
+
+    margin:auto;
+
+    margin-bottom:var(--space-8);
+
+}
+
+.hero__actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.hero__button{
+
+    padding:14px 30px;
+
+    border-radius:var(--radius-full);
+
+    transition:all var(--speed-normal);
+
+}
+
+.hero__button--primary{
+
+    background:var(--color-primary);
+
+    color:#000;
+
+}
+
+.hero__button--secondary{
+
+    border:1px solid var(--color-primary);
+
+    color:var(--color-primary);
+
+}
+
+.hero__button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+</style>
