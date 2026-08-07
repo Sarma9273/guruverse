@@ -25,6 +25,24 @@
   --color-text-muted: #94a3b8;
   --color-border: rgba(255,255,255,.08);
 
+
+/* ==========================================================
+   Compatibility Aliases
+   ========================================================== */
+
+   --color-background:var(--color-bg);
+
+   --surface:var(--color-surface);
+
+   --surface-2:var(--color-surface-2);
+
+   --surface-3:var(--color-surface-3);
+
+   --border-color:var(--color-border);
+
+   --background-color:var(--color-bg);
+
+
   /* ==========================================================================
      SPACING
      ========================================================================== */
@@ -97,6 +115,9 @@
   --glass-bg: rgba(255,255,255,.04);
   --glass-border: rgba(255,255,255,.08);
   --glass-blur: 16px;
+  --glass-background:var(--glass-bg);
+  --glass-border-color:var(--glass-border);
+  --glass-backdrop:var(--glass-blur);
 
   /* ==========================================================================
      TRANSITIONS
@@ -160,6 +181,7 @@
    --z-background:-1;
    --z-content:1;
    --z-navigation:100;
+   --z-navbar:var(--z-navigation);
    --z-overlay:500;
    --z-modal:1000;
   

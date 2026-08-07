@@ -1,0 +1,75 @@
+---
+interface Props{
+
+    previous?:{
+
+        title:string;
+
+        slug:string;
+
+    };
+
+    next?:{
+
+        title:string;
+
+        slug:string;
+
+    };
+
+}
+
+const{
+
+    previous,
+
+    next
+
+}=Astro.props;
+---
+
+<nav class="project-navigation">
+
+    {
+
+        previous ? (
+
+            <a href={`/projects/${previous.slug}`}>
+
+                ← {previous.title}
+
+            </a>
+
+        ) : (
+
+            <div></div>
+
+        )
+
+    }
+
+    <a href="/#projects">
+
+        Back to Projects
+
+    </a>
+
+    {
+
+        next ? (
+
+            <a href={`/projects/${next.slug}`}>
+
+                {next.title} →
+
+            </a>
+
+        ) : (
+
+            <div></div>
+
+        )
+
+    }
+
+</nav>

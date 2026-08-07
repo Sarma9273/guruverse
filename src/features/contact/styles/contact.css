@@ -1,0 +1,331 @@
+/* ==========================================================
+   CONTACT
+   ========================================================== */
+
+.contact{
+
+    position:relative;
+
+    padding:var(--space-12) 0;
+
+    overflow:hidden;
+
+}
+
+.contact__container{
+
+    width:min(
+
+        var(--container-width),
+
+        calc(100% - var(--container-padding) * 2)
+
+    );
+
+    margin:auto;
+
+}
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.contact__header{
+
+    text-align:center;
+
+    max-width:850px;
+
+    margin:0 auto var(--space-10);
+
+}
+
+.contact__header span{
+
+    display:inline-block;
+
+    margin-bottom:var(--space-4);
+
+    color:var(--color-primary);
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+    letter-spacing:.35rem;
+
+}
+
+.contact__header h2{
+
+    margin-bottom:var(--space-5);
+
+}
+
+.contact__header p{
+
+    color:var(--color-text-muted);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================================
+   CONTACT GRID
+   ========================================================== */
+
+.contact__grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:var(--space-5);
+
+    margin-bottom:var(--space-10);
+
+}
+
+/* ==========================================================
+   CONTACT CARD
+   ========================================================== */
+
+.contact-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:var(--space-7);
+
+    border-radius:var(--radius-xl);
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--color-border);
+
+    backdrop-filter:blur(var(--blur-md));
+
+    transition:all var(--speed-normal);
+
+}
+
+.contact-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:var(--color-primary);
+
+    box-shadow:var(--shadow-glow);
+
+}
+
+.contact-card__icon{
+
+    width:64px;
+
+    height:64px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:50%;
+
+    margin-bottom:var(--space-5);
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            rgba(0,229,255,.18),
+
+            rgba(124,77,255,.18)
+
+        );
+
+    color:var(--color-primary);
+
+    font-size:1.5rem;
+
+    border:1px solid var(--color-primary);
+
+}
+
+.contact-card h3{
+
+    margin-bottom:var(--space-3);
+
+}
+
+.contact-card p{
+
+    color:var(--color-text-muted);
+
+}
+
+/* ==========================================================
+   FORM
+   ========================================================== */
+
+.contact-form{
+
+    display:grid;
+
+    gap:var(--space-5);
+
+    max-width:760px;
+
+    margin:0 auto;
+
+}
+
+.contact-form input,
+
+.contact-form textarea{
+
+    width:100%;
+
+    padding:18px;
+
+    border-radius:var(--radius-lg);
+
+    border:1px solid var(--color-border);
+
+    background:rgba(255,255,255,.04);
+
+    color:var(--color-text);
+
+    backdrop-filter:blur(var(--blur-sm));
+
+}
+
+.contact-form textarea{
+
+    resize:vertical;
+
+}
+
+.contact-form button{
+
+    justify-self:center;
+
+    padding:16px 42px;
+
+    border-radius:999px;
+
+    background:var(--color-primary);
+
+    color:#000;
+
+    font-weight:700;
+
+    transition:all var(--speed-normal);
+
+}
+
+.contact-form button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-glow);
+
+}
+
+/* ==========================================================
+   SOCIAL LINKS
+   ========================================================== */
+
+.social-links{
+
+    margin-top:var(--space-10);
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:var(--space-6);
+
+    flex-wrap:wrap;
+
+}
+
+.social-links a{
+
+    color:var(--color-text-muted);
+
+    transition:all var(--speed-normal);
+
+}
+
+.social-links a:hover{
+
+    color:var(--color-primary);
+
+}
+
+/* ==========================================================
+   BACKGROUND
+   ========================================================== */
+
+.contact::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:900px;
+
+    height:500px;
+
+    left:50%;
+
+    top:20%;
+
+    transform:translateX(-50%);
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(0,229,255,.08),
+
+            transparent 70%
+
+        );
+
+    z-index:-1;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media(max-width:992px){
+
+    .contact__grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:640px){
+
+    .contact__grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

@@ -1,0 +1,609 @@
+/* ==========================================================
+   PROJECTS
+   ========================================================== */
+
+.projects{
+
+    position:relative;
+
+    padding:
+
+        var(--space-12)
+
+        0;
+
+}
+
+.projects__container{
+
+    width:min(
+
+        var(--container-width),
+
+        calc(100% - var(--container-padding) * 2)
+
+    );
+
+    margin:auto;
+
+}
+
+.projects__header{
+
+    text-align:center;
+
+    margin-bottom:var(--space-10);
+
+}
+
+.projects__header p{
+
+    color:var(--color-primary);
+
+    letter-spacing:.3rem;
+
+    margin-bottom:var(--space-4);
+
+}
+
+.projects__grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            auto-fit,
+
+            minmax(360px,1fr)
+
+        );
+
+    gap:var(--space-8);
+
+    align-items:start;
+
+}
+
+/* ==========================================================
+   PROJECT CARD
+   ========================================================== */
+
+.project-card{
+
+    display:block;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:var(--radius-xl);
+
+    background:rgba(255,255,255,.04);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:inherit;
+
+    text-decoration:none;
+
+    transition:
+
+        transform var(--speed-normal),
+
+        border-color var(--speed-normal),
+
+        box-shadow var(--speed-normal);
+
+}
+
+.project-card:hover{
+
+    transform:
+
+        translateY(-10px)
+
+        scale(1.015);
+
+    border-color:var(--color-primary);
+
+    box-shadow:
+
+        0 0 40px rgba(0,229,255,.15);
+
+}
+
+.project-card__image{
+
+    aspect-ratio:16/9;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--color-primary),
+
+            var(--color-secondary)
+
+        );
+
+}
+
+.project-card__image img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.project-card__content{
+
+    padding:var(--space-6);
+
+}
+
+.project-card__category{
+
+    display:inline-block;
+
+    color:var(--color-primary);
+
+    margin-bottom:var(--space-3);
+
+    font-size:.85rem;
+
+    letter-spacing:.08rem;
+
+}
+
+.project-card h3{
+
+    margin-bottom:var(--space-3);
+
+}
+
+.project-card__tagline{
+
+    color:var(--color-text);
+
+    margin-bottom:var(--space-4);
+
+}
+
+.project-card__description{
+
+    color:var(--color-text-muted);
+
+    margin-bottom:var(--space-6);
+
+}
+
+.project-card__tech{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:var(--space-2);
+
+    margin-bottom:var(--space-6);
+
+}
+
+.project-card__tech span{
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:var(--color-text-muted);
+
+    transition:all var(--speed-fast);
+
+    font-size:.8rem;
+
+}
+
+.project-card__tech span:hover{
+
+    color:var(--color-primary);
+
+    border-color:var(--color-primary);
+
+    transform:translateY(-2px);
+
+}
+
+.project-card__footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.project-card__cta{
+
+    color:var(--color-primary);
+
+    font-weight:600;
+
+    transition:transform var(--speed-fast);
+
+}
+
+.project-card:hover .project-card__cta{
+
+    transform:translateX(4px);
+
+}
+
+.project-card__placeholder{
+
+    width:100%;
+
+    height:100%;
+
+    display:grid;
+
+    place-items:center;
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--color-text);
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--color-primary),
+
+            var(--color-secondary)
+
+        );
+
+}
+/* ==========================================================
+   PROJECT CARD ANIMATED BORDER
+   ========================================================== */
+.project-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    padding:1px;
+
+    border-radius:inherit;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            rgba(0,229,255,.4),
+
+            rgba(124,77,255,.2),
+
+            transparent
+
+        );
+
+    mask:
+
+        linear-gradient(#fff 0 0) content-box,
+
+        linear-gradient(#fff 0 0);
+
+    mask-composite:exclude;
+
+    opacity:0;
+
+    transition:opacity var(--speed-normal);
+
+    pointer-events:none;
+}
+
+.project-card:hover::before{
+
+    opacity:1;
+
+}
+
+/* ==========================================================
+   PROJECT CARD FEATURED BADGE STYLES
+   ========================================================== */
+
+.project-card__featured{
+
+    position:absolute;
+
+    top:16px;
+
+    right:16px;
+
+    z-index:2;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    background:rgba(0,229,255,.12);
+
+    color:var(--color-primary);
+
+    font-size:.75rem;
+
+    backdrop-filter:blur(10px);
+
+}
+
+/* ==========================================================
+   PROJECT CARD STATUS STYLES
+   ========================================================== */
+
+   .project-card__status{
+
+    color:var(--color-accent);
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   PROJECT HEADER
+   ========================================================== */
+
+.projects__header{
+
+    text-align:center;
+
+    max-width:760px;
+
+    margin:auto;
+
+    margin-bottom:var(--space-10);
+
+}
+
+.projects__eyebrow{
+
+    display:inline-block;
+
+    margin-bottom:var(--space-4);
+
+    color:var(--color-primary);
+
+    letter-spacing:.35rem;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+}
+
+.projects__header h2{
+
+    margin-bottom:var(--space-5);
+
+}
+
+.projects__header p{
+
+    color:var(--color-text-muted);
+
+}
+
+/* ==========================================================
+   PROJECT FOOTER
+   ========================================================== */
+
+.projects__footer{
+
+    margin-top:var(--space-10);
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.projects__button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+
+        var(--space-4)
+
+        var(--space-7);
+
+    border-radius:var(--radius-full);
+
+    border:1px solid var(--color-primary);
+
+    color:var(--color-primary);
+
+    transition:all var(--speed-normal);
+
+}
+
+.projects__button:hover{
+
+    background:var(--color-primary);
+
+    color:#000;
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================================
+   PROJECTS BACKGROUND GLOW
+   ========================================================== */
+
+.projects::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:900px;
+
+    height:500px;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(0,229,255,.06),
+
+            transparent 70%
+
+        );
+
+    pointer-events:none;
+
+}
+
+/* ==========================================================
+   PROJECTS ANIMATION - STAGGERED
+   ========================================================== */
+
+.projects__grid .project-card{
+
+    animation:
+
+        slide-up
+
+        .7s
+
+        ease
+
+        forwards;
+
+}
+
+.projects__grid .project-card:nth-child(2){
+
+    animation-delay:.12s;
+
+}
+
+.projects__grid .project-card:nth-child(3){
+
+    animation-delay:.24s;
+
+}
+
+/* ==========================================================
+   MEDIA QUERIES - MOBILE POLISHING
+   ========================================================== */
+
+@media (max-width:768px){
+
+    .projects{
+
+        padding:
+
+            var(--space-10)
+
+            0;
+
+    }
+
+    .projects__grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ==========================================================
+   PROJECT SECTION TITLE
+   ========================================================== */
+
+.project-section-title{
+
+    margin-bottom:var(--space-8);
+
+}
+
+.project-section-title span{
+
+    display:inline-block;
+
+    margin-bottom:var(--space-3);
+
+    color:var(--color-primary);
+
+    letter-spacing:.25rem;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+}
+
+.project-section-title h2{
+
+    margin-bottom:var(--space-4);
+
+}
+
+.project-section-title p{
+
+    color:var(--color-text-muted);
+
+    max-width:760px;
+
+}
+
+/* ==========================================================
+   PROJECT OVERVIEW
+   ========================================================== */
+
+.project-overview{
+
+    max-width:900px;
+
+    line-height:1.9;
+
+    color:var(--color-text-muted);
+
+}
+

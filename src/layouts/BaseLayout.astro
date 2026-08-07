@@ -1,17 +1,21 @@
 ---
 import "../styles/globals.css";
 
-interface Props{
+interface Props {
 
-title?:string;
+    title?: string;
+
+    description?: string;
 
 }
 
-const{
+const {
 
-title="GURUVERSE"
+    title = "GURUVERSE",
 
-}=Astro.props;
+    description = "Interactive AI Engineering Universe"
+
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -20,24 +24,41 @@ title="GURUVERSE"
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8" />
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    />
 
-<title>{title}</title>
+    <title>{title}</title>
 
-<meta
-name="description"
-content="Interactive AI Engineering Universe"
-/>
+    <meta
+        name="description"
+        content={description}
+    />
+
+    <meta
+        name="theme-color"
+        content="#04070D"
+    />
 
 </head>
 
 <body>
 
-<slot/>
+    <slot />
 
 </body>
 
 </html>
+
+<style is:global>
+
+body{
+
+    padding-top:var(--navbar-height);
+
+}
+
+</style>

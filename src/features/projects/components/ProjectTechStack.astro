@@ -1,0 +1,31 @@
+---
+interface Props{
+
+    technologies:string[];
+
+}
+
+const{
+
+    technologies
+
+}=Astro.props;
+---
+
+<section class="project-tech-stack">
+
+    {
+
+        technologies.map(technology=>(
+
+            <span class="project-tech-stack__chip">
+
+                {technology}
+
+            </span>
+
+        ))
+
+    }
+
+</section>

@@ -1,0 +1,50 @@
+---
+interface Props{
+
+    architecture:string[];
+
+}
+
+const{
+
+    architecture
+
+}=Astro.props;
+---
+
+<section class="project-architecture">
+
+    {
+
+        architecture.map((item,index)=>(
+            <>
+                <div class="project-architecture__item">
+
+                    <div class="project-architecture__box">
+
+                        {item}
+
+                    </div>
+
+                </div>
+
+                {
+
+                    index < architecture.length - 1 && (
+
+                        <div class="project-architecture__connector">
+
+                            ↓
+
+                        </div>
+
+                    )
+
+                }
+
+            </>
+        ))
+
+    }
+
+</section>

@@ -1,0 +1,41 @@
+---
+import type { Project } from "../types/project";
+
+interface Props{
+
+    project:Project;
+
+}
+
+const{
+
+    project
+
+}=Astro.props;
+---
+
+<section class="project-hero">
+
+    <div class="project-hero__container">
+
+        <span class="project-hero__category">
+
+            {project.category}
+
+        </span>
+
+        <h1 class="project-hero__title">
+
+            {project.title}
+
+        </h1>
+
+        <p class="project-hero__tagline">
+
+            {project.tagline}
+
+        </p>
+
+    </div>
+
+</section>

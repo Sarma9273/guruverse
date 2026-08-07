@@ -1,0 +1,65 @@
+---
+interface Props{
+
+github?:string;
+
+demo?:string;
+
+}
+
+const{
+
+github,
+
+demo
+
+}=Astro.props;
+---
+
+<div class="project-links">
+
+    {
+
+        github && (
+
+            <a
+
+                href={github}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+            >
+
+                GitHub
+
+            </a>
+
+        )
+
+    }
+
+    {
+
+        demo && (
+
+            <a
+
+                href={demo}
+
+                target="_blank"
+
+                rel="noopener noreferrer"
+
+            >
+
+                Live Demo
+
+            </a>
+
+        )
+
+    }
+
+</div>

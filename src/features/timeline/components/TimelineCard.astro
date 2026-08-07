@@ -1,0 +1,41 @@
+---
+const {event}=Astro.props;
+---
+
+<div class="timeline-card">
+
+    <div class="timeline-card__icon">
+
+        {event.icon}
+
+    </div>
+
+    <div class="timeline-card__content">
+
+        <span>
+
+            {event.year}
+
+        </span>
+
+        <h3>
+
+            {event.title}
+
+        </h3>
+
+        <h4>
+
+            {event.subtitle}
+
+        </h4>
+
+        <p>
+
+            {event.description}
+
+        </p>
+
+    </div>
+
+</div>

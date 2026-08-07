@@ -1,0 +1,83 @@
+---
+import { projects } from "./data/projects";
+
+import ProjectCard from "./components/ProjectCard.astro";
+
+import "./styles/projects.css";
+---
+
+<section
+
+    id="projects"
+
+    class="projects"
+
+>
+
+    <div class="projects__container">
+
+        <div class="projects__header">
+
+            <span class="projects__eyebrow">
+
+                FEATURED WORK
+
+            </span>
+
+            <h2>
+
+                Featured Projects
+
+            </h2>
+
+            <p>
+
+                A curated collection of projects spanning
+                Artificial Intelligence,
+                Cybersecurity,
+                Software Engineering,
+                and Research.
+
+            </p>
+
+        </div>
+
+        <div class="projects__grid">
+
+            {
+
+                projects.map(
+
+                    project=>(
+
+                        <ProjectCard
+
+                            project={project}
+
+                        />
+
+                    )
+
+                )
+
+            }
+
+        </div>
+        <div class="projects__footer">
+
+            <a
+
+                href="/projects"
+
+                class="projects__button"
+
+            >
+
+                View All Projects →
+
+            </a>
+
+        </div>
+    </div>
+
+</section>

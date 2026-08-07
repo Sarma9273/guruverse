@@ -1,0 +1,39 @@
+---
+interface Props{
+
+    title:string;
+
+}
+
+const{
+
+    title
+
+}=Astro.props;
+---
+
+<nav class="project-breadcrumbs">
+
+    <a href="/">
+
+        Home
+
+    </a>
+
+    <span>/</span>
+
+    <a href="/#projects">
+
+        Projects
+
+    </a>
+
+    <span>/</span>
+
+    <span>
+
+        {title}
+
+    </span>
+
+</nav>

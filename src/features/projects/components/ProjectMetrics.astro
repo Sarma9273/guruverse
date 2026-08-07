@@ -1,0 +1,57 @@
+---
+interface Metric{
+
+    label:string;
+
+    value:string;
+
+}
+
+interface Props{
+
+    metrics?:Metric[];
+
+}
+
+const{
+
+    metrics=[]
+
+}=Astro.props;
+---
+
+{
+
+    metrics.length>0 && (
+
+        <section class="project-metrics">
+
+            {
+
+                metrics.map(metric=>(
+
+                    <div class="project-metric">
+
+                        <h3>
+
+                            {metric.value}
+
+                        </h3>
+
+                        <p>
+
+                            {metric.label}
+
+                        </p>
+
+                    </div>
+
+                ))
+
+            }
+
+        </section>
+
+    )
+
+}

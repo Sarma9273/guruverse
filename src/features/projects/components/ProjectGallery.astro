@@ -1,0 +1,47 @@
+---
+interface Props{
+
+    screenshots?:string[];
+
+}
+
+const{
+
+    screenshots=[]
+
+}=Astro.props;
+---
+
+{
+
+    screenshots.length>0 && (
+
+        <section class="project-gallery">
+
+            {
+
+                screenshots.map(image=>(
+
+                    <figure class="project-gallery__item">
+
+                        <img
+
+                            src={image}
+
+                            alt="Project Screenshot"
+
+                            loading="lazy"
+
+                        />
+
+                    </figure>
+
+                ))
+
+            }
+
+        </section>
+
+    )
+
+}

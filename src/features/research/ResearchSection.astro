@@ -1,0 +1,72 @@
+---
+import { research } from "./data/research";
+
+import ResearchCard from "./components/ResearchCard.astro";
+
+import ResearchStats from "./components/ResearchStats.astro";
+
+import "./styles/research.css";
+---
+
+<section
+
+    id="research"
+
+    class="research"
+
+>
+
+    <div class="research__container">
+
+        <div class="research__header">
+
+            <span class="research__eyebrow">
+
+                RESEARCH & INNOVATION
+
+            </span>
+
+            <h2>
+
+                Engineering Through Research
+
+            </h2>
+
+            <p>
+
+                My research bridges Artificial Intelligence,
+                Cybersecurity, Renewable Energy, and Software
+                Engineering to develop intelligent, practical,
+                and scalable solutions for real-world challenges.
+
+            </p>
+
+        </div>
+
+        <div class="research__grid">
+
+            {
+
+                research.map(
+
+                    item => (
+
+                        <ResearchCard
+
+                            research={item}
+
+                        />
+
+                    )
+
+                )
+
+            }
+
+        </div>
+
+        <ResearchStats />
+
+    </div>
+
+</section>

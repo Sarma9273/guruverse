@@ -1,0 +1,41 @@
+---
+interface Props{
+
+    workflow:string[];
+
+}
+
+const{
+
+    workflow
+
+}=Astro.props;
+---
+
+<section class="project-workflow">
+
+    {
+
+        workflow.map((step,index)=>(
+
+            <div class="project-workflow__step">
+
+                <div class="project-workflow__number">
+
+                    {index+1}
+
+                </div>
+
+                <div class="project-workflow__content">
+
+                    {step}
+
+                </div>
+
+            </div>
+
+        ))
+
+    }
+
+</section>

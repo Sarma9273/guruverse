@@ -1,0 +1,47 @@
+---
+import type { Contact } from "../data/contact";
+
+interface Props{
+
+    contact:Contact;
+
+}
+
+const{
+
+    contact
+
+}=Astro.props;
+---
+
+<a
+
+    href={contact.href}
+
+    class="contact-card"
+
+    target="_blank"
+
+    rel="noopener noreferrer"
+
+>
+
+    <div class="contact-card__icon">
+
+        {contact.icon}
+
+    </div>
+
+    <h3>
+
+        {contact.title}
+
+    </h3>
+
+    <p>
+
+        {contact.value}
+
+    </p>
+
+</a>

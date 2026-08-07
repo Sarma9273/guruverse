@@ -1,0 +1,57 @@
+---
+const stats = [
+
+    {
+
+        value:"15+",
+
+        label:"Projects"
+
+    },
+
+    {
+
+        value:"AI",
+
+        label:"Powered"
+
+    },
+
+    {
+
+        value:"Cyber",
+
+        label:"Security"
+
+    },
+
+    {
+
+        value:"Research",
+
+        label:"Focused"
+
+    }
+
+];
+---
+
+<div class="hero-stats">
+
+    {
+
+        stats.map(stat => (
+
+            <article class="hero-stat">
+
+                <h3>{stat.value}</h3>
+
+                <p>{stat.label}</p>
+
+            </article>
+
+        ))
+
+    }
+
+</div>

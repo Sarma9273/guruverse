@@ -1,0 +1,55 @@
+---
+import {timeline} from "./data/timeline";
+
+import TimelineCard from "./components/TimelineCard.astro";
+
+import "./styles/timeline.css";
+---
+
+<section
+
+    id="timeline"
+
+    class="timeline"
+
+>
+
+<div class="timeline__container">
+
+    <div class="section-title">
+
+        <span>
+
+            JOURNEY
+
+        </span>
+
+        <h2>
+
+            Engineering Timeline
+
+        </h2>
+
+    </div>
+
+    {
+
+        timeline.map(
+
+            event=>(
+
+                <TimelineCard
+
+                    event={event}
+
+                />
+
+            )
+
+        )
+
+    }
+
+</div>
+
+</section>

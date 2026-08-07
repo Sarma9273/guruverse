@@ -1,0 +1,495 @@
+/* ==========================================================
+   RESEARCH SECTION
+   ========================================================== */
+
+.research{
+
+    position:relative;
+
+    padding:var(--space-12) 0;
+
+    overflow:hidden;
+
+}
+
+.research__container{
+
+    width:min(
+
+        var(--container-width),
+
+        calc(100% - var(--container-padding) * 2)
+
+    );
+
+    margin:auto;
+
+}
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.research__header{
+
+    text-align:center;
+
+    max-width:900px;
+
+    margin:0 auto var(--space-10);
+
+}
+
+.research__eyebrow{
+
+    display:inline-block;
+
+    margin-bottom:var(--space-4);
+
+    color:var(--color-primary);
+
+    letter-spacing:.35rem;
+
+    font-size:.85rem;
+
+    font-weight:700;
+
+}
+
+.research__header h2{
+
+    margin-bottom:var(--space-5);
+
+}
+
+.research__header p{
+
+    color:var(--color-text-muted);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================================
+   GRID
+   ========================================================== */
+
+.research__grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            auto-fit,
+
+            minmax(360px,1fr)
+
+        );
+
+    gap:var(--space-7);
+
+}
+
+/* ==========================================================
+   CARD
+   ========================================================== */
+
+.research-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:100%;
+
+    padding:var(--space-7);
+
+    border-radius:var(--radius-xl);
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--color-border);
+
+    backdrop-filter:blur(var(--blur-md));
+
+    transition:
+
+        transform var(--speed-normal),
+
+        border-color var(--speed-normal),
+
+        box-shadow var(--speed-normal);
+
+}
+
+.research-card:hover{
+
+    transform:
+
+        translateY(-8px)
+
+        scale(1.02);
+
+    border-color:var(--color-primary);
+
+    box-shadow:var(--shadow-glow);
+
+}
+
+.research-card__category{
+
+    color:var(--color-primary);
+
+    font-size:.85rem;
+
+    letter-spacing:.25rem;
+
+    font-weight:700;
+
+    margin-bottom:var(--space-3);
+
+}
+
+.research-card h3{
+
+    margin-bottom:var(--space-4);
+
+}
+
+.research-card__description{
+
+    color:var(--color-text-muted);
+
+    line-height:1.8;
+
+    margin-bottom:var(--space-6);
+
+    flex:1;
+
+}
+
+/* ==========================================================
+   TECHNOLOGIES
+   ========================================================== */
+
+.research-card__tech{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:var(--space-2);
+
+    margin-bottom:var(--space-6);
+
+}
+
+.research-card__tech span{
+
+    padding:
+
+        var(--space-2)
+
+        var(--space-4);
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--color-border);
+
+    color:var(--color-text-muted);
+
+    font-size:.82rem;
+
+    transition:all var(--speed-normal);
+
+}
+
+.research-card__tech span:hover{
+
+    color:var(--color-primary);
+
+    border-color:var(--color-primary);
+
+    background:rgba(0,229,255,.08);
+
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.research-card__footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:auto;
+
+}
+
+.research-card__footer a{
+
+    color:var(--color-primary);
+
+    transition:opacity var(--speed-fast);
+
+}
+
+.research-card__footer a:hover{
+
+    opacity:.8;
+
+}
+
+/* ==========================================================
+   STATUS
+   ========================================================== */
+
+.research-card__status{
+
+    padding:
+
+        8px 14px;
+
+    border-radius:999px;
+
+    font-size:.8rem;
+
+    font-weight:700;
+
+}
+
+.research-card__status--published{
+
+    background:rgba(34,197,94,.15);
+
+    color:var(--color-success);
+
+}
+
+.research-card__status--ongoing{
+
+    background:rgba(0,229,255,.15);
+
+    color:var(--color-primary);
+
+}
+
+.research-card__status--future{
+
+    background:rgba(124,77,255,.15);
+
+    color:var(--color-secondary);
+
+}
+
+/* ==========================================================
+   STATS
+   ========================================================== */
+
+.research-stats{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+
+            auto-fit,
+
+            minmax(220px,1fr)
+
+        );
+
+    gap:var(--space-6);
+
+    margin-top:var(--space-11);
+
+}
+
+.research-stats>div{
+
+    text-align:center;
+
+    padding:var(--space-6);
+
+    border-radius:var(--radius-xl);
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--color-border);
+
+    backdrop-filter:blur(var(--blur-sm));
+
+    transition:all var(--speed-normal);
+
+}
+
+.research-stats>div:hover{
+
+    transform:translateY(-6px);
+
+    border-color:var(--color-primary);
+
+    box-shadow:var(--shadow-glow);
+
+}
+
+.research-stats h3{
+
+    color:var(--color-primary);
+
+    font-size:var(--text-3xl);
+
+    margin-bottom:var(--space-3);
+
+}
+
+.research-stats p{
+
+    color:var(--color-text-muted);
+
+}
+
+/* ==========================================================
+   BACKGROUND GLOW
+   ========================================================== */
+
+.research::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:15%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:900px;
+
+    height:500px;
+
+    background:
+
+        radial-gradient(
+
+            circle,
+
+            rgba(0,229,255,.07),
+
+            transparent 70%
+
+        );
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+/* ==========================================================
+   ANIMATIONS
+   ========================================================== */
+
+.research-card{
+
+    animation:
+
+        slide-up
+
+        .8s
+
+        ease
+
+        both;
+
+}
+
+.research-card:nth-child(2){
+
+    animation-delay:.12s;
+
+}
+
+.research-card:nth-child(3){
+
+    animation-delay:.24s;
+
+}
+
+.research-stats{
+
+    animation:
+
+        fade-in
+
+        1s
+
+        ease
+
+        both;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width:768px){
+
+    .research{
+
+        padding:var(--space-10) 0;
+
+    }
+
+    .research__grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* ==========================================================
+   RESEARCH RIBBON
+   ========================================================== */
+
+.research-card{
+
+    position:relative;
+
+}
+
+.research-card__ribbon{
+
+    position:absolute;
+
+    top:20px;
+
+    right:20px;
+
+    padding:6px 12px;
+
+    border-radius:999px;
+
+    background:rgba(0,229,255,.12);
+
+    color:var(--color-primary);
+
+    font-size:.72rem;
+
+    letter-spacing:.08rem;
+
+    font-weight:700;
+
+}

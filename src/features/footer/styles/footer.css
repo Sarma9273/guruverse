@@ -1,0 +1,149 @@
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.footer{
+
+    margin-top:var(--space-12);
+
+    padding:var(--space-10) 0 var(--space-7);
+
+    border-top:1px solid var(--color-border);
+
+    background:rgba(255,255,255,.02);
+
+}
+
+.footer__container{
+
+    width:min(
+
+        var(--container-width),
+
+        calc(100% - var(--container-padding)*2)
+
+    );
+
+    margin:auto;
+
+}
+
+/* ==========================================================
+   BRAND
+   ========================================================== */
+
+.footer-brand{
+
+    text-align:center;
+
+    max-width:700px;
+
+    margin:0 auto var(--space-10);
+
+}
+
+.footer-brand h2{
+
+    color:var(--color-primary);
+
+    margin-bottom:var(--space-4);
+
+}
+
+.footer-brand p{
+
+    color:var(--color-text-muted);
+
+    line-height:1.8;
+
+}
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+
+.footer-links{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:var(--space-8);
+
+    margin-bottom:var(--space-10);
+
+}
+
+.footer-links h3{
+
+    margin-bottom:var(--space-4);
+
+    color:var(--color-primary);
+
+}
+
+.footer-links a,
+
+.footer-links p{
+
+    display:block;
+
+    margin-bottom:var(--space-3);
+
+    color:var(--color-text-muted);
+
+    transition:.25s;
+
+}
+
+.footer-links a:hover{
+
+    color:var(--color-primary);
+
+}
+
+/* ==========================================================
+   BOTTOM
+   ========================================================== */
+
+.footer-bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding-top:var(--space-6);
+
+    border-top:1px solid var(--color-border);
+
+    color:var(--color-text-muted);
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media(max-width:768px){
+
+    .footer-links{
+
+        grid-template-columns:1fr;
+
+        text-align:center;
+
+    }
+
+    .footer-bottom{
+
+        flex-direction:column;
+
+        gap:var(--space-4);
+
+        text-align:center;
+
+    }
+
+}
