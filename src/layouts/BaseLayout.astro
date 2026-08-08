@@ -2,63 +2,182 @@
 import "../styles/globals.css";
 
 interface Props {
-
     title?: string;
-
     description?: string;
-
+    image?: string;
+    canonical?: string;
+    type?: "website" | "article";
 }
 
 const {
-
     title = "GURUVERSE",
-
-    description = "Interactive AI Engineering Universe"
-
+    description = "Interactive AI Engineering Universe",
+    image = "/favicon.svg",
+    canonical,
+    type = "website",
 } = Astro.props;
+
+/*
+ * Canonical URL
+ *
+ * We are not setting `site` in astro.config.mjs yet because
+ * Guruverse does not have a production domain.
+ *
+ * Therefore Astro.url is used for now.
+ */
+const canonicalURL = canonical
+    ? new URL(canonical, Astro.url).href
+    : Astro.url.href;
+
+/*
+ * Convert relative image paths into absolute URLs.
+ */
+const imageURL = new URL(image, Astro.url).href;
+
+/*
+ * JSON-LD structured data.
+ *
+ * This describes Guruverse as a website/portfolio and
+ * identifies the author.
+ */
+const structuredData =
+    type === "article"
+        ? {
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: title,
+              description,
+              image: imageURL,
+              url: canonicalURL,
+              author: {
+                  "@type": "Person",
+                  name: "Guru Charan Mavuduru",
+              },
+              publisher: {
+                  "@type": "Person",
+                  name: "Guru Charan Mavuduru",
+              },
+          }
+        : {
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "GURUVERSE",
+              description,
+              url: canonicalURL,
+              author: {
+                  "@type": "Person",
+                  name: "Guru Charan Mavuduru",
+              },
+          };
 ---
 
 <!doctype html>
 
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
 
-<head>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+        />
 
-    <meta charset="UTF-8" />
+        <title>{title}</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    />
+        <meta
+            name="description"
+            content={description}
+        />
 
-    <title>{title}</title>
+        <meta
+            name="theme-color"
+            content="#04070D"
+        />
 
-    <meta
-        name="description"
-        content={description}
-    />
+        <!-- Canonical -->
 
-    <meta
-        name="theme-color"
-        content="#04070D"
-    />
+        <link
+            rel="canonical"
+            href={canonicalURL}
+        />
 
-</head>
+        <!-- Open Graph -->
 
-<body>
+        <meta
+            property="og:title"
+            content={title}
+        />
 
-    <slot />
+        <meta
+            property="og:description"
+            content={description}
+        />
 
-</body>
+        <meta
+            property="og:type"
+            content={type}
+        />
 
+        <meta
+            property="og:url"
+            content={canonicalURL}
+        />
+
+        <meta
+            property="og:image"
+            content={imageURL}
+        />
+
+        <meta
+            property="og:site_name"
+            content="GURUVERSE"
+        />
+
+        <!-- Twitter / X -->
+
+        <meta
+            name="twitter:card"
+            content="summary_large_image"
+        />
+
+        <meta
+            name="twitter:title"
+            content={title}
+        />
+
+        <meta
+            name="twitter:description"
+            content={description}
+        />
+
+        <meta
+            name="twitter:image"
+            content={imageURL}
+        />
+
+        <!-- Author -->
+
+        <meta
+            name="author"
+            content="Guru Charan Mavuduru"
+        />
+
+        <!-- Favicon -->
+
+        <link
+            rel="icon"
+            href="/favicon.svg"
+        />
+
+        <!-- JSON-LD Structured Data -->
+
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify(structuredData)}
+        />
+    </head>
+
+    <body>
+        <slot />
+    </body>
 </html>
-
-<style is:global>
-
-body{
-
-    padding-top:var(--navbar-height);
-
-}
-
-</style>

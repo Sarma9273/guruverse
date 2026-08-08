@@ -7,7 +7,6 @@ import { projects } from "../../features/projects/data/projects";
 
 import ProjectHero from "../../features/projects/components/ProjectHero.astro";
 import ProjectBreadcrumbs from "../../features/projects/components/ProjectBreadcrumbs.astro";
-
 import ProjectSectionTitle from "../../features/projects/components/ProjectSectionTitle.astro";
 import ProjectOverview from "../../features/projects/components/ProjectOverview.astro";
 import ProjectArchitecture from "../../features/projects/components/ProjectArchitecture.astro";
@@ -18,207 +17,129 @@ import ProjectMetrics from "../../features/projects/components/ProjectMetrics.as
 import ProjectLinks from "../../features/projects/components/ProjectLinks.astro";
 import ProjectNavigation from "../../features/projects/components/ProjectNavigation.astro";
 
-export async function getStaticPaths(){
-
-    return projects.map(project=>({
-
-        params:{
-            slug:project.id
+export function getStaticPaths() {
+    return projects.map((project) => ({
+        params: {
+            slug: project.id,
         },
-
-        props:{
-            project
-        }
-
+        props: {
+            project,
+        },
     }));
-
 }
 
-const{
-
-    project
-
-}=Astro.props;
+const { project } = Astro.props;
 
 const currentIndex = projects.findIndex(
-
-    p=>p.id===project.id
-
+    (p) => p.id === project.id
 );
 
 const previous =
-
-    currentIndex>0
-
-        ?{
-
-            title:projects[currentIndex-1].title,
-
-            slug:projects[currentIndex-1].id
-
-        }
-
-        :undefined;
+    currentIndex > 0
+        ? {
+              title: projects[currentIndex - 1].title,
+              slug: projects[currentIndex - 1].id,
+          }
+        : undefined;
 
 const next =
-
-    currentIndex<projects.length-1
-
-        ?{
-
-            title:projects[currentIndex+1].title,
-
-            slug:projects[currentIndex+1].id
-
-        }
-
-        :undefined;
+    currentIndex < projects.length - 1
+        ? {
+              title: projects[currentIndex + 1].title,
+              slug: projects[currentIndex + 1].id,
+          }
+        : undefined;
 ---
 
-<BaseLayout title={project.title}>
-
-<main class="project-page">
-
+<BaseLayout
+    title={`${project.title} — GURUVERSE`}
+    description={project.description}
+    image={project.image}
+    type="article"
+>
     <ProjectBreadcrumbs
-
         title={project.title}
-
     />
 
     <ProjectHero
-
         project={project}
-
     />
 
     <section class="project-content">
-
         <ProjectSectionTitle
-
             eyebrow="OVERVIEW"
-
             title="Project Overview"
-
         />
 
         {
-
             project.overview && (
-
                 <ProjectOverview
-
                     overview={project.overview}
-
                 />
-
             )
-
         }
 
         <ProjectSectionTitle
-
             eyebrow="SYSTEM"
-
             title="Architecture"
-
         />
 
         {
-
             project.architecture && (
-
                 <ProjectArchitecture
-
                     architecture={project.architecture}
-
                 />
-
             )
-
         }
 
         <ProjectSectionTitle
-
             eyebrow="PROCESS"
-
             title="Workflow"
-
         />
 
         {
-
             project.workflow && (
-
                 <ProjectWorkflow
-
                     workflow={project.workflow}
-
                 />
-
             )
-
         }
 
         <ProjectSectionTitle
-
             eyebrow="TECH"
-
             title="Technology Stack"
-
         />
 
         <ProjectTechStack
-
             technologies={project.technologies}
-
         />
 
         <ProjectSectionTitle
-
             eyebrow="VISUALS"
-
             title="Gallery"
-
         />
 
         <ProjectGallery
-
             screenshots={project.screenshots}
-
         />
 
         <ProjectSectionTitle
-
             eyebrow="RESULTS"
-
             title="Project Metrics"
-
         />
 
         <ProjectMetrics
-
             metrics={project.metrics}
-
         />
 
         <ProjectLinks
-
             github={project.github}
-
             demo={project.demo}
-
         />
 
         <ProjectNavigation
-
             previous={previous}
-
             next={next}
-
         />
-
     </section>
-
-</main>
-
 </BaseLayout>
