@@ -1,0 +1,187 @@
+---
+const particles = Array.from({ length: 45 }, (_, index) => ({
+    x: (index * 37) % 100,
+    y: (index * 61) % 100,
+    size: 1 + (index % 3) * 0.5,
+    delay: (index % 8) * 0.6,
+    duration: 5 + (index % 6),
+    opacity: 0.25 + (index % 5) * 0.08,
+}));
+---
+
+<div class="ambient-space" aria-hidden="true">
+
+    <div class="ambient-space__layer ambient-space__layer--background">
+        {
+            particles.slice(0, 15).map((particle) => (
+                <span
+                    class="ambient-space__particle"
+                    style={`--particle-x:${particle.x}%;--particle-y:${particle.y}%;--particle-size:${particle.size}px;--particle-delay:${particle.delay}s;--particle-duration:${particle.duration}s;--particle-opacity:${particle.opacity};`}
+                />
+            ))
+        }
+    </div>
+
+    <div class="ambient-space__layer ambient-space__layer--midground">
+        {
+            particles.slice(15, 30).map((particle) => (
+                <span
+                    class="ambient-space__particle"
+                    style={`--particle-x:${particle.x}%;--particle-y:${particle.y}%;--particle-size:${particle.size}px;--particle-delay:${particle.delay}s;--particle-duration:${particle.duration}s;--particle-opacity:${particle.opacity};`}
+                />
+            ))
+        }
+    </div>
+
+    <div class="ambient-space__layer ambient-space__layer--foreground">
+        {
+            particles.slice(30).map((particle) => (
+                <span
+                    class="ambient-space__particle"
+                    style={`--particle-x:${particle.x}%;--particle-y:${particle.y}%;--particle-size:${particle.size}px;--particle-delay:${particle.delay}s;--particle-duration:${particle.duration}s;--particle-opacity:${particle.opacity};`}
+                />
+            ))
+        }
+    </div>
+
+</div>
+
+<style>
+    .ambient-space {
+        position: fixed;
+        inset: 0;
+
+        z-index: var(--z-background);
+
+        pointer-events: none;
+
+        overflow: hidden;
+    }
+
+    .ambient-space__layer {
+        position: absolute;
+        inset: 0;
+
+        will-change: transform;
+
+        transition:
+            transform
+            700ms
+            var(--ease-smooth);
+    }
+
+    .ambient-space__stars {
+    position: absolute;
+    inset: 0;
+
+    transform:
+        translate3d(
+            var(--mouse-x, 0px),
+            var(--mouse-y, 0px),
+            0
+        );
+
+    transition:
+        transform
+        700ms
+        var(--ease-smooth);
+}
+    .ambient-space__particle {
+        position: absolute;
+
+        left: var(--particle-x);
+        top: var(--particle-y);
+
+        width: var(--particle-size);
+        height: var(--particle-size);
+
+        border-radius: 50%;
+
+        background: var(--color-text);
+
+        opacity: var(--particle-opacity);
+
+        box-shadow:
+            0 0 6px
+            rgba(0, 229, 255, 0.35);
+
+        animation:
+            ambient-particle-pulse
+            var(--particle-duration)
+            ease-in-out
+            var(--particle-delay)
+            infinite;
+    }
+
+    @keyframes ambient-particle-pulse {
+
+        0%,
+        100% {
+            opacity: calc(
+                var(--particle-opacity) * 0.45
+            );
+
+            transform: scale(0.8);
+        }
+
+        50% {
+            opacity: var(--particle-opacity);
+
+            transform: scale(1.2);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .ambient-space__particle {
+            animation: none;
+        }
+
+        .ambient-space__layer {
+            transform: none;
+            transition: none;
+            will-change: auto;
+        }
+    }
+</style>
+
+<script>
+    const layers =
+        document.querySelectorAll<HTMLElement>(
+            ".ambient-space__layer"
+        );
+
+    window.addEventListener(
+        "pointermove",
+        (event) => {
+
+            const centerX =
+                window.innerWidth / 2;
+
+            const centerY =
+                window.innerHeight / 2;
+
+            const x =
+                ((event.clientX - centerX) / centerX) * 40;
+
+            const y =
+                ((event.clientY - centerY) / centerY) * 40;
+
+            layers.forEach((layer, index) => {
+
+                const depth =
+                    index === 0
+                        ? 0.25
+                        : index === 1
+                            ? 0.55
+                            : 1;
+
+                layer.style.transform =
+                    `translate3d(${x * depth}px, ${y * depth}px, 0)`;
+            });
+        },
+        {
+            passive: true
+        }
+    );
+</script>

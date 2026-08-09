@@ -1,75 +1,254 @@
 ---
-interface Props{
+import type { Project } from "../types/project";
 
-    previous?:{
-
-        title:string;
-
-        slug:string;
-
-    };
-
-    next?:{
-
-        title:string;
-
-        slug:string;
-
-    };
-
+interface Props {
+    projects: Project[];
+    currentSlug: string;
 }
 
-const{
+const { projects, currentSlug } = Astro.props;
 
-    previous,
+const currentIndex = projects.findIndex(
+    (project) => project.id === currentSlug
+);
 
-    next
+const previousProject =
+    currentIndex > 0
+        ? projects[currentIndex - 1]
+        : null;
 
-}=Astro.props;
+const nextProject =
+    currentIndex >= 0 && currentIndex < projects.length - 1
+        ? projects[currentIndex + 1]
+        : null;
 ---
 
-<nav class="project-navigation">
+<nav
+    class="project-navigation"
+    aria-label="Project navigation"
+>
 
-    {
+    <div class="project-navigation__inner">
 
-        previous ? (
+        {
+            previousProject ? (
+                <a
+                    href={`/projects/${previousProject.id}`}
+                    class="project-navigation__link project-navigation__link--previous"
+                >
+                    <span class="project-navigation__direction">
+                        ← Previous
+                    </span>
 
-            <a href={`/projects/${previous.slug}`}>
+                    <strong>
+                        {previousProject.title}
+                    </strong>
+                </a>
+            ) : (
+                <span />
+            )
+        }
 
-                ← {previous.title}
 
-            </a>
+        <a
+            href="/projects"
+            class="project-navigation__index"
+            aria-label="Back to all projects"
+        >
+            <span class="project-navigation__index-icon">
+                ◈
+            </span>
 
-        ) : (
+            <span>
+                Project Universe
+            </span>
+        </a>
 
-            <div></div>
 
-        )
+        {
+            nextProject ? (
+                <a
+                    href={`/projects/${nextProject.id}`}
+                    class="project-navigation__link project-navigation__link--next"
+                >
+                    <span class="project-navigation__direction">
+                        Next →
+                    </span>
 
-    }
+                    <strong>
+                        {nextProject.title}
+                    </strong>
+                </a>
+            ) : (
+                <span />
+            )
+        }
 
-    <a href="/#projects">
-
-        Back to Projects
-
-    </a>
-
-    {
-
-        next ? (
-
-            <a href={`/projects/${next.slug}`}>
-
-                {next.title} →
-
-            </a>
-
-        ) : (
-
-            <div></div>
-
-        )
-
-    }
+    </div>
 
 </nav>
+
+<style>
+    .project-navigation {
+        width: min(
+            var(--container-width),
+            calc(100% - var(--container-padding) * 2)
+        );
+
+        margin:
+            var(--space-10)
+            auto
+            var(--space-12);
+    }
+
+    .project-navigation__inner {
+        display: grid;
+
+        grid-template-columns:
+            1fr
+            auto
+            1fr;
+
+        align-items: center;
+
+        gap: var(--space-6);
+
+        padding:
+            var(--space-5)
+            var(--space-6);
+
+        border:
+            1px solid
+            var(--glass-border);
+
+        border-radius:
+            var(--radius-xl);
+
+        background:
+            var(--glass-bg);
+
+        backdrop-filter:
+            blur(var(--glass-blur));
+
+        -webkit-backdrop-filter:
+            blur(var(--glass-blur));
+    }
+
+    .project-navigation__link {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: var(--space-2);
+
+        color: var(--color-text-muted);
+
+        transition:
+            color var(--speed-normal),
+            transform var(--speed-normal);
+    }
+
+    .project-navigation__link:hover {
+        color: var(--color-primary);
+    }
+
+    .project-navigation__link--next {
+        align-items: flex-end;
+
+        text-align: right;
+    }
+
+    .project-navigation__direction {
+        color: var(--color-primary);
+
+        font-family: var(--font-code);
+
+        font-size: var(--text-xs);
+
+        letter-spacing: .08rem;
+
+        text-transform: uppercase;
+    }
+
+    .project-navigation__link strong {
+        color: var(--color-text);
+
+        font-family: var(--font-display);
+
+        font-size: var(--text-sm);
+    }
+
+    .project-navigation__index {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: var(--space-2);
+
+        color: var(--color-primary);
+
+        font-family: var(--font-code);
+
+        font-size: var(--text-xs);
+
+        font-weight: 700;
+
+        letter-spacing: .08rem;
+
+        text-transform: uppercase;
+
+        white-space: nowrap;
+
+        transition:
+            transform var(--speed-normal),
+            color var(--speed-normal);
+    }
+
+    .project-navigation__index:hover {
+        color: var(--color-text);
+
+        transform: translateY(-2px);
+    }
+
+    .project-navigation__index-icon {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 700px) {
+
+        .project-navigation {
+            width: calc(100% - 32px);
+        }
+
+        .project-navigation__inner {
+            grid-template-columns: 1fr 1fr;
+
+            padding: var(--space-4);
+        }
+
+        .project-navigation__index {
+            grid-column: 1 / -1;
+            grid-row: 1;
+
+            justify-self: center;
+        }
+
+        .project-navigation__link--next {
+            grid-column: 2;
+        }
+
+        .project-navigation__link--previous {
+            grid-column: 1;
+        }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .project-navigation__link,
+        .project-navigation__index {
+            transition: none;
+        }
+
+    }
+</style>

@@ -30,25 +30,6 @@ export function getStaticPaths() {
 
 const { project } = Astro.props;
 
-const currentIndex = projects.findIndex(
-    (p) => p.id === project.id
-);
-
-const previous =
-    currentIndex > 0
-        ? {
-              title: projects[currentIndex - 1].title,
-              slug: projects[currentIndex - 1].id,
-          }
-        : undefined;
-
-const next =
-    currentIndex < projects.length - 1
-        ? {
-              title: projects[currentIndex + 1].title,
-              slug: projects[currentIndex + 1].id,
-          }
-        : undefined;
 ---
 
 <BaseLayout
@@ -138,8 +119,8 @@ const next =
         />
 
         <ProjectNavigation
-            previous={previous}
-            next={next}
+            projects={projects}
+            currentSlug={project.id}
         />
     </section>
 </BaseLayout>

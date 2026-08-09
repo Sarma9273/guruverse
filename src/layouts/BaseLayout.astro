@@ -1,5 +1,7 @@
 ---
 import "../styles/globals.css";
+import AmbientSpace from "../shared/components/Universe/AmbientSpace.astro";
+import GuruBot from "../shared/components/GuruBot/GuruBot.astro";
 
 interface Props {
     title?: string;
@@ -178,6 +180,9 @@ const structuredData =
     </head>
 
     <body>
+        <AmbientSpace />
+        <GuruBot />
         <slot />
+        
     </body>
 </html>
