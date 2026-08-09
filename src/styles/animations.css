@@ -1,177 +1,293 @@
 /* ==========================================================================
-   ANIMATIONS
+   GURUVERSE
+   MOTION SYSTEM
+   V2 — Motion Foundation
    ========================================================================== */
 
-/* Fade */
 
-@keyframes fade-in{
+/* ==========================================================================
+   FADE
+   ========================================================================== */
 
-    from{
+@keyframes fade-in {
 
-        opacity:0;
-
+    from {
+        opacity: 0;
     }
 
-    to{
-
-        opacity:1;
-
-    }
-
-}
-
-/* Slide Up */
-
-@keyframes slide-up{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
+    to {
+        opacity: 1;
     }
 
 }
 
-/* Scale */
 
-@keyframes scale-in{
+/* ==========================================================================
+   SLIDE UP
+   ========================================================================== */
 
-    from{
+@keyframes slide-up {
 
-        opacity:0;
-
-        transform:scale(.9);
-
+    from {
+        opacity: 0;
+        transform: translateY(var(--motion-distance-lg));
     }
 
-    to{
-
-        opacity:1;
-
-        transform:scale(1);
-
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 
 }
 
-/* Rotate */
 
-@keyframes rotate{
+/* ==========================================================================
+   SCALE
+   ========================================================================== */
 
-    from{
+@keyframes scale-in {
 
-        transform:rotate(0deg);
-
+    from {
+        opacity: 0;
+        transform: scale(.96);
     }
 
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
-}
-
-/* Pulse */
-
-@keyframes pulse{
-
-    0%,100%{
-
-        transform:scale(1);
-
-    }
-
-    50%{
-
-        transform:scale(1.05);
-
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 
 }
 
-/* Floating */
 
-@keyframes float{
+/* ==========================================================================
+   ROTATE
+   ========================================================================== */
 
-    0%,100%{
+@keyframes rotate {
 
-        transform:translateY(0);
-
+    from {
+        transform: rotate(0deg);
     }
 
-    50%{
+    to {
+        transform: rotate(360deg);
+    }
 
-        transform:translateY(-10px);
+}
 
+
+/* ==========================================================================
+   PULSE
+   ========================================================================== */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
     }
 
 }
 
-/* Glow */
 
-@keyframes glow{
+/* ==========================================================================
+   FLOAT
+   ========================================================================== */
 
-    0%,100%{
+@keyframes float {
 
-        filter:drop-shadow(0 0 0 rgba(0,229,255,.25));
-
+    0%,
+    100% {
+        transform: translateY(0);
     }
 
-    50%{
-
-        filter:drop-shadow(0 0 12px rgba(0,229,255,.6));
-
+    50% {
+        transform: translateY(
+            calc(var(--motion-distance-md) * -1)
+        );
     }
 
 }
+
+
+/* ==========================================================================
+   GLOW
+   ========================================================================== */
+
+@keyframes glow {
+
+    0%,
+    100% {
+        filter:
+            drop-shadow(
+                0 0 0
+                rgba(0,229,255,.25)
+            );
+    }
+
+    50% {
+        filter:
+            drop-shadow(
+                0 0 12px
+                rgba(0,229,255,.6)
+            );
+    }
+
+}
+
 
 /* ==========================================================================
    UTILITY CLASSES
    ========================================================================== */
 
-.animate-fade{
+.animate-fade {
 
-    animation:fade-in var(--speed-normal) ease forwards;
-
-}
-
-.animate-slide-up{
-
-    animation:slide-up var(--speed-normal) ease forwards;
+    animation:
+        fade-in
+        var(--motion-normal)
+        var(--ease-standard)
+        forwards;
 
 }
 
-.animate-scale{
 
-    animation:scale-in var(--speed-normal) ease forwards;
+.animate-slide-up {
 
-}
-
-.animate-float{
-
-    animation:float 4s ease-in-out infinite;
-
-}
-
-.animate-glow{
-
-    animation:glow 2.5s ease-in-out infinite;
+    animation:
+        slide-up
+        var(--motion-normal)
+        var(--ease-smooth)
+        forwards;
 
 }
 
-.animate-spin{
 
-    animation:rotate 10s linear infinite;
+.animate-scale {
+
+    animation:
+        scale-in
+        var(--motion-normal)
+        var(--ease-smooth)
+        forwards;
+
+}
+
+
+.animate-float {
+
+    animation:
+        float
+        4s
+        var(--ease-smooth)
+        infinite;
+
+}
+
+
+.animate-glow {
+
+    animation:
+        glow
+        2.5s
+        var(--ease-standard)
+        infinite;
+
+}
+
+
+.animate-spin {
+
+    animation:
+        rotate
+        10s
+        linear
+        infinite;
+
+}
+
+
+/* ==========================================================================
+   V2 MOTION HELPERS
+   ========================================================================== */
+
+.motion-fast {
+
+    transition:
+        transform var(--motion-fast) var(--ease-standard),
+        opacity var(--motion-fast) var(--ease-standard);
+
+}
+
+
+.motion-normal {
+
+    transition:
+        transform var(--motion-normal) var(--ease-standard),
+        opacity var(--motion-normal) var(--ease-standard);
+
+}
+
+
+.motion-slow {
+
+    transition:
+        transform var(--motion-slow) var(--ease-smooth),
+        opacity var(--motion-slow) var(--ease-smooth);
+
+}
+
+
+/* ==========================================================================
+   V2 INTERACTION BASE
+   ========================================================================== */
+
+.motion-interactive {
+
+    transition:
+        transform var(--motion-normal) var(--ease-smooth),
+        opacity var(--motion-normal) var(--ease-standard),
+        border-color var(--motion-normal) var(--ease-standard),
+        box-shadow var(--motion-normal) var(--ease-standard);
+
+}
+
+
+.motion-interactive:hover {
+
+    transform:
+        translateY(
+            calc(var(--interaction-hover-distance) * -1)
+        )
+        scale(var(--interaction-scale));
+
+}
+
+
+/* ==========================================================================
+   PERFORMANCE HINTS
+   ========================================================================== */
+
+.motion-transform {
+
+    will-change: transform;
+
+}
+
+
+.motion-opacity {
+
+    will-change: opacity;
+
+}
+
+
+.motion-transform-opacity {
+
+    will-change: transform, opacity;
 
 }

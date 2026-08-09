@@ -19,10 +19,24 @@
 
 }
 
-html{
+html {
+    scroll-behavior: smooth;
+}
 
-    scroll-behavior:smooth;
+@media (prefers-reduced-motion: reduce) {
 
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: var(--motion-reduced-duration) !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: var(--motion-reduced-duration) !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 html,
