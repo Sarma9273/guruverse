@@ -42,8 +42,7 @@ import "./styles/projects.css";
 
         </div>
 
-        <div class="projects__grid">
-
+        <div class="projects__grid motion-stagger">
             {
 
                 projects.map(
@@ -81,3 +80,15 @@ import "./styles/projects.css";
     </div>
 
 </section>
+
+<script>
+    import { revealObserver } from "../../shared/interactions";
+
+    const elements = document.querySelectorAll(
+        ".motion-reveal"
+    );
+
+    elements.forEach((element) => {
+        revealObserver.observe(element);
+    });
+</script>

@@ -105,10 +105,6 @@
 
     text-decoration: none;
 
-    opacity: 0;
-
-    transform: translateY(20px);
-
     transition:
         transform var(--speed-normal),
         border-color var(--speed-normal),
@@ -464,49 +460,6 @@
     pointer-events: none;
 }
 
-/* ==========================================================
-   PROJECT ANIMATION
-   ========================================================== */
-
-@keyframes project-slide-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.projects__grid .project-card {
-    animation:
-        project-slide-up
-        0.7s
-        ease
-        forwards;
-}
-
-.projects__grid .project-card:nth-child(2) {
-    animation-delay: 0.12s;
-}
-
-.projects__grid .project-card:nth-child(3) {
-    animation-delay: 0.24s;
-}
-
-.projects__grid .project-card:nth-child(4) {
-    animation-delay: 0.36s;
-}
-
-.projects__grid .project-card:nth-child(5) {
-    animation-delay: 0.48s;
-}
-
-.projects__grid .project-card:nth-child(6) {
-    animation-delay: 0.60s;
-}
 
 /* ==========================================================
    PROJECT SECTION TITLE
@@ -573,7 +526,8 @@
     }
 
     .project-card:hover {
-        transform: translateY(-6px);
+        transform: translateY(-10px)
+        scale(1.015);
     }
 
     .projects::before {
@@ -643,6 +597,280 @@
 
     .project-card:hover .project-card__image img {
         transform: none;
+    }
+
+}
+
+/* ==========================================================
+   PROJECTS PAGE
+   Full Project Universe
+   ========================================================== */
+
+.projects-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   PROJECT PAGE HERO
+   ========================================================== */
+
+.projects-page__hero {
+    position: relative;
+
+    padding:
+        var(--space-12)
+        0
+        var(--space-10);
+}
+
+.projects-page__hero-content {
+    width: min(
+        var(--container-width),
+        calc(100% - var(--container-padding) * 2)
+    );
+
+    margin: 0 auto;
+
+    max-width: 1000px;
+}
+
+.projects-page__eyebrow {
+    display: inline-block;
+
+    margin-bottom: var(--space-4);
+
+    color: var(--color-primary);
+
+    font-family: var(--font-code);
+
+    font-size: var(--text-sm);
+
+    font-weight: 700;
+
+    letter-spacing: .2rem;
+
+    text-transform: uppercase;
+}
+
+.projects-page__hero h1 {
+    margin-bottom: var(--space-5);
+
+    font-family: var(--font-display);
+
+    font-size: clamp(
+        3rem,
+        7vw,
+        var(--text-5xl)
+    );
+
+    line-height: 1.05;
+
+    letter-spacing: -.04em;
+}
+
+.projects-page__hero h1 span {
+    color: var(--color-primary);
+}
+
+.projects-page__hero p {
+    max-width: 850px;
+
+    color: var(--color-text-muted);
+
+    font-size: var(--text-lg);
+
+    line-height: 1.8;
+}
+
+
+/* ==========================================================
+   PROJECT COLLECTION
+   ========================================================== */
+
+.projects-page__content {
+    position: relative;
+
+    width: min(
+        var(--container-width),
+        calc(100% - var(--container-padding) * 2)
+    );
+
+    margin: 0 auto;
+
+    padding-bottom: var(--space-12);
+}
+
+
+/* ==========================================================
+   PROJECT PAGE HEADER
+   ========================================================== */
+
+.projects-page__header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-end;
+
+    gap: var(--space-6);
+
+    margin-bottom: var(--space-8);
+}
+
+.projects-page__section-label {
+    display: inline-block;
+
+    margin-bottom: var(--space-3);
+
+    color: var(--color-primary);
+
+    font-family: var(--font-code);
+
+    font-size: var(--text-sm);
+
+    font-weight: 700;
+
+    letter-spacing: .2rem;
+
+    text-transform: uppercase;
+}
+
+.projects-page__header h2 {
+    font-family: var(--font-display);
+
+    font-size: var(--text-4xl);
+
+    line-height: 1.1;
+}
+
+.projects-page__header > p {
+    flex-shrink: 0;
+
+    color: var(--color-text-muted);
+
+    font-family: var(--font-code);
+
+    font-size: var(--text-sm);
+}
+
+
+/* ==========================================================
+   PROJECT PAGE GRID
+   ========================================================== */
+
+.projects-page__grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: var(--space-8);
+
+    align-items: stretch;
+}
+
+
+/* ==========================================================
+   PROJECT PAGE BACKGROUND
+   ========================================================== */
+
+.projects-page::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 1000px;
+    height: 700px;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 229, 255, .055),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.projects-page__hero,
+.projects-page__content {
+    position: relative;
+
+    z-index: 1;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 1100px) {
+
+    .projects-page__grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .projects-page__hero {
+        padding:
+            var(--space-10)
+            0
+            var(--space-8);
+    }
+
+    .projects-page__hero h1 {
+        font-size: clamp(
+            2.5rem,
+            10vw,
+            4rem
+        );
+    }
+
+    .projects-page__header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .projects-page__grid {
+        grid-template-columns: 1fr;
+
+        gap: var(--space-6);
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .projects-page__hero-content,
+    .projects-page__content {
+        width: calc(100% - 32px);
+    }
+
+    .projects-page__hero p {
+        font-size: var(--text-base);
     }
 
 }

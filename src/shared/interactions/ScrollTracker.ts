@@ -1,75 +1,85 @@
 /* ==========================================================
    GURUVERSE
    Scroll Engine
+   V2 — Motion Engine
    ========================================================== */
 
-type ScrollListener=(progress:number)=>void;
+type ScrollListener = (progress: number) => void;
 
-class ScrollTracker{
+class ScrollTracker {
 
-    private progress=0;
+    private progress = 0;
 
-    private listeners=new Set<ScrollListener>();
+    private listeners = new Set<ScrollListener>();
 
-    constructor(){
+    private ticking = false;
 
-        if(typeof window!=="undefined"){
+    constructor() {
+
+        if (typeof window !== "undefined") {
 
             window.addEventListener(
-
                 "scroll",
-
                 this.handleScroll,
-
                 {
-
-                    passive:true
-
+                    passive: true
                 }
-
             );
+
+            this.update();
 
         }
 
     }
 
-    private handleScroll=()=>{
+    private handleScroll = () => {
 
-        const max=
+        if (this.ticking) {
+            return;
+        }
 
-            document.documentElement.scrollHeight-
+        this.ticking = true;
 
-            window.innerHeight;
+        requestAnimationFrame(() => {
 
-        this.progress=
+            this.update();
 
-            max>0
+            this.ticking = false;
 
-                ?window.scrollY/max
-
-                :0;
-
-        this.emit();
+        });
 
     };
 
-    private emit(){
+    private update() {
+
+        const max =
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
+        this.progress =
+            max > 0
+                ? window.scrollY / max
+                : 0;
+
+        this.emit();
+
+    }
+
+    private emit() {
 
         this.listeners.forEach(
-
-            listener=>listener(this.progress)
-
+            listener => listener(this.progress)
         );
 
     }
 
-    subscribe(listener:ScrollListener){
+    subscribe(listener: ScrollListener) {
 
         this.listeners.add(listener);
 
         listener(this.progress);
 
-        return()=>{
+        return () => {
 
             this.listeners.delete(listener);
 
@@ -77,7 +87,7 @@ class ScrollTracker{
 
     }
 
-    getProgress(){
+    getProgress() {
 
         return this.progress;
 
@@ -85,4 +95,4 @@ class ScrollTracker{
 
 }
 
-export const scrollTracker=new ScrollTracker();
+export const scrollTracker = new ScrollTracker();
