@@ -1,0 +1,78 @@
+---
+import { projects } from "./data/projects";
+import ProjectCard from "./components/ProjectCard.astro";
+import "./styles/projects.css";
+---
+
+<main class="projects-page">
+
+    <!-- =====================================================
+         PROJECT PAGE HERO
+         ===================================================== -->
+
+    <section class="projects-page__hero">
+
+        <div class="projects-page__hero-content">
+
+            <span class="projects-page__eyebrow">
+                PROJECT UNIVERSE
+            </span>
+
+            <h1>
+                Engineering Through
+                <span>Projects</span>
+            </h1>
+
+            <p>
+                Explore the systems, experiments, and engineering
+                work behind GURUVERSE — spanning artificial intelligence,
+                cybersecurity, software engineering, and research.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROJECT COLLECTION
+         ===================================================== -->
+
+    <section class="projects-page__content">
+
+        <div class="projects-page__header">
+
+            <div>
+
+                <span class="projects-page__section-label">
+                    FEATURED WORK
+                </span>
+
+                <h2>
+                    Built Systems
+                </h2>
+
+            </div>
+
+            <p>
+                {projects.length} projects
+            </p>
+
+        </div>
+
+
+        <div class="projects-page__grid">
+
+            {
+                projects.map((project) => (
+                    <ProjectCard
+                        project={project}
+                    />
+                ))
+            }
+
+        </div>
+
+    </section>
+
+</main>
