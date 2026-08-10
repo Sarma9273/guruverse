@@ -31,6 +31,29 @@ export const projects:Project[]=[
 
         ],
 
+        overview:
+            "RA-XSOC is an AI-powered Retrieval-Augmented Extended Security Operations Center designed to assist security analysts with threat investigation, incident response, MITRE ATT&CK mapping, and intelligent security workflows.",
+
+        architecture: [
+            "Security Event and Alert Input",
+            "Data Preprocessing and Normalization",
+            "Threat Intelligence and Knowledge Base",
+            "Embedding and Vector Retrieval",
+            "RAG-Based Security Reasoning",
+            "MITRE ATT&CK Mapping",
+            "Analyst Response and Incident Reporting"
+        ],
+
+        workflow: [
+            "Collect and ingest security events or analyst queries",
+            "Normalize and prepare the security information",
+            "Retrieve relevant knowledge from the security knowledge base",
+            "Perform contextual threat analysis using retrieval-augmented reasoning",
+            "Map identified techniques and behaviors to MITRE ATT&CK",
+            "Present investigation findings and recommended response actions",
+            "Generate structured incident-response information for the analyst"
+        ],
+
         category:"Cybersecurity",
 
         status:"Completed",
@@ -65,6 +88,31 @@ export const projects:Project[]=[
             "NLP",
             "RAG"
 
+        ],
+
+        overview:
+            "CyberGPT is a Retrieval-Augmented Security Incident Response Copilot that helps security analysts investigate alerts, understand attack behavior, map incidents to MITRE ATT&CK, and generate structured incident reports.",
+
+        architecture: [
+            "Security Incident Input",
+            "Incident Classification",
+            "Knowledge Base",
+            "SentenceTransformer Embeddings",
+            "FAISS Vector Retrieval",
+            "Hybrid Retrieval and Context Ranking",
+            "MITRE ATT&CK Mapping",
+            "Incident Response Generation"
+        ],
+
+        workflow: [
+            "Receive a security alert or incident description",
+            "Identify the relevant attack category and security context",
+            "Convert the query into an embedding representation",
+            "Retrieve relevant security knowledge using FAISS",
+            "Apply contextual and keyword-based relevance enhancement",
+            "Map the investigation to applicable MITRE ATT&CK techniques",
+            "Generate an analyst-oriented incident response",
+            "Produce structured incident-report information"
         ],
 
         category:"AI",
@@ -102,6 +150,29 @@ export const projects:Project[]=[
 
         ],
 
+        overview:
+            "GURUVERSE is an interactive engineering portfolio universe designed to present software engineering, artificial intelligence, cybersecurity, research, and technical projects through immersive digital experiences.",
+
+        architecture: [
+            "Astro Application Layer",
+            "Feature-Based Portfolio Architecture",
+            "Shared Component System",
+            "Project Data Layer",
+            "Interaction and Animation Layer",
+            "Ambient Universe System",
+            "GURU-BOT Intelligence Interface"
+        ],
+
+        workflow: [
+            "Visitor enters the GURUVERSE",
+            "Explore the interactive hero and universe environment",
+            "Navigate through portfolio domains and sections",
+            "Explore individual engineering projects",
+            "Inspect project architecture, workflow, technologies, and results",
+            "Interact with GURU-BOT for contextual project information",
+            "Move between projects and deeper technical experiences"
+        ],
+
         category:"Portfolio",
 
         status:"In Progress",
@@ -114,4 +185,7 @@ export const projects:Project[]=[
 
     }
 
+    
+
 ];
+

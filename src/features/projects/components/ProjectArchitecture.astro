@@ -1,50 +1,85 @@
 ---
-interface Props{
-
-    architecture:string[];
-
+interface Props {
+    architecture: string[];
 }
 
-const{
-
-    architecture
-
-}=Astro.props;
+const { architecture } = Astro.props;
 ---
 
-<section class="project-architecture">
+<div class="project-architecture">
 
     {
-
-        architecture.map((item,index)=>(
+        architecture.map((item, index) => (
             <>
-                <div class="project-architecture__item">
+                <button
+                    class="project-architecture__item"
+                    type="button"
+                    aria-label={`Architecture component: ${item}`}
+                    data-architecture-node
+                >
+                    <span class="project-architecture__box">
+                        <span class="project-architecture__index">
+                            {String(index + 1).padStart(2, "0")}
+                        </span>
 
-                    <div class="project-architecture__box">
+                        <span class="project-architecture__label">
+                            {item}
+                        </span>
 
-                        {item}
-
-                    </div>
-
-                </div>
+                        <span
+                            class="project-architecture__indicator"
+                            aria-hidden="true"
+                        />
+                    </span>
+                </button>
 
                 {
-
                     index < architecture.length - 1 && (
-
-                        <div class="project-architecture__connector">
-
+                        <div
+                            class="project-architecture__connector"
+                            aria-hidden="true"
+                        >
                             ↓
-
                         </div>
-
                     )
-
                 }
-
             </>
         ))
-
     }
 
-</section>
+</div>
+
+<script>
+    const nodes =
+        document.querySelectorAll<HTMLElement>(
+            "[data-architecture-node]"
+        );
+
+    nodes.forEach((node) => {
+
+        node.addEventListener("mouseenter", () => {
+            nodes.forEach((item) => {
+                item.classList.remove(
+                    "project-architecture__item--active"
+                );
+            });
+
+            node.classList.add(
+                "project-architecture__item--active"
+            );
+        });
+
+        node.addEventListener("focus", () => {
+            nodes.forEach((item) => {
+                item.classList.remove(
+                    "project-architecture__item--active"
+                );
+            });
+
+            node.classList.add(
+                "project-architecture__item--active"
+            );
+        });
+
+    });
+</script>

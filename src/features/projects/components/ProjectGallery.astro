@@ -1,47 +1,161 @@
 ---
-interface Props{
-
-    screenshots?:string[];
-
+interface Props {
+    screenshots?: string[];
 }
 
-const{
-
-    screenshots=[]
-
-}=Astro.props;
+const {
+    screenshots = []
+} = Astro.props;
 ---
 
 {
-
-    screenshots.length>0 && (
-
-        <section class="project-gallery">
+    screenshots.length > 0 && (
+        <section
+            class="project-gallery"
+            aria-label="Project screenshots"
+        >
 
             {
+                screenshots.map((image, index) => (
+                    <button
+                        class="project-gallery__item"
+                        type="button"
+                        data-gallery-image={image}
+                        aria-label={`Open project screenshot ${index + 1}`}
+                    >
+                        <figure>
 
-                screenshots.map(image=>(
+                            <img
+                                src={image}
+                                alt={`Project screenshot ${index + 1}`}
+                                loading="lazy"
+                            />
 
-                    <figure class="project-gallery__item">
+                            <figcaption>
+                                <span>
+                                    VISUAL {String(index + 1).padStart(2, "0")}
+                                </span>
 
-                        <img
+                                <strong>
+                                    View screenshot ↗
+                                </strong>
+                            </figcaption>
 
-                            src={image}
-
-                            alt="Project Screenshot"
-
-                            loading="lazy"
-
-                        />
-
-                    </figure>
-
+                        </figure>
+                    </button>
                 ))
-
             }
 
         </section>
-
     )
-
 }
+
+<div
+    class="project-gallery__viewer"
+    data-gallery-viewer
+    aria-hidden="true"
+>
+    <button
+        class="project-gallery__close"
+        type="button"
+        data-gallery-close
+        aria-label="Close screenshot viewer"
+    >
+        ×
+    </button>
+
+    <img
+        class="project-gallery__viewer-image"
+        data-gallery-viewer-image
+        alt="Expanded project screenshot"
+    />
+</div>
+
+<script>
+    const galleryItems =
+        document.querySelectorAll<HTMLButtonElement>(
+            "[data-gallery-image]"
+        );
+
+    const viewer =
+        document.querySelector<HTMLElement>(
+            "[data-gallery-viewer]"
+        );
+
+    const viewerImage =
+        document.querySelector<HTMLImageElement>(
+            "[data-gallery-viewer-image]"
+        );
+
+    const closeButton =
+        document.querySelector<HTMLButtonElement>(
+            "[data-gallery-close]"
+        );
+
+    if (
+        viewer &&
+        viewerImage &&
+        closeButton
+    ) {
+        const closeViewer = () => {
+            viewer.classList.remove(
+                "project-gallery__viewer--open"
+            );
+
+            viewer.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+            document.body.style.overflow = "";
+        };
+
+        galleryItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                const image =
+                    item.dataset.galleryImage;
+
+                if (!image) return;
+
+                viewerImage.src = image;
+
+                viewer.classList.add(
+                    "project-gallery__viewer--open"
+                );
+
+                viewer.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                document.body.style.overflow =
+                    "hidden";
+            });
+        });
+
+        closeButton.addEventListener(
+            "click",
+            closeViewer
+        );
+
+        viewer.addEventListener("click", (event) => {
+            if (event.target === viewer) {
+                closeViewer();
+            }
+        });
+
+        document.addEventListener(
+            "keydown",
+            (event) => {
+                if (
+                    event.key === "Escape" &&
+                    viewer.classList.contains(
+                        "project-gallery__viewer--open"
+                    )
+                ) {
+                    closeViewer();
+                }
+            }
+        );
+    }
+</script>

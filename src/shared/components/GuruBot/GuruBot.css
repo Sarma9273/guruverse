@@ -1,0 +1,834 @@
+/* ==========================================================
+   GURU-BOT
+   Visual System
+   ========================================================== */
+
+.guru-bot {
+    position: fixed;
+
+    right: 28px;
+    bottom: 28px;
+
+    width: 72px;
+    height: 72px;
+
+    z-index: var(--z-robot);
+
+    display: grid;
+    place-items: center;
+
+    border:
+        1px solid
+        rgba(0, 229, 255, 0.35);
+
+    border-radius: 50%;
+
+    background:
+        rgba(4, 7, 13, 0.72);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+
+    box-shadow:
+        0 0 24px
+        rgba(0, 229, 255, 0.12);
+
+    color: var(--color-text);
+
+    cursor: pointer;
+
+    transition:
+        transform var(--speed-normal),
+        border-color var(--speed-normal),
+        box-shadow var(--speed-normal);
+}
+
+.guru-bot:hover {
+    transform: scale(1.08);
+
+    border-color:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 36px
+        rgba(0, 229, 255, 0.28);
+}
+
+.guru-bot--active {
+    border-color:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 32px
+        rgba(0, 229, 255, 0.3);
+}
+
+
+/* ==========================================================
+   CORE
+   ========================================================== */
+
+.guru-bot__core {
+    position: relative;
+
+    width: 30px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    border:
+        1px solid
+        rgba(0, 229, 255, 0.65);
+
+    border-radius: 9px;
+
+    background:
+        rgba(0, 229, 255, 0.08);
+
+    box-shadow:
+        inset 0 0 12px
+        rgba(0, 229, 255, 0.08);
+}
+
+.guru-bot__eye {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 8px
+        rgba(0, 229, 255, 0.8);
+}
+
+.guru-bot__pulse {
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    border:
+        1px solid
+        rgba(0, 229, 255, 0.4);
+
+    animation:
+        guru-bot-pulse
+        2.4s
+        ease-in-out
+        infinite;
+}
+
+
+/* ==========================================================
+   ORBITS
+   ========================================================== */
+
+.guru-bot__orbit {
+    position: absolute;
+
+    inset: 8px;
+
+    border:
+        1px solid
+        rgba(0, 229, 255, 0.16);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.guru-bot__orbit--one {
+    transform:
+        rotate(35deg)
+        scaleX(1.35);
+
+    animation:
+        guru-bot-orbit
+        7s
+        linear
+        infinite;
+}
+
+.guru-bot__orbit--two {
+    transform:
+        rotate(-35deg)
+        scaleX(1.35);
+
+    border-color:
+        rgba(124, 77, 255, 0.16);
+
+    animation:
+        guru-bot-orbit-reverse
+        9s
+        linear
+        infinite;
+}
+
+
+/* ==========================================================
+   STATUS LABEL
+   ========================================================== */
+
+.guru-bot__status {
+    position: absolute;
+
+    right: 4px;
+    bottom: -20px;
+
+    color:
+        var(--color-primary);
+
+    font-family:
+        var(--font-code);
+
+    font-size:
+        0.55rem;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.08rem;
+
+    white-space: nowrap;
+
+    opacity: 0.7;
+}
+
+
+/* ==========================================================
+   PROJECT INFORMATION
+   ========================================================== */
+
+.guru-bot__project {
+    width: 100%;
+
+    margin-bottom: 1.25rem;
+}
+
+.guru-bot__project-label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.65rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2rem;
+
+    text-transform: uppercase;
+}
+
+.guru-bot__project-title {
+    margin: 0 0 0.4rem;
+
+    color:
+        var(--color-text);
+
+    font-size: 1.15rem;
+}
+
+.guru-bot__project-tagline {
+    margin: 0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.8rem;
+
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   ACTIONS
+   ========================================================== */
+
+.guru-bot__actions {
+    width: 100%;
+
+    display: grid;
+
+    gap: 0.55rem;
+}
+
+.guru-bot__actions button {
+    width: 100%;
+
+    padding: 0.7rem 0.8rem;
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius: 0.65rem;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color:
+        var(--color-text);
+
+    font: inherit;
+
+    font-size: 0.75rem;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color var(--speed-fast),
+        background var(--speed-fast),
+        transform var(--speed-fast);
+}
+
+.guru-bot__actions button:hover {
+    border-color:
+        var(--color-primary);
+
+    background:
+        rgba(0, 229, 255, 0.06);
+
+    transform:
+        translateX(3px);
+}
+
+.guru-bot__action.is-active {
+    border-color:
+        var(--color-primary);
+
+    background:
+        rgba(0, 229, 255, 0.08);
+
+    color:
+        var(--color-primary);
+}
+
+
+/* ==========================================================
+   RESPONSE
+   ========================================================== */
+
+.guru-bot__response {
+    width: 100%;
+
+    margin-top: 1rem;
+
+    padding: 0;
+
+    max-height: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    transform:
+        translateY(6px);
+
+    transition:
+        max-height 400ms ease,
+        opacity 300ms ease,
+        transform 300ms ease,
+        padding 300ms ease;
+}
+
+.guru-bot__response.is-visible {
+    max-height: 360px;
+
+    padding: 1rem;
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+    overflow-y: auto;
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius:
+        0.8rem;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.guru-bot__response-label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.62rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.18rem;
+
+    text-transform: uppercase;
+}
+
+.guru-bot__response strong {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color:
+        var(--color-text);
+
+    font-size: 0.95rem;
+}
+
+.guru-bot__response p {
+    margin: 0;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.76rem;
+
+    line-height: 1.65;
+}
+
+.guru-bot__response-list {
+    display: grid;
+
+    gap: 0.5rem;
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+}
+
+.guru-bot__response-list li {
+    position: relative;
+
+    padding-left: 1rem;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 0.75rem;
+
+    line-height: 1.5;
+}
+
+.guru-bot__response-list li::before {
+    content: "◆";
+
+    position: absolute;
+
+    left: 0;
+
+    color:
+        var(--color-primary);
+
+    font-size: 0.45rem;
+}
+
+
+/* ==========================================================
+   KEYFRAMES
+   ========================================================== */
+
+@keyframes guru-bot-pulse {
+
+    0%,
+    100% {
+        opacity: 0.25;
+
+        transform:
+            scale(0.85);
+    }
+
+    50% {
+        opacity: 0.8;
+
+        transform:
+            scale(1.08);
+    }
+}
+
+@keyframes guru-bot-orbit {
+
+    from {
+        transform:
+            rotate(35deg)
+            scaleX(1.35);
+    }
+
+    to {
+        transform:
+            rotate(395deg)
+            scaleX(1.35);
+    }
+}
+
+@keyframes guru-bot-orbit-reverse {
+
+    from {
+        transform:
+            rotate(-35deg)
+            scaleX(1.35);
+    }
+
+    to {
+        transform:
+            rotate(-395deg)
+            scaleX(1.35);
+    }
+}
+
+@keyframes guru-bot-status {
+
+    0%,
+    100% {
+        opacity: 0.45;
+
+        transform:
+            scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+/* ==========================================================
+   INTERACTION PANEL
+   ========================================================== */
+
+.guru-bot-panel {
+    position: fixed;
+
+    right: 28px;
+    bottom: 118px;
+
+    width:
+        min(
+            380px,
+            calc(100vw - 40px)
+        );
+
+    max-height:
+        calc(100vh - 150px);
+
+    overflow-y: auto;
+
+    z-index:
+        calc(var(--z-robot) + 1);
+
+    padding:
+        var(--space-6);
+
+    border:
+        1px solid
+        rgba(0, 229, 255, 0.18);
+
+    border-radius:
+        var(--radius-xl);
+
+    background:
+        rgba(4, 7, 13, 0.88);
+
+    backdrop-filter:
+        blur(24px);
+
+    -webkit-backdrop-filter:
+        blur(24px);
+
+    box-shadow:
+        0 24px 80px
+        rgba(0, 0, 0, 0.45),
+        0 0 40px
+        rgba(0, 229, 255, 0.08);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translateY(16px)
+        scale(0.96);
+
+    transform-origin:
+        bottom right;
+
+    pointer-events: none;
+
+    transition:
+        opacity var(--speed-normal),
+        transform var(--speed-normal),
+        visibility var(--speed-normal);
+}
+
+.guru-bot-panel--open {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+}
+
+
+/* ==========================================================
+   PANEL HEADER
+   ========================================================== */
+
+.guru-bot-panel__header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: var(--space-4);
+
+    padding-bottom:
+        var(--space-5);
+
+    border-bottom:
+        1px solid
+        var(--color-border);
+}
+
+.guru-bot-panel__eyebrow {
+    display: block;
+
+    margin-bottom:
+        var(--space-2);
+
+    color:
+        var(--color-primary);
+
+    font-family:
+        var(--font-code);
+
+    font-size:
+        var(--text-xs);
+
+    letter-spacing:
+        0.12rem;
+}
+
+.guru-bot-panel__header h2 {
+    margin: 0;
+
+    color:
+        var(--color-text);
+
+    font-size:
+        var(--text-2xl);
+}
+
+
+/* ==========================================================
+   CLOSE BUTTON
+   ========================================================== */
+
+.guru-bot-panel__close {
+    width: 32px;
+    height: 32px;
+
+    display: grid;
+
+    place-items: center;
+
+    border:
+        1px solid
+        var(--color-border);
+
+    border-radius: 50%;
+
+    background: transparent;
+
+    color:
+        var(--color-text-muted);
+
+    font-size: 1.25rem;
+
+    cursor: pointer;
+
+    transition:
+        color var(--speed-fast),
+        border-color var(--speed-fast),
+        background var(--speed-fast);
+}
+
+.guru-bot-panel__close:hover {
+    color:
+        var(--color-primary);
+
+    border-color:
+        var(--color-primary);
+
+    background:
+        rgba(0, 229, 255, 0.06);
+}
+
+
+/* ==========================================================
+   PANEL BODY
+   ========================================================== */
+
+.guru-bot-panel__body {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: var(--space-3);
+
+    padding:
+        var(--space-6)
+        0;
+}
+
+.guru-bot-panel__indicator {
+    width: 8px;
+    height: 8px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        var(--color-accent);
+
+    box-shadow:
+        0 0 12px
+        rgba(0, 255, 163, 0.7);
+
+    animation:
+        guru-bot-status
+        2s
+        ease-in-out
+        infinite;
+}
+
+.guru-bot-panel__body > p {
+    color:
+        var(--color-text);
+
+    font-size:
+        var(--text-lg);
+}
+
+.guru-bot-panel__body > span {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--text-sm);
+
+    line-height: 1.7;
+}
+
+
+/* ==========================================================
+   PANEL FOOTER
+   ========================================================== */
+
+.guru-bot-panel__footer {
+    padding-top:
+        var(--space-4);
+
+    border-top:
+        1px solid
+        var(--color-border);
+
+    color:
+        var(--color-accent);
+
+    font-family:
+        var(--font-code);
+
+    font-size:
+        var(--text-xs);
+
+    letter-spacing:
+        0.08rem;
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 768px) {
+
+    .guru-bot {
+        right: 18px;
+        bottom: 18px;
+
+        width: 62px;
+        height: 62px;
+    }
+
+    .guru-bot__status {
+        display: none;
+    }
+
+    .guru-bot-panel {
+        right: 18px;
+        bottom: 96px;
+
+        width:
+            calc(100vw - 36px);
+
+        max-height:
+            calc(100vh - 120px);
+    }
+}
+
+
+/* ==========================================================
+   REDUCED MOTION
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .guru-bot__pulse,
+    .guru-bot__orbit,
+    .guru-bot-panel__indicator {
+        animation: none;
+    }
+
+    .guru-bot,
+    .guru-bot-panel,
+    .guru-bot-panel__close,
+    .guru-bot__response {
+        transition: none;
+    }
+}

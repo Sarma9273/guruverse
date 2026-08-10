@@ -1,41 +1,77 @@
 ---
 import type { Project } from "../types/project";
 
-interface Props{
-
-    project:Project;
-
+interface Props {
+    project: Project;
 }
 
-const{
-
-    project
-
-}=Astro.props;
+const { project } = Astro.props;
 ---
 
 <section class="project-hero">
-
     <div class="project-hero__container">
 
-        <span class="project-hero__category">
+        <div class="project-hero__meta">
 
-            {project.category}
+            <span class="project-hero__category">
+                {project.category}
+            </span>
 
-        </span>
+            {
+                project.featured && (
+                    <span class="project-hero__featured">
+                        ★ Featured Project
+                    </span>
+                )
+            }
+
+            <span class="project-hero__status">
+                {project.status}
+            </span>
+
+        </div>
 
         <h1 class="project-hero__title">
-
             {project.title}
-
         </h1>
 
         <p class="project-hero__tagline">
-
             {project.tagline}
-
         </p>
 
-    </div>
+        <p class="project-hero__description">
+            {project.description}
+        </p>
 
+        <div class="project-hero__actions">
+
+            {
+                project.github && (
+                    <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-hero__button project-hero__button--primary"
+                    >
+                        View Source →
+                    </a>
+                )
+            }
+
+            {
+                project.demo && (
+                    <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-hero__button"
+                    >
+                        Live Demo ↗
+                    </a>
+                )
+            }
+
+        </div>
+
+    </div>
 </section>

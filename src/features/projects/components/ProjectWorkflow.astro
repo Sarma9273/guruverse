@@ -1,41 +1,74 @@
 ---
-interface Props{
-
-    workflow:string[];
-
+interface Props {
+    workflow: string[];
 }
 
-const{
-
-    workflow
-
-}=Astro.props;
+const { workflow } = Astro.props;
 ---
 
-<section class="project-workflow">
+<div class="project-workflow">
 
     {
-
-        workflow.map((step,index)=>(
-
-            <div class="project-workflow__step">
+        workflow.map((step, index) => (
+            <div
+                class="project-workflow__step"
+                tabindex="0"
+                data-workflow-step
+            >
 
                 <div class="project-workflow__number">
-
-                    {index+1}
-
+                    {String(index + 1).padStart(2, "0")}
                 </div>
 
                 <div class="project-workflow__content">
+                    <span class="project-workflow__label">
+                        STEP {String(index + 1).padStart(2, "0")}
+                    </span>
 
-                    {step}
-
+                    <p>
+                        {step}
+                    </p>
                 </div>
 
+                <div
+                    class="project-workflow__signal"
+                    aria-hidden="true"
+                />
             </div>
-
         ))
-
     }
 
-</section>
+</div>
+
+<script>
+    const steps =
+        document.querySelectorAll<HTMLElement>(
+            "[data-workflow-step]"
+        );
+
+    steps.forEach((step) => {
+        step.addEventListener("mouseenter", () => {
+            steps.forEach((item) =>
+                item.classList.remove(
+                    "project-workflow__step--active"
+                )
+            );
+
+            step.classList.add(
+                "project-workflow__step--active"
+            );
+        });
+
+        step.addEventListener("focus", () => {
+            steps.forEach((item) =>
+                item.classList.remove(
+                    "project-workflow__step--active"
+                )
+            );
+
+            step.classList.add(
+                "project-workflow__step--active"
+            );
+        });
+    });
+</script>

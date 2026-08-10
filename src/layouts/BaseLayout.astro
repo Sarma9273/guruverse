@@ -9,6 +9,37 @@ interface Props {
     image?: string;
     canonical?: string;
     type?: "website" | "article";
+    project?: {
+        id: string;
+        title: string;
+        tagline: string;
+        description: string;
+        category: string;
+        status: string;
+        technologies: string[];
+        overview?: string;
+        architecture?: string[];
+        workflow?: string[];
+        project?: ProjectContext;
+    };
+}
+
+interface ProjectContext {
+    id: string;
+    title: string;
+    tagline: string;
+    description: string;
+    category: string;
+    status: string;
+    technologies: string[];
+    overview?: string;
+    architecture?: string[];
+    workflow?: string[];
+    screenshots?: string[];
+    metrics?: {
+        label: string;
+        value: string;
+    }[];
 }
 
 const {
@@ -17,6 +48,7 @@ const {
     image = "/favicon.svg",
     canonical,
     type = "website",
+    project,
 } = Astro.props;
 
 /*
@@ -181,7 +213,7 @@ const structuredData =
 
     <body>
         <AmbientSpace />
-        <GuruBot />
+        <GuruBot project={project} />
         <slot />
         
     </body>

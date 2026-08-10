@@ -1,57 +1,53 @@
 ---
-interface Metric{
-
-    label:string;
-
-    value:string;
-
+interface Metric {
+    label: string;
+    value: string;
 }
 
-interface Props{
-
-    metrics?:Metric[];
-
+interface Props {
+    metrics?: Metric[];
 }
 
-const{
-
-    metrics=[]
-
-}=Astro.props;
+const {
+    metrics = []
+} = Astro.props;
 ---
 
 {
-
-    metrics.length>0 && (
-
-        <section class="project-metrics">
+    metrics.length > 0 && (
+        <section
+            class="project-metrics"
+            aria-label="Project metrics"
+        >
 
             {
+                metrics.map((metric, index) => (
+                    <article
+                        class="project-metric"
+                        tabindex="0"
+                    >
 
-                metrics.map(metric=>(
+                        <span class="project-metric__index">
+                            {String(index + 1).padStart(2, "0")}
+                        </span>
 
-                    <div class="project-metric">
-
-                        <h3>
-
+                        <div class="project-metric__value">
                             {metric.value}
+                        </div>
 
-                        </h3>
-
-                        <p>
-
+                        <p class="project-metric__label">
                             {metric.label}
-
                         </p>
 
-                    </div>
+                        <span
+                            class="project-metric__signal"
+                            aria-hidden="true"
+                        />
 
+                    </article>
                 ))
-
             }
 
         </section>
-
     )
-
 }
