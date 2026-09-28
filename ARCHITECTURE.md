@@ -1,6 +1,6 @@
 # 🌌 Guruverse Software Architecture Specification
 
-> **Version:** 1.0.0
+> **Version:** 2.0.0
 >
 > **Project:** Guruverse
 >
@@ -93,7 +93,7 @@ Guruverse is not intended to be a traditional portfolio website.
 
 Instead, it is designed as a long-term engineering platform that showcases software engineering, artificial intelligence, cybersecurity, research, and technical problem solving through a modular and scalable architecture.
 
-The first version establishes the engineering foundation upon which future versions will be built.
+Version 2 establishes the interactive engineering-platform layer on top of the production portfolio foundation.
 
 Rather than continuously replacing existing code, Guruverse is designed so that new capabilities can be added by extending the existing architecture.
 
@@ -2116,3 +2116,20 @@ These principles define the engineering identity of Guruverse.
 ---
 
 **End of Document**
+
+# GURUVERSE 2.0 Architecture Addendum
+
+## Interactive Platform Layer
+
+Version 2 introduces four explicit runtime layers above the static portfolio foundation:
+
+- **Experience Layer** — navigation modes, command palette and interaction state.
+- **Intelligence Layer** — local project-aware GURU-BOT intent detection and response generation.
+- **Exploration Layer** — searchable and filterable project discovery.
+- **Service Layer** — reusable domain services under `src/services/` for deterministic client-side intelligence.
+
+The 2.0 implementation remains static-first: no external AI API, credentials, server, or backend is required for the local GURU-BOT experience.
+
+## 2.0 Design Rule
+
+Interactive capabilities must remain progressively enhanced. Core project information and navigation remain available without conversational intelligence or client-side filtering.
