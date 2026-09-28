@@ -21,14 +21,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         )
     }
 
-    <div class="project-card__image">
-
+    <div class="project-card__image" aria-label={`${project.title} visual placeholder`}>
         <img
             src={`${base}${project.image.startsWith("/") ? project.image : `/${project.image}`}`}
-            alt={project.title}
+            alt=""
             loading="lazy"
+            aria-hidden="true"
         />
-
+        <div class="project-card__space" aria-hidden="true">
+            <span class="project-card__space-orbit project-card__space-orbit--one"></span>
+            <span class="project-card__space-orbit project-card__space-orbit--two"></span>
+            <span class="project-card__space-core"></span>
+            <span class="project-card__space-label">{project.title}</span>
+        </div>
     </div>
 
     <div class="project-card__content">
