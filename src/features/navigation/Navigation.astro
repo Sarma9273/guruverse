@@ -1,53 +1,25 @@
 ---
 import "./navigation.css";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
-
 <header class="gv-navbar">
-
     <div class="gv-navbar__container">
-
-        <a href="/guruverse/" class="gv-logo">
-
+        <a href={`${base}/`} class="gv-logo" aria-label="GURUVERSE home">
             <span class="gv-logo__dot"></span>
-
             <span>GURUVERSE</span>
-
         </a>
-
-        <nav class="gv-nav">
-
+        <nav class="gv-nav" aria-label="Primary navigation">
             <ul>
-
-                <li><a href="/guruverse/#hero">Universe</a></li>
-
-                <li><a href="/guruverse/#projects">Projects</a></li>
-
-                <li><a href="/guruverse/#timeline">Timeline</a></li>
-
-                <li><a href="/guruverse/#research">Research</a></li>
-
-                <li><a href="/guruverse/#about">About</a></li>
-
-                <li><a href="/guruverse/#contact">Contact</a></li>
-
+                <li><a href={`${base}/#hero`}>Universe</a></li>
+                <li><a href={`${base}/#projects`}>Projects</a></li>
+                <li><a href={`${base}/#timeline`}>Timeline</a></li>
+                <li><a href={`${base}/#research`}>Research</a></li>
+                <li><a href={`${base}/#about`}>About</a></li>
+                <li><a href={`${base}/#contact`}>Contact</a></li>
             </ul>
-
         </nav>
-
         <div class="gv-actions">
-
-            <a
-                href="https://github.com/Sarma9273"
-                target="_blank"
-                class="gv-button"
-            >
-
-                GitHub →
-
-            </a>
-
+            <a href="https://github.com/Sarma9273" target="_blank" rel="noopener noreferrer" class="gv-button">GitHub →</a>
         </div>
-
     </div>
-
 </header>
