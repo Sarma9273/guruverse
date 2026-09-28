@@ -4,219 +4,56 @@ import AmbientSpace from "../shared/components/Universe/AmbientSpace.astro";
 import GuruBot from "../shared/components/GuruBot/GuruBot.astro";
 import ExperienceSystem from "../shared/components/ExperienceSystem.astro";
 
-interface Props {
-    title?: string;
-    description?: string;
-    image?: string;
-    canonical?: string;
-    type?: "website" | "article";
-    project?: {
-        id: string;
-        title: string;
-        tagline: string;
-        description: string;
-        category: string;
-        status: string;
-        technologies: string[];
-        overview?: string;
-        architecture?: string[];
-        workflow?: string[];
-        project?: ProjectContext;
-    };
-}
-
 interface ProjectContext {
-    id: string;
-    title: string;
-    tagline: string;
-    description: string;
-    category: string;
-    status: string;
-    technologies: string[];
-    overview?: string;
-    architecture?: string[];
-    workflow?: string[];
-    screenshots?: string[];
-    metrics?: {
-        label: string;
-        value: string;
-    }[];
+    id: string; title: string; tagline: string; description: string; category: string; status: string;
+    technologies: string[]; overview?: string; architecture?: string[]; workflow?: string[];
+    screenshots?: string[]; metrics?: { label: string; value: string }[]; problem?: string;
+    objectives?: string[]; challenge?: string; solution?: string; achievements?: string[];
+    futureEnhancements?: string[]; github?: string; demo?: string;
 }
-
-const {
-    title = "GURUVERSE",
-    description = "Interactive AI Engineering Universe",
-    image = "/favicon.svg",
-    canonical,
-    type = "website",
-    project,
-} = Astro.props;
-
-/*
- * Canonical URL
- *
- * We are not setting `site` in astro.config.mjs yet because
- * Guruverse does not have a production domain.
- *
- * Therefore Astro.url is used for now.
- */
-const canonicalURL = canonical
-    ? new URL(canonical, Astro.url).href
-    : Astro.url.href;
-
-/*
- * Convert relative image paths into absolute URLs.
- */
-const imageURL = new URL(image, Astro.url).href;
-
-/*
- * JSON-LD structured data.
- *
- * This describes Guruverse as a website/portfolio and
- * identifies the author.
- */
-const structuredData =
-    type === "article"
-        ? {
-              "@context": "https://schema.org",
-              "@type": "Article",
-              headline: title,
-              description,
-              image: imageURL,
-              url: canonicalURL,
-              author: {
-                  "@type": "Person",
-                  name: "Guru Charan Mavuduru",
-              },
-              publisher: {
-                  "@type": "Person",
-                  name: "Guru Charan Mavuduru",
-              },
-          }
-        : {
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              name: "GURUVERSE",
-              description,
-              url: canonicalURL,
-              author: {
-                  "@type": "Person",
-                  name: "Guru Charan Mavuduru",
-              },
-          };
+interface Props {
+    title?: string; description?: string; image?: string; canonical?: string;
+    type?: "website" | "article"; project?: ProjectContext;
+}
+const { title="GURUVERSE", description="Interactive AI Engineering Universe", image="favicon.svg",
+    canonical, type="website", project } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const canonicalURL = canonical ? new URL(canonical, Astro.url).href : Astro.url.href;
+const imageURL = new URL(image.replace(/^\//, ""), new URL(base, Astro.url)).href;
+const structuredData = type === "article"
+    ? { "@context":"https://schema.org", "@type":"Article", headline:title, description, image:imageURL,
+        url:canonicalURL, author:{"@type":"Person",name:"Guru Charan Mavuduru"},
+        publisher:{"@type":"Person",name:"Guru Charan Mavuduru"} }
+    : { "@context":"https://schema.org", "@type":"WebSite", name:"GURUVERSE", description,
+        url:canonicalURL, author:{"@type":"Person",name:"Guru Charan Mavuduru"} };
 ---
-
 <!doctype html>
-
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-        />
-
-        <title>{title}</title>
-
-        <meta
-            name="description"
-            content={description}
-        />
-
-        <meta
-            name="theme-color"
-            content="#04070D"
-        />
-
-        <!-- Canonical -->
-
-        <link
-            rel="canonical"
-            href={canonicalURL}
-        />
-
-        <!-- Open Graph -->
-
-        <meta
-            property="og:title"
-            content={title}
-        />
-
-        <meta
-            property="og:description"
-            content={description}
-        />
-
-        <meta
-            property="og:type"
-            content={type}
-        />
-
-        <meta
-            property="og:url"
-            content={canonicalURL}
-        />
-
-        <meta
-            property="og:image"
-            content={imageURL}
-        />
-
-        <meta
-            property="og:site_name"
-            content="GURUVERSE"
-        />
-
-        <!-- Twitter / X -->
-
-        <meta
-            name="twitter:card"
-            content="summary_large_image"
-        />
-
-        <meta
-            name="twitter:title"
-            content={title}
-        />
-
-        <meta
-            name="twitter:description"
-            content={description}
-        />
-
-        <meta
-            name="twitter:image"
-            content={imageURL}
-        />
-
-        <!-- Author -->
-
-        <meta
-            name="author"
-            content="Guru Charan Mavuduru"
-        />
-
-        <!-- Favicon -->
-
-        <link
-            rel="icon"
-            href="/favicon.svg"
-        />
-
-        <!-- JSON-LD Structured Data -->
-
-        <script
-            type="application/ld+json"
-            set:html={JSON.stringify(structuredData)}
-        />
-    </head>
-
-    <body>
-        <AmbientSpace />
-        <GuruBot project={project} />
-        <ExperienceSystem />
-        <slot />
-        
-    </body>
+<html lang="en" data-base={base}>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#04070D" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:site_name" content="GURUVERSE" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="author" content="Guru Charan Mavuduru" />
+    <link rel="icon" href={new URL("favicon.svg", new URL(base, Astro.url)).href} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+</head>
+<body>
+    <AmbientSpace />
+    <GuruBot project={project} />
+    <ExperienceSystem />
+    <slot />
+</body>
 </html>
