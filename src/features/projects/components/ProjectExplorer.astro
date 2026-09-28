@@ -1,0 +1,58 @@
+---
+import type { Project } from "../types/project";
+interface Props { projects: Project[] }
+const { projects } = Astro.props;
+const categories = [...new Set(projects.map(project => project.category))];
+---
+<section class="project-explorer" aria-labelledby="project-explorer-title">
+  <div class="project-explorer__intro">
+    <div>
+      <span class="projects-page__section-label">INTERACTIVE INDEX</span>
+      <h2 id="project-explorer-title">Explore the system graph</h2>
+    </div>
+    <p>Filter the portfolio by domain or search for a project.</p>
+  </div>
+  <div class="project-explorer__controls">
+    <label class="project-explorer__search">
+      <span class="sr-only">Search projects</span>
+      <input type="search" data-project-search placeholder="Search projects, technologies, domains…" />
+    </label>
+    <div class="project-explorer__filters" role="group" aria-label="Project categories">
+      <button type="button" class="is-active" data-project-filter="all" aria-pressed="true">All</button>
+      {categories.map(category => <button type="button" data-project-filter={category} aria-pressed="false">{category}</button>)}
+    </div>
+  </div>
+  <div class="project-explorer__status" data-project-status aria-live="polite">{projects.length} systems indexed</div>
+</section>
+<script>
+  const root = document.querySelector(".project-explorer");
+  if (root) {
+    const search = root.querySelector("[data-project-search]");
+    const filters = [...root.querySelectorAll("[data-project-filter]")];
+    const cards = [...document.querySelectorAll("[data-project-card]")];
+    let active = "all";
+    const update = () => {
+      const query = search?.value.trim().toLowerCase() || "";
+      let visible = 0;
+      cards.forEach(card => {
+        const haystack = (card.getAttribute("data-project-search") || "").toLowerCase();
+        const category = card.getAttribute("data-project-category") || "";
+        const show = (active === "all" || category === active) && (!query || haystack.includes(query));
+        card.toggleAttribute("hidden", !show);
+        if (show) visible++;
+      });
+      const status = root.querySelector("[data-project-status]");
+      if (status) status.textContent = `${visible} system${visible === 1 ? "" : "s"} indexed`;
+    };
+    filters.forEach(button => button.addEventListener("click", () => {
+      active = button.getAttribute("data-project-filter") || "all";
+      filters.forEach(item => {
+        const selected = item === button;
+        item.classList.toggle("is-active", selected);
+        item.setAttribute("aria-pressed", String(selected));
+      });
+      update();
+    }));
+    search?.addEventListener("input", update);
+  }
+</script>
