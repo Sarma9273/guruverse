@@ -6,10 +6,11 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <a
-    href={`/projects/${project.id}`}
+    href={`${base}/projects/${project.id}/`}
     class="project-card motion-reveal motion-interactive"
 >
     {
@@ -23,7 +24,7 @@ const { project } = Astro.props;
     <div class="project-card__image">
 
         <img
-            src={project.image}
+            src={`${base}${project.image.startsWith("/") ? project.image : `/${project.image}`}`}
             alt={project.title}
             loading="lazy"
         />
