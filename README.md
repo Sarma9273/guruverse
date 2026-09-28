@@ -9,7 +9,7 @@
 [![Astro](https://img.shields.io/badge/Astro-7.x-FF5D01?style=for-the-badge&logo=astro)]
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)]
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]
-[![Version](https://img.shields.io/badge/Version-v1.0.1-blue?style=for-the-badge)]
+[![Version](https://img.shields.io/badge/Version-v2.0.0-blue?style=for-the-badge)]
 
 ---
 
@@ -59,7 +59,7 @@ Future versions will gradually evolve Guruverse into a complete engineering ecos
 
 # ✨ Features
 
-## Current (Version 1.0.1)
+## Current (Version 2.0.0)
 
 - 🌌 Hero Section
 - 👤 About
@@ -78,6 +78,10 @@ Future versions will gradually evolve Guruverse into a complete engineering ecos
 - 🔎 SEO, canonical metadata and sitemap
 - ♿ Accessibility foundations
 - 🚀 GitHub Pages production deployment
+- 🧠 Conversational local GURU-BOT
+- 🔎 Interactive project explorer with search and domain filters
+- 🎛️ Shared interaction and motion system
+- 🧩 Service-layer foundations for local intelligence
 
 ---
 
@@ -260,7 +264,7 @@ Guruverse is built upon five core engineering principles:
 
 ---
 
-## Version 1.0.1 — Completed
+## Version 2.0.0 — Completed
 
 - Accessibility foundations
 - SEO and structured metadata
@@ -273,13 +277,21 @@ Guruverse is built upon five core engineering principles:
 
 ---
 
-## Version 2
+## Version 1.0.1 — Foundation
 
-- GuruBot AI Assistant
-- Shared Design System
-- Interactive Experiences
-- Service Layer
-- Advanced Animations
+The 1.0.1 release established the production portfolio baseline.
+
+---
+
+## Version 2 — Completed
+
+- Conversational local GURU-BOT
+- Project-aware natural-language intent detection
+- Shared service-layer foundation
+- Interactive project search and domain filters
+- Expanded motion and interaction primitives
+- Responsive interaction surfaces
+- Release and documentation alignment
 
 ---
 
@@ -365,7 +377,7 @@ https://linkedin.com/in/gurucharan-mavuduru
 
 ### *Building the Future of Intelligent Engineering*
 
-**Version 1.0.1**
+**Version 2.0.0**
 
 Made with ❤️ by **Guru Charan**
 
