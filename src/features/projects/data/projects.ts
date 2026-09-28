@@ -19,7 +19,7 @@ export const projects:Project[]=[
 
             "An AI-powered Retrieval-Augmented Extended Security Operations Center that assists analysts with threat investigation, incident response, MITRE ATT&CK mapping, and intelligent security workflows.",
 
-        image:"/images/projects/ra-xsoc.webp",
+        image:"/images/projects/ra-xsoc.svg",
 
         technologies:[
 
@@ -74,7 +74,7 @@ export const projects:Project[]=[
 
             "An intelligent cybersecurity assistant that combines Retrieval-Augmented Generation with LLMs to help security analysts investigate alerts, explain attacks, and generate incident reports.",
 
-        image:"/images/projects/cybergpt.webp",
+        image:"/images/projects/cybergpt.svg",
 
         technologies:[
 
@@ -131,7 +131,7 @@ export const projects:Project[]=[
 
             "A cinematic portfolio experience showcasing software engineering, artificial intelligence, cybersecurity, research, and innovation through immersive storytelling.",
 
-        image:"/images/projects/guruverse.webp",
+        image:"/images/projects/guruverse.svg",
 
         technologies:[
 
