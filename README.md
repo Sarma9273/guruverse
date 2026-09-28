@@ -9,7 +9,7 @@
 [![Astro](https://img.shields.io/badge/Astro-5.x-FF5D01?style=for-the-badge&logo=astro)]
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)]
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]
-[![Version](https://img.shields.io/badge/Version-v1.0.0-blue?style=for-the-badge)]
+[![Version](https://img.shields.io/badge/Version-v1.0.1-blue?style=for-the-badge)]
 
 ---
 
@@ -59,7 +59,7 @@ Future versions will gradually evolve Guruverse into a complete engineering ecos
 
 # ✨ Features
 
-## Current (Version 1)
+## Current (Version 1.0.1)
 
 - 🌌 Hero Section
 - 👤 About
@@ -260,14 +260,16 @@ Guruverse is built upon five core engineering principles:
 
 ---
 
-## Version 1.1
+## Version 1.0.1 — Completed
 
-- Accessibility Improvements
-- SEO Enhancements
-- Performance Optimization
-- Engineering Documentation
-- GitHub Actions
-- Release Engineering
+- Accessibility foundations
+- SEO and structured metadata
+- GitHub Pages CI/CD
+- Base-path-safe routing
+- Project case-study architecture
+- Project-aware GURU-BOT
+- Experience modes and command palette
+- Release engineering and documentation
 
 ---
 
