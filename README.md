@@ -6,7 +6,7 @@
 
 <img src="./public/favicon.svg" width="120"/>
 
-[![Astro](https://img.shields.io/badge/Astro-5.x-FF5D01?style=for-the-badge&logo=astro)]
+[![Astro](https://img.shields.io/badge/Astro-7.x-FF5D01?style=for-the-badge&logo=astro)]
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)]
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)]
 [![Version](https://img.shields.io/badge/Version-v1.0.1-blue?style=for-the-badge)]
@@ -228,12 +228,7 @@ Project documentation includes:
 - CLAUDE
 - Roadmaps
 
-Future versions will introduce:
-
-- Architecture Decision Records (ADR)
-- Design System Documentation
-- Development Handbook
-- Release Documentation
+Release engineering is documented in the changelog; architecture guidance is maintained in `ARCHITECTURE.md`, with agent/development guidance in `AGENTS.md` and `CLAUDE.md`.
 
 ---
 
