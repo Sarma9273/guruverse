@@ -73,6 +73,11 @@ Future versions will gradually evolve Guruverse into a complete engineering ecos
 - 🎨 Design Token System
 - 📱 Responsive Layout
 - 🌙 Modern Glassmorphism UI
+- 🤖 Project-aware GURU-BOT
+- 🧭 Experience modes and command palette
+- 🔎 SEO, canonical metadata and sitemap
+- ♿ Accessibility foundations
+- 🚀 GitHub Pages production deployment
 
 ---
 
@@ -360,7 +365,7 @@ https://linkedin.com/in/gurucharan-mavuduru
 
 ### *Building the Future of Intelligent Engineering*
 
-**Version 1.0.0**
+**Version 1.0.1**
 
 Made with ❤️ by **Guru Charan**
 
