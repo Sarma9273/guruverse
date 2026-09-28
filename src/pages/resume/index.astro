@@ -1,20 +1,35 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
-
-<BaseLayout
-  title="Resume — GURUVERSE"
-  description="Guru Charan Mavuduru — AI, cybersecurity, software engineering and research resume."
->
-  <main style="min-height:100vh;padding:8rem 1.5rem 4rem;max-width:900px;margin:auto">
+<BaseLayout title="Resume — GURUVERSE" description="Guru Charan Mavuduru — AI, cybersecurity, software engineering and research profile.">
+  <main class="resume-page" style="min-height:100vh;padding:8rem 1.5rem 5rem;max-width:1000px;margin:auto">
     <p style="letter-spacing:.14em;opacity:.65">GURUVERSE / RESUME</p>
-    <h1 style="font-size:clamp(2rem,6vw,4rem);margin:.5rem 0 1rem">Resume</h1>
-    <p style="max-width:680px;line-height:1.7;opacity:.78">
-      View or download the current ATS-oriented resume.
-    </p>
-    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2rem">
-      <a href="/guruverse/resume/Guru_Charan_Mavuduru_ATS_Resume_2026.pdf" target="_blank" rel="noopener noreferrer">Open Resume ↗</a>
-      <a href="/guruverse/#hero">Return to Universe</a>
+    <h1 style="font-size:clamp(2.5rem,7vw,5rem);margin:.5rem 0 1rem">Guru Charan Mavuduru</h1>
+    <p style="font-size:1.15rem;line-height:1.7;max-width:760px">AI engineering, cybersecurity, software development, teaching and research.</p>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin:2rem 0 3rem">
+      <a href={`${base}/#contact`}>Contact</a>
+      <a href="https://github.com/Sarma9273" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="https://linkedin.com/in/gurucharan-mavuduru" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
     </div>
+    <section aria-labelledby="profile-summary">
+      <h2 id="profile-summary">Profile</h2>
+      <p style="line-height:1.8;max-width:780px">AI and cybersecurity-focused engineer building practical systems across security operations, retrieval-augmented AI, software engineering and technical education.</p>
+    </section>
+    <section aria-labelledby="experience-summary" style="margin-top:3rem">
+      <h2 id="experience-summary">Experience</h2>
+      <article style="margin-top:1rem"><h3>Computer Teacher — Swaminarayan Gurukul International School</h3><p>Teaching Python, HTML and CSS; June 2025–Present.</p></article>
+      <article style="margin-top:1rem"><h3>Junior Design Engineer — Cadsys</h3><p>Engineering design experience.</p></article>
+    </section>
+    <section aria-labelledby="education-summary" style="margin-top:3rem">
+      <h2 id="education-summary">Education</h2>
+      <article style="margin-top:1rem"><h3>Executive M.Tech — AI &amp; Data Science, IIT Patna</h3></article>
+      <article style="margin-top:1rem"><h3>B.Tech — Electrical &amp; Electronics Engineering, AITAM</h3></article>
+    </section>
+    <section aria-labelledby="focus-summary" style="margin-top:3rem">
+      <h2 id="focus-summary">Technical Focus</h2>
+      <p style="line-height:1.8">Python • AI/ML • RAG systems • Cybersecurity • SOC workflows • MITRE ATT&amp;CK • SIEM • Splunk • Wireshark • Burp Suite • Astro • TypeScript • React</p>
+    </section>
+    <p style="margin-top:3rem;opacity:.65">For the latest project evidence, use the GURUVERSE Projects section and individual case-study pages.</p>
   </main>
 </BaseLayout>
