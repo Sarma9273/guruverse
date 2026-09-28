@@ -1,0 +1,89 @@
+---
+import "./experience-system.css";
+---
+
+<div class="experience-system" data-experience-system>
+  <div class="experience-system__modes" role="group" aria-label="Experience mode">
+    <button type="button" data-mode="explore" aria-pressed="true">Explore</button>
+    <button type="button" data-mode="recruiter" aria-pressed="false">Recruiter</button>
+    <button type="button" data-mode="engineer" aria-pressed="false">Engineer</button>
+  </div>
+
+  <button class="experience-system__command" type="button" data-command-open aria-label="Open GURUVERSE command palette">
+    <span>⌘</span><span>K</span>
+  </button>
+
+  <dialog class="command-palette" data-command-dialog aria-labelledby="command-title">
+    <div class="command-palette__panel">
+      <div class="command-palette__header">
+        <div>
+          <span class="command-palette__eyebrow">GURUVERSE NAVIGATION</span>
+          <h2 id="command-title">What do you want to explore?</h2>
+        </div>
+        <button type="button" data-command-close aria-label="Close command palette">×</button>
+      </div>
+      <input data-command-input type="search" placeholder="Search projects, research, sections…" autocomplete="off" />
+      <div class="command-palette__results" data-command-results></div>
+      <p class="command-palette__hint">Use ↑ ↓ to navigate · Enter to open · Esc to close</p>
+    </div>
+  </dialog>
+</div>
+
+<script>
+  const root = document.querySelector("[data-experience-system]");
+  if (root) {
+    const modes = root.querySelectorAll("[data-mode]");
+    const dialog = root.querySelector("[data-command-dialog]");
+    const open = root.querySelector("[data-command-open]");
+    const close = root.querySelector("[data-command-close]");
+    const input = root.querySelector("[data-command-input]");
+    const results = root.querySelector("[data-command-results]");
+
+    const items = [
+      { label: "Universe", href: "/#hero", keywords: "home hero explore" },
+      { label: "Projects", href: "/projects/", keywords: "projects systems work" },
+      { label: "RA-XSOC", href: "/projects/ra-xsoc/", keywords: "security soc ai cybersecurity" },
+      { label: "CyberGPT", href: "/projects/cybergpt/", keywords: "security incident response ai" },
+      { label: "GURUVERSE", href: "/projects/guruverse/", keywords: "portfolio architecture" },
+      { label: "Research", href: "/#research", keywords: "papers research" },
+      { label: "Timeline", href: "/#timeline", keywords: "career experience timeline" },
+      { label: "About", href: "/#about", keywords: "about profile" },
+      { label: "Contact", href: "/#contact", keywords: "contact connect" },
+      { label: "Resume", href: "/resume/", keywords: "cv resume recruiter" }
+    ];
+
+    const render = (query = "") => {
+      const q = query.trim().toLowerCase();
+      const filtered = items.filter(item => !q || (item.label + " " + item.keywords).toLowerCase().includes(q));
+      results.innerHTML = filtered.map((item, i) =>
+        `<a class="command-palette__item" href="${item.href}" data-command-index="${i}">
+          <span>${item.label}</span><span>↗</span>
+        </a>`
+      ).join("") || '<p class="command-palette__empty">No matching destination.</p>';
+    };
+
+    const setMode = (mode) => {
+      document.documentElement.dataset.experienceMode = mode;
+      modes.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.mode === mode)));
+      try { localStorage.setItem("guruverse-experience-mode", mode); } catch {}
+    };
+
+    modes.forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
+    try { setMode(localStorage.getItem("guruverse-experience-mode") || "explore"); } catch { setMode("explore"); }
+
+    const show = () => {
+      render(input.value);
+      dialog.showModal();
+      requestAnimationFrame(() => input.focus());
+    };
+    open.addEventListener("click", show);
+    close.addEventListener("click", () => dialog.close());
+    input.addEventListener("input", () => render(input.value));
+    dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
+    document.addEventListener("keydown", event => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") { event.preventDefault(); show(); }
+      if (event.key === "Escape" && dialog.open) dialog.close();
+    });
+    render();
+  }
+</script>
