@@ -132,11 +132,13 @@ const {
 
                     </div>
 
-                    <div
-                        class="guru-bot__response"
-                        data-guru-response
-                        aria-live="polite"
-                    ></div>
+                    <div class="guru-bot__conversation" data-guru-conversation aria-live="polite"></div>
+                    <form class="guru-bot__ask" data-guru-form>
+                        <label class="sr-only" for="guru-bot-input">Ask GURU-BOT</label>
+                        <input id="guru-bot-input" data-guru-input type="text" autocomplete="off" placeholder="Ask about architecture, workflow, stack…" />
+                        <button type="submit">Ask</button>
+                    </form>
+                    <div class="guru-bot__response" data-guru-response aria-live="polite"></div>
                 </>
             ) : (
                 <>
