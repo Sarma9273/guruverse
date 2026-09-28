@@ -1,67 +1,25 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
 <div class="footer-links">
-
     <div>
-
-        <h3>
-
-            Navigation
-
-        </h3>
-
-        <a href="#hero">Home</a>
-
-        <a href="#about">About</a>
-
-        <a href="#projects">Projects</a>
-
-        <a href="#contact">Contact</a>
-
+        <h3>Navigation</h3>
+        <a href={`${base}/#hero`}>Home</a>
+        <a href={`${base}/#about`}>About</a>
+        <a href={`${base}/#projects`}>Projects</a>
+        <a href={`${base}/#contact`}>Contact</a>
     </div>
-
     <div>
-
-        <h3>
-
-            Resources
-
-        </h3>
-
-        <a href="/resume/Guru_Charan_Mavuduru_ATS_Resume_2026.pdf">
-
-            Resume
-
-        </a>
-
-        <a href="https://github.com/Sarma9273">
-
-            GitHub
-
-        </a>
-
-        <a href="https://linkedin.com/in/gurucharan-mavuduru">
-
-            LinkedIn
-
-        </a>
-
+        <h3>Resources</h3>
+        <a href={`${base}/resume/`}>Resume</a>
+        <a href="https://github.com/Sarma9273" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/gurucharan-mavuduru" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
-
     <div>
-
-        <h3>
-
-            Technologies
-
-        </h3>
-
+        <h3>Technologies</h3>
         <p>Astro</p>
-
         <p>TypeScript</p>
-
         <p>Python</p>
-
         <p>Artificial Intelligence</p>
-
     </div>
-
 </div>
