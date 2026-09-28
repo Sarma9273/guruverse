@@ -1,39 +1,12 @@
 ---
-interface Props{
-
-    title:string;
-
-}
-
-const{
-
-    title
-
-}=Astro.props;
+interface Props { title: string; }
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
-
-<nav class="project-breadcrumbs">
-
-    <a href="/">
-
-        Home
-
-    </a>
-
+<nav class="project-breadcrumbs" aria-label="Breadcrumb">
+    <a href={`${base}/`}>Home</a>
     <span>/</span>
-
-    <a href="/#projects">
-
-        Projects
-
-    </a>
-
+    <a href={`${base}/#projects`}>Projects</a>
     <span>/</span>
-
-    <span>
-
-        {title}
-
-    </span>
-
+    <span aria-current="page">{title}</span>
 </nav>
