@@ -1,30 +1,23 @@
 # Changelog
 
-All notable changes to **Guruverse** will be documented in this file.
+All notable changes to **GURUVERSE** will be documented here.
 
-The format follows the principles of Keep a Changelog and semantic versioning.
-
-# [1.0.1] - 2026-09-28
+# [2.0.0] - 2026-09-28
 
 ## Completed
 
-- Added production GitHub Pages CI/CD workflow.
-- Added dedicated resume route with a self-contained profile page.
-- Added GURUVERSE experience modes and command palette.
-- Added project case-study pages with architecture, workflow, technology, evidence and navigation sections.
-- Added project-aware GURU-BOT interaction.
-- Added structured metadata, canonical URLs, sitemap integration and accessibility primitives.
-- Made navigation, command palette, project routes and assets safe for the `/guruverse` GitHub Pages base path.
-- Added shipped project visual assets and a non-misleading profile placeholder.
-- Removed the superseded duplicate experience-controls implementation.
-- Finalized project-link handling so unavailable private/public repository status is not misrepresented.
+- Upgraded GURU-BOT from action-only project lookup to conversational local intelligence.
+- Added deterministic intent detection for overview, architecture, workflow, technology, problem, solution, results, and help queries.
+- Added a reusable `src/services/guruBot.ts` service layer.
+- Added interactive project search and category filtering.
+- Added progressive-enhancement-safe project exploration controls.
+- Preserved static-first Astro rendering and removed the need for external AI credentials.
+- Expanded GURU-BOT accessibility and responsive interaction surfaces.
+- Updated package, lockfile, README, and architecture metadata to 2.0.0.
 
-## Engineering
+## 1.0.1
 
-- Preserved feature ownership, component isolation, design-token usage and static-first Astro rendering.
-- Updated package metadata to version 1.0.1.
-
----
+The 1.0.1 production portfolio foundation is preserved below.
 
 # [1.0.0] - 2026-08-07
 
