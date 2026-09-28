@@ -2,141 +2,60 @@
 
 All notable changes to **Guruverse** will be documented in this file.
 
-The format follows the principles of **Keep a Changelog** and semantic versioning.
+The format follows the principles of Keep a Changelog and semantic versioning.
+
+# [1.0.1] - 2026-09-28
+
+## Completed
+
+- Added production GitHub Pages CI/CD workflow.
+- Added dedicated resume route with a self-contained profile page.
+- Added GURUVERSE experience modes and command palette.
+- Added project case-study pages with architecture, workflow, technology, evidence and navigation sections.
+- Added project-aware GURU-BOT interaction.
+- Added structured metadata, canonical URLs, sitemap integration and accessibility primitives.
+- Made navigation, command palette, project routes and assets safe for the `/guruverse` GitHub Pages base path.
+- Added shipped project visual assets and a non-misleading profile placeholder.
+- Removed the superseded duplicate experience-controls implementation.
+- Finalized project-link handling so unavailable private/public repository status is not misrepresented.
+
+## Engineering
+
+- Preserved feature ownership, component isolation, design-token usage and static-first Astro rendering.
+- Updated package metadata to version 1.0.1.
 
 ---
 
 # [1.0.0] - 2026-08-07
 
-## 🎉 Initial Public Release
+## Initial Release
 
-Guruverse Version 1 marks the first complete release of the project as a modern engineering portfolio built with Astro and TypeScript.
+Guruverse Version 1 established the engineering portfolio foundation with:
 
----
-
-## ✨ Added
-
-### Core Features
-
-- Hero Section
-- About Section
+- Hero
+- About
 - Timeline
 - Research
 - Experience
 - Projects
 - Contact
 - Footer
-- Responsive Navigation
+- Responsive navigation
+- Feature-based architecture
+- Modular components and CSS
+- Design tokens
+- TypeScript data models
+- Responsive glassmorphism interface
+- Astro static rendering
+- Engineering documentation
 
-### Architecture
+## Future
 
-- Feature-Based Architecture
-- Modular Components
-- Modular CSS
-- Design Token System
-- TypeScript Data Models
-- Shared Layout Structure
+The following remain intentionally outside the 1.0.x release scope:
 
-### UI / UX
-
-- Glassmorphism Design
-- Responsive Layout
-- Modern Typography
-- Smooth Animations
-- Interactive Components
-
-### Documentation
-
-- README
-- ARCHITECTURE
-- AGENTS
-- CLAUDE
-
----
-
-## 🚀 Performance
-
-- Astro Static Rendering
-- Optimized CSS Architecture
-- Lightweight Components
-
----
-
-## 🔒 Security
-
-- No sensitive data committed
-- Static frontend architecture
-
----
-
-## 📚 Documentation
-
-Initial engineering documentation includes:
-
-- README
-- Architecture Overview
-- AI Agent Guidelines
-- Development Notes
-
----
-
-## 🎯 Version Goals
-
-Version 1 establishes the engineering foundation for Guruverse.
-
-The focus is:
-
-- Modular Architecture
-- Maintainability
-- Scalability
-- Professional Engineering Practices
-
----
-
-# Upcoming
-
-## Version 1.0.1
-
-Planned improvements:
-
-- Accessibility
-- SEO
-- Image Optimization
-- Documentation Improvements
-- Repository Enhancements
-
----
-
-## Version 1.1
-
-Planned improvements:
-
-- CI/CD
-- GitHub Actions
-- ADR Documentation
-- Engineering Standards
-- Repository Templates
-
----
-
-## Version 2
-
-Planned Features:
-
-- GuruBot AI
-- Shared Design System
-- Services Layer
-- Interactive Experiences
-- Advanced Animations
-
----
-
-## Version 3
-
-Future Vision:
-
-- Interactive Engineering Universe
-- AI Mentor
-- Research Explorer
-- Knowledge Graph
-- Recruiter Mode
+- External AI/backend services
+- Full knowledge graph
+- Research explorer
+- 3D universe
+- AI mentor
+- Advanced service integrations
