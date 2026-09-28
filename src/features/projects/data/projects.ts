@@ -58,11 +58,7 @@ export const projects:Project[]=[
 
         status:"Completed",
 
-        featured:true,
-
-        github:"https://github.com/Sarma9273",
-
-        demo:"#"
+        featured:true
 
     },
 
@@ -119,11 +115,7 @@ export const projects:Project[]=[
 
         status:"Completed",
 
-        featured:true,
-
-        github:"https://github.com/Sarma9273",
-
-        demo:"#"
+        featured:true
 
     },
 
@@ -175,13 +167,11 @@ export const projects:Project[]=[
 
         category:"Portfolio",
 
-        status:"In Progress",
+        status:"Completed",
 
         featured:true,
 
-        github:"https://github.com/Sarma9273",
-
-        demo:"#"
+        demo:"/guruverse/"
 
     }
 
