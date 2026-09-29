@@ -871,3 +871,38 @@
 @media(max-width:768px){
     .guru-bot--placed{left:var(--guru-bot-left);top:var(--guru-bot-top)}
 }
+
+/* ==========================================================
+   GURU-BOT DOCK / LANDING BAY
+   ========================================================== */
+.guru-bot-dock{
+  position:fixed;
+  right:18px;
+  top:50%;
+  width:112px;
+  height:112px;
+  transform:translateY(-50%);
+  z-index:calc(var(--z-robot) - 1);
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  border:1px solid rgba(0,229,255,.12);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(0,229,255,.07),transparent 62%);
+  box-shadow:inset 0 0 35px rgba(0,229,255,.04),0 0 45px rgba(0,229,255,.04);
+  opacity:.82;
+}
+.guru-bot-dock__halo,.guru-bot-dock__ring{position:absolute;border:1px solid rgba(0,229,255,.2);border-radius:50%;inset:15px}
+.guru-bot-dock__ring{inset:27px;border-color:rgba(124,77,255,.2);transform:rotate(25deg) scaleX(1.35)}
+.guru-bot-dock__label{position:absolute;right:calc(100% + 10px);white-space:nowrap;color:rgba(223,252,255,.4);font:600 .52rem var(--font-code);letter-spacing:.12em}
+.guru-bot-dock.is-active{animation:guru-bot-dock-pulse .7s ease-out}
+.guru-bot-dock.is-active .guru-bot-dock__halo{border-color:rgba(0,229,255,.7);box-shadow:0 0 35px rgba(0,229,255,.25)}
+.guru-bot__clear{padding:.42rem .6rem;border:1px solid var(--color-border);border-radius:.55rem;background:rgba(255,255,255,.025);color:var(--color-text-muted);font:700 .58rem var(--font-code);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.guru-bot__clear:hover,.guru-bot__clear:focus-visible{color:var(--color-primary);border-color:var(--color-primary);background:rgba(0,229,255,.06)}
+.guru-bot-panel__controls{display:flex;align-items:center;gap:.45rem}
+@keyframes guru-bot-dock-pulse{50%{transform:translateY(-50%) scale(1.08);opacity:1}}
+@media(max-width:768px){
+  .guru-bot-dock{right:8px;width:88px;height:88px}
+  .guru-bot-dock__label{display:none}
+}
+@media(prefers-reduced-motion:reduce){.guru-bot-dock.is-active{animation:none}}
