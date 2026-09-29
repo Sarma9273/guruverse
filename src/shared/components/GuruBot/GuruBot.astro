@@ -3,7 +3,7 @@ import "./GuruBot.css";
 interface Props { label?: string; project?: { title:string; tagline:string; description:string; category:string; status:string; technologies:string[]; }; }
 const { label = "Open GURU-BOT", project } = Astro.props;
 ---
-<button class="guru-bot" type="button" aria-label={label} aria-expanded="false" aria-controls="guru-bot-panel">
+<div class="guru-bot-dock" aria-hidden="true"><span class="guru-bot-dock__halo"></span><span class="guru-bot-dock__ring"></span><span class="guru-bot-dock__label">GURU-BOT / DOCK 01</span></div>\n<button class="guru-bot" type="button" aria-label={label} aria-expanded="false" aria-controls="guru-bot-panel">
   <span class="guru-bot__core"><span class="guru-bot__pulse"></span><span class="guru-bot__eye guru-bot__eye--left"></span><span class="guru-bot__eye guru-bot__eye--right"></span></span>
   <span class="guru-bot__orbit guru-bot__orbit--one"></span><span class="guru-bot__orbit guru-bot__orbit--two"></span>
   <span class="guru-bot__status">GURU-BOT</span>
@@ -11,7 +11,7 @@ const { label = "Open GURU-BOT", project } = Astro.props;
 <section id="guru-bot-panel" class="guru-bot-panel" aria-hidden="true">
   <div class="guru-bot-panel__header">
     <div><span class="guru-bot-panel__eyebrow">GURUVERSE INTELLIGENCE</span><h2>GURU-BOT</h2></div>
-    <button class="guru-bot-panel__close" type="button" aria-label="Close GURU-BOT">×</button>
+    <div class="guru-bot-panel__controls"><button class="guru-bot__clear" type="button" data-guru-clear aria-label="Clear GURU-BOT chat">Clear</button><button class="guru-bot-panel__close" type="button" aria-label="Close GURU-BOT">×</button></div>
   </div>
   <div class="guru-bot-panel__body">
     <div class="guru-bot-panel__indicator"></div>
