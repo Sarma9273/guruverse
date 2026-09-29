@@ -1,0 +1,30 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navigation from "../../features/navigation/Navigation.astro";
+import ExperienceSystem from "../../shared/components/ExperienceSystem.astro";
+import { journalEntries } from "../../features/journal/data/journal";
+
+export function getStaticPaths() {
+  return journalEntries.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+---
+<Layout title={entry.title + " — GURUVERSE"} description={entry.summary}>
+  <Navigation />
+  <main class="journal-entry">
+    <header class="journal-entry__hero">
+      <a href={import.meta.env.BASE_URL + "journal/"} class="journal-entry__back">← Journal</a>
+      <span>{entry.eyebrow} · {entry.kind}</span>
+      <h1>{entry.title}</h1>
+      <p>{entry.summary}</p>
+      <div class="journal-entry__tags">{entry.themes.map((theme) => <span>{theme}</span>)}</div>
+    </header>
+    <article class="journal-entry__content">{entry.body.map((paragraph) => <p>{paragraph}</p>)}</article>
+    <aside class="journal-entry__source">
+      <span>SOURCE</span><strong>{entry.source}</strong>
+      <p>This entry is part of the GURUVERSE learning journal. Project and research claims remain bounded by their documented evidence.</p>
+    </aside>
+  </main>
+  <ExperienceSystem />
+</Layout>

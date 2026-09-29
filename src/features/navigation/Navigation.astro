@@ -5,10 +5,10 @@ const base=import.meta.env.BASE_URL.replace(/\/$/,"");
 <header class="gv-navbar" data-navigation>
   <div class="gv-navbar__container">
     <a href={base + "/"} class="gv-logo" aria-label="GURUVERSE home"><span class="gv-logo__mark" aria-hidden="true"><i></i><i></i><i></i></span><span>GURUVERSE</span></a>
-    <nav class="gv-nav" aria-label="Primary navigation"><a href={base + "/#about"}>Identity</a><a href={base + "/#timeline"}>Journey</a><a href={base + "/#projects"}>Projects</a><a href={base + "/research/"}>Research</a></nav>
+    <nav class="gv-nav" aria-label="Primary navigation"><a href={base + "/#about"}>Identity</a><a href={base + "/#timeline"}>Journey</a><a href={base + "/projects/"}>Projects</a><a href={base + "/research/"}>Research</a><a href={base + "/journal/"}>Journal</a></nav>
     <div class="gv-actions"><a href={base + "/resume/"} class="gv-resume">Resume <span>↗</span></a><button class="gv-menu" type="button" aria-expanded="false" aria-controls="gv-mobile-nav" data-mobile-toggle><span></span><span></span><span></span><b>Menu</b></button></div>
   </div>
-  <div class="gv-mobile" id="gv-mobile-nav" hidden data-mobile-nav><a href={base + "/#about"}>01 · Identity</a><a href={base + "/#timeline"}>02 · Journey</a><a href={base + "/#projects"}>03 · Project Worlds</a><a href={base + "/research/"}>04 · Research</a><a href={base + "/#contact"}>05 · Contact</a></div>
+  <div class="gv-mobile" id="gv-mobile-nav" hidden data-mobile-nav><a href={base + "/#about"}>01 · Identity</a><a href={base + "/#timeline"}>02 · Journey</a><a href={base + "/projects/"}>03 · Project Worlds</a><a href={base + "/research/"}>04 · Research</a><a href={base + "/journal/"}>05 · Journal</a><a href={base + "/#contact"}>06 · Contact</a></div>
 </header>
 <script>
 const nav=document.querySelector<HTMLElement>("[data-navigation]"),toggle=nav?.querySelector<HTMLButtonElement>("[data-mobile-toggle]"),mobile=nav?.querySelector<HTMLElement>("[data-mobile-nav]");const setScrolled=()=>nav?.classList.toggle("is-scrolled",window.scrollY>24);setScrolled();window.addEventListener("scroll",setScrolled,{passive:true});toggle?.addEventListener("click",()=>{const open=toggle.getAttribute("aria-expanded")==="true";toggle.setAttribute("aria-expanded",String(!open));if(mobile)mobile.hidden=open;nav?.classList.toggle("is-open",!open)});mobile?.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>{if(toggle&&mobile){toggle.setAttribute("aria-expanded","false");mobile.hidden=true;nav?.classList.remove("is-open")}}));

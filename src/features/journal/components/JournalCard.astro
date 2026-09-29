@@ -1,0 +1,16 @@
+---
+import type { JournalEntry } from "../types/journal";
+interface Props { entry: JournalEntry; index: number; }
+const { entry, index } = Astro.props;
+---
+<article class="journal-card" data-journal-kind={entry.kind}>
+  <div class="journal-card__index">{String(index + 1).padStart(2, "0")}</div>
+  <div class="journal-card__body">
+    <div class="journal-card__meta"><span>{entry.eyebrow}</span><span>{entry.kind}</span></div>
+    <h2>{entry.title}</h2>
+    <p>{entry.summary}</p>
+    <div class="journal-card__tags">{entry.themes.map((theme) => <span>{theme}</span>)}</div>
+    <a href={import.meta.env.BASE_URL + "journal/" + entry.slug + "/"}>Open entry <span>↗</span></a>
+  </div>
+  <div class="journal-card__signal" aria-hidden="true"><i></i><i></i><i></i></div>
+</article>
