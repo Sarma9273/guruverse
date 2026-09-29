@@ -181,6 +181,13 @@
   .gv-stars,.gv-progress__track i,.gv-arrival-core__ring,.gv-arrival-core,.gv-ship{animation:none!important}
   .gv-progress__track i{width:100%}
 }
+
+
+/* Keep the real GURU-BOT visually behind the atmospheric whiteout.
+   It returns above the interface only after the website reveal event. */
+html.guruverse-whiteout .guru-bot--booting{
+  z-index:calc(var(--z-loader) - 1)!important;
+}
 </style>
 
 <script is:inline>
@@ -216,8 +223,7 @@
     if(done)return;
     done=true;
     timers.forEach(clearTimeout);
-    document.documentElement.classList.remove("guruverse-booting");
-    emit("guruverse:website-revealed");
+    document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");
     intro.classList.add("is-complete");
     later(()=>emit("guruverse:intro-complete"),120);
     later(()=>intro.remove(),850);
@@ -255,12 +261,15 @@
 
     later(()=>{
       setState("phase-white","ATMOSPHERIC TRANSITION","06 / WHITEOUT",100);
+      document.documentElement.classList.add("guruverse-whiteout");
       emit("guruverse:boot-whiteout");
     },8050);
 
     later(()=>{
       setState("phase-reveal","GURUVERSE ONLINE / WEBSITE REVEALED","07 / REVEALED",100);
+      document.documentElement.classList.remove("guruverse-whiteout","guruverse-booting");
       emit("guruverse:website-reveal-start");
+      emit("guruverse:website-revealed");
     },8850);
 
     later(finish,9650);
@@ -270,7 +279,7 @@
     if(done)return;
     timers.forEach(clearTimeout);
     setState("phase-reveal","GURUVERSE ONLINE / WEBSITE REVEALED","SKIPPED / READY",100);
-    document.documentElement.classList.remove("guruverse-booting");
+    document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");
     emit("guruverse:website-revealed");
     later(finish,300);
   }
