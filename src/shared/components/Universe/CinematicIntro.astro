@@ -73,9 +73,9 @@
 .gv-loader__progress-ring strong{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);z-index:1;color:#d9fdff;font:700 .62rem var(--font-code);letter-spacing:.04em;white-space:nowrap}
 .gv-loader__progress>span{position:absolute;left:50%;top:calc(100% + 34px);transform:translateX(-50%);font:600 .42rem var(--font-code);letter-spacing:.16em;color:rgba(225,250,255,.34);text-transform:uppercase;white-space:nowrap}
 .gv-loader__skip{position:absolute;right:4vw;bottom:4vh;z-index:10;border:0;background:none;color:rgba(236,255,255,.3);font:600 .48rem var(--font-code);letter-spacing:.15em;cursor:pointer}.gv-loader__skip kbd{margin-left:.4rem;color:#72efff;font:inherit}
-.gv-loader.phase-white .gv-loader__space,.gv-loader.phase-white .gv-loader__core,.gv-loader.phase-white .gv-loader__brand,.gv-loader.phase-white .gv-loader__readout,.gv-loader.phase-white .gv-loader__copy,.gv-loader.phase-white .gv-loader__progress{opacity:0;transition:opacity .28s ease}
-.gv-loader.phase-white:after{content:"";position:absolute;inset:-10%;z-index:9;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.62) 0,rgba(255,255,255,.58) 25%,rgba(255,255,255,.38) 50%,rgba(255,255,255,.10) 72%,transparent 84%);animation:gv-whiteout 1.15s cubic-bezier(.22,.61,.36,1) both}
-@keyframes gv-stars{to{transform:translateY(87px)}}@keyframes gv-spin{to{transform:rotate(360deg)}}@keyframes gv-spin-rev{to{transform:rotate(-360deg)}}@keyframes gv-pulse{0%,100%{transform:scale(.86);opacity:.72}50%{transform:scale(1.12);opacity:1}}@keyframes gv-scan{to{transform:rotate(360deg)}}@keyframes gv-whiteout{0%{opacity:0;transform:scale(.94)}38%{opacity:.72;transform:scale(1)}72%{opacity:1;transform:scale(1.04)}100%{opacity:.88;transform:scale(1.08)}}
+.gv-loader.phase-white .gv-loader__space,.gv-loader.phase-white .gv-loader__core,.gv-loader.phase-white .gv-loader__brand,.gv-loader.phase-white .gv-loader__readout,.gv-loader.phase-white .gv-loader__copy,.gv-loader.phase-white .gv-loader__progress{opacity:0;transition:opacity .12s linear}
+.gv-loader.phase-white:after{content:"";position:absolute;inset:-10%;z-index:9;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.62) 0,rgba(255,255,255,.58) 25%,rgba(255,255,255,.38) 50%,rgba(255,255,255,.10) 72%,transparent 84%);animation:gv-whiteout .35s cubic-bezier(.2,.8,.3,1) both}
+@keyframes gv-stars{to{transform:translateY(87px)}}@keyframes gv-spin{to{transform:rotate(360deg)}}@keyframes gv-spin-rev{to{transform:rotate(-360deg)}}@keyframes gv-pulse{0%,100%{transform:scale(.86);opacity:.72}50%{transform:scale(1.12);opacity:1}}@keyframes gv-scan{to{transform:rotate(360deg)}}@keyframes gv-whiteout{0%{opacity:0;transform:scale(.96)}18%{opacity:.72;transform:scale(1)}48%{opacity:1;transform:scale(1.02)}100%{opacity:.72;transform:scale(1.06)}}
 @media(max-width:700px){.gv-loader__core{width:min(82vw,430px);height:min(82vw,430px)}.gv-loader__copy{top:calc(50% + min(43vw,225px))}.gv-loader__progress{width:min(58vw,250px);height:min(58vw,250px)}.gv-loader__progress-ring i{inset:18px}.gv-loader__brand{left:1rem}.gv-loader__readout{right:1rem}}
 @media(prefers-reduced-motion:reduce){.gv-loader__space:before,.gv-loader__orbit,.gv-loader__core-light,.gv-loader__scan{animation:none}.gv-loader.phase-white:after{animation:none}}
 </style>
@@ -121,13 +121,14 @@
       return;
     }
     state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);emit("guruverse:boot-start");
+    /* Fresh timing profile on every boot: deliberately irregular, but always coherent. */
     const jitter=(min,max)=>Math.floor(min+Math.random()*(max-min+1));
-    const tCore=jitter(2500,3300);
-    const tBot=tCore+jitter(2400,3100);
-    const tLoad=tBot+jitter(1900,2800);
-    const tComplete=tLoad+jitter(1500,2400);
-    const tWhite=tComplete+jitter(700,1200);
-    const tReveal=tWhite+jitter(900,1400);
+    const tCore=jitter(1900,3400);
+    const tBot=Math.max(6000,tCore+jitter(2700,4300));
+    const tLoad=tBot+jitter(1100,2500);
+    const tComplete=tLoad+jitter(900,2100);
+    const tWhite=tComplete+jitter(300,850);
+    const tReveal=tWhite+jitter(220,520);
     later(()=>{state("phase-core","IDENTITY CORE ONLINE","02 / CORE",28)},tCore);
     later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},tBot);
     later(()=>{state("phase-bot","GURU-BOT STANDING / LOADING","04 / 78%",78)},tLoad);
