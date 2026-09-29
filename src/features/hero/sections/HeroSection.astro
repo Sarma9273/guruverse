@@ -32,6 +32,16 @@ const canvas=document.querySelector<HTMLCanvasElement>(".hero-portrait__particle
 const frame=document.querySelector<HTMLElement>(".hero-portrait__frame");
 const status=document.querySelector<HTMLElement>("[data-identity-status]");
 const binary=document.querySelector<HTMLElement>(".hero-portrait__binary");
+
+const hero=document.querySelector<HTMLElement>("#hero");
+if(hero) hero.classList.add("is-cinematic");
+const startReveal=()=>{ hero?.classList.add("is-revealed"); };
+if(hero){
+  const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
+  if(seen) window.setTimeout(startReveal,40);
+  window.addEventListener("guruverse:intro-reveal",startReveal,{once:true});
+  window.addEventListener("guruverse:intro-complete",startReveal,{once:true});
+}
 if(portrait&&canvas&&frame){
   const ctx=canvas.getContext("2d",{willReadFrequently:true});
   const build=()=>{
@@ -78,8 +88,15 @@ if(portrait&&canvas&&frame){
     };
     requestAnimationFrame(animate);
   };
-  if(portrait.complete)build();else portrait.addEventListener("load",build,{once:true});
-  window.addEventListener("resize",build,{passive:true});
+
+  let started=false;
+  const startBuild=()=>{if(started)return;started=true;build();};
+  window.addEventListener("guruverse:intro-reveal",startBuild,{once:true});
+  window.addEventListener("guruverse:intro-complete",startBuild,{once:true});
+  const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
+  if(seen){ if(portrait.complete) window.setTimeout(startBuild,60); else portrait.addEventListener("load",()=>window.setTimeout(startBuild,60),{once:true}); }
+  else if(portrait.complete){ /* wait for cinematic reveal */ } else portrait.addEventListener("load",()=>{}, {once:true});
+  window.addEventListener("resize",()=>{if(started)build()},{passive:true});
 }
 if(binary){binary.textContent=Array.from({length:42},(_,i)=>`${(i%2)?"1":"0"}${((i*7)%2)?"0":"1"}${((i*3)%2)?"1":"0"}`).join(" · ");}
 </script>
