@@ -352,32 +352,37 @@ function beginPostRevealDocking() {
   clearInactivityTimer();
   closeBot();
 
-  const start = bootCenterPosition();
-  if (!start) return;
-  setLauncherPosition(start.left, start.top, false);
+  /* Use the untransformed launcher dimensions so the large boot scale
+     does not shift the post-reveal starting point. */
+  const baseWidth = launcher.offsetWidth || 82;
+  const baseHeight = launcher.offsetHeight || 82;
+  const startX = window.innerWidth / 2 - baseWidth / 2;
+  const startY = window.innerHeight / 2 - baseHeight / 2;
 
-  launcher.classList.remove("guru-bot--booting","guru-bot--boot-emerging","guru-bot--boot-holding");
+  launcher.classList.remove("guru-bot--boot-emerging","guru-bot--boot-holding");
   launcher.classList.add("guru-bot--post-reveal-flight");
+  setLauncherPosition(startX, startY, false);
   document.documentElement.classList.add("guruverse-docking");
 
   const rect = launcher.getBoundingClientRect();
   const dock = dockPoint();
   if (!dock) {
-    launcher.classList.remove("guru-bot--post-reveal-flight");
+    launcher.classList.remove("guru-bot--post-reveal-flight","guru-bot--booting");
     setLauncherAtDock(true);
     document.documentElement.classList.remove("guruverse-docking");
     document.documentElement.classList.add("guruverse-docked");
     return;
   }
 
-  const startX = start.left;
-  const startY = start.top;
-  const targetX = dock.left - rect.width / 2;
-  const targetY = dock.top - rect.height / 2;
-  const controlX = window.innerWidth * 0.66;
-  const controlY = Math.min(window.innerHeight * 0.34, targetY - 40);
-  const duration = 1450;
+  const targetX = dock.left - baseWidth / 2;
+  const targetY = dock.top - baseHeight / 2;
+  const controlX = window.innerWidth * 0.64;
+  const controlY = Math.min(window.innerHeight * 0.36, targetY - 55);
+  const duration = 1550;
   const started = performance.now();
+
+  /* Remove loader ownership only after the first flight frame is staged. */
+  requestAnimationFrame(() => launcher.classList.remove("guru-bot--booting"));
 
   const step = (now: number) => {
     const raw = Math.min(1, (now - started) / duration);
@@ -385,7 +390,7 @@ function beginPostRevealDocking() {
     const x = (1-eased)*(1-eased)*startX + 2*(1-eased)*eased*controlX + eased*eased*targetX;
     const y = (1-eased)*(1-eased)*startY + 2*(1-eased)*eased*controlY + eased*eased*targetY;
     const scale = 2.55 - 1.55*eased;
-    const dx = Math.max(-32, Math.min(32, (targetX - x) * .08));
+    const dx = Math.max(-28, Math.min(28, (targetX - x) * .065));
     launcher.style.setProperty("--guru-bot-flight-transform", `scale(${scale}) rotate(${dx}deg)`);
     setLauncherPosition(x, y, false);
 
