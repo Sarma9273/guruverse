@@ -1,41 +1,6 @@
 ---
+import type { TimelineEvent } from "../data/timeline";
+interface Props{event:TimelineEvent}
 const {event}=Astro.props;
 ---
-
-<div class="timeline-card">
-
-    <div class="timeline-card__icon">
-
-        {event.icon}
-
-    </div>
-
-    <div class="timeline-card__content">
-
-        <span>
-
-            {event.year}
-
-        </span>
-
-        <h3>
-
-            {event.title}
-
-        </h3>
-
-        <h4>
-
-            {event.subtitle}
-
-        </h4>
-
-        <p>
-
-            {event.description}
-
-        </p>
-
-    </div>
-
-</div>
+<article class="timeline-card" tabindex="0"><div class="timeline-card__marker"><span>{event.icon}</span></div><div class="timeline-card__content"><div class="timeline-card__top"><span class="timeline-card__year">{event.year}</span><span class="timeline-card__line"></span></div><h3>{event.title}</h3><h4>{event.subtitle}</h4><p>{event.description}</p><details><summary>Context + what changed</summary><p>{event.context}</p><div class="timeline-card__focus">{event.focus.map(item=><span>{item}</span>)}</div></details></div></article>
