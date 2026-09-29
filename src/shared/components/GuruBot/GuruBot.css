@@ -1200,3 +1200,52 @@ html.guruverse-docked .guru-bot-dock{
   .guru-bot--boot-emerging,.guru-bot--boot-holding{animation:none!important;transform:translate(-50%,-50%) scale(1)!important}
   .guru-bot--post-reveal-flight{transition:none!important}
 }
+
+
+/* ==========================================================
+   CINEMATIC FLIGHT SMOKE
+   ========================================================== */
+.guru-bot__smoke{
+  position:absolute;
+  left:50%;
+  top:12px;
+  width:46px;
+  height:52px;
+  transform:translateX(-50%);
+  pointer-events:none;
+  opacity:0;
+}
+.guru-bot__smoke b{
+  position:absolute;
+  display:block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(225,250,255,.55) 0 22%,rgba(126,190,205,.22) 48%,transparent 76%);
+  filter:blur(1px);
+  opacity:0;
+}
+.guru-bot__smoke b:nth-child(1){left:8px;top:6px;animation:gurubot-smoke 1.15s ease-out infinite}
+.guru-bot__smoke b:nth-child(2){left:20px;top:1px;animation:gurubot-smoke 1.35s .12s ease-out infinite}
+.guru-bot__smoke b:nth-child(3){left:31px;top:8px;animation:gurubot-smoke 1.05s .24s ease-out infinite}
+.guru-bot__smoke b:nth-child(4){left:14px;top:15px;width:9px;height:9px;animation:gurubot-smoke 1.5s .3s ease-out infinite}
+.guru-bot__smoke b:nth-child(5){left:28px;top:19px;width:8px;height:8px;animation:gurubot-smoke 1.25s .42s ease-out infinite}
+.guru-bot--post-reveal-flight .guru-bot__smoke,
+.guru-bot--returning .guru-bot__smoke{opacity:1}
+@keyframes gurubot-smoke{
+  0%{opacity:0;transform:translate(0,0) scale(.35)}
+  15%{opacity:.48}
+  55%{opacity:.25;transform:translate(calc(var(--smoke-drift, 0px)),18px) scale(1.25)}
+  100%{opacity:0;transform:translate(calc(var(--smoke-drift, 0px)),42px) scale(2.2)}
+}
+.guru-bot__smoke b:nth-child(1){--smoke-drift:-7px}
+.guru-bot__smoke b:nth-child(2){--smoke-drift:2px}
+.guru-bot__smoke b:nth-child(3){--smoke-drift:8px}
+.guru-bot__smoke b:nth-child(4){--smoke-drift:-4px}
+.guru-bot__smoke b:nth-child(5){--smoke-drift:6px}
+
+@media(prefers-reduced-motion:reduce){
+  .guru-bot__smoke b{animation:none}
+  .guru-bot--post-reveal-flight .guru-bot__smoke,
+  .guru-bot--returning .guru-bot__smoke{opacity:.35}
+}
