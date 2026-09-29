@@ -1,0 +1,25 @@
+---
+import type { Project } from "../types/project";
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<section class="project-evidence" aria-labelledby="evidence-title">
+  <div class="project-evidence__header">
+    <span class="project-kicker">EVIDENCE / VERIFICATION</span>
+    <h2 id="evidence-title">What can be inspected</h2>
+    <p>Evidence is separated from positioning claims so the case study stays auditable.</p>
+  </div>
+  <div class="project-evidence__grid">
+    {(project.evidence ?? []).map((item, index) => (
+      <article class="project-evidence__item">
+        <span class="project-evidence__index">{String(index + 1).padStart(2, "0")}</span>
+        <div>
+          <span class="project-evidence__type">{item.type}</span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+          {item.href && <a href={item.href} target="_blank" rel="noopener noreferrer">{item.linkLabel ?? "Inspect evidence"} ↗</a>}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
