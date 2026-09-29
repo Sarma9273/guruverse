@@ -35,11 +35,15 @@ const binary=document.querySelector<HTMLElement>(".hero-portrait__binary");
 
 const hero=document.querySelector<HTMLElement>("#hero");
 if(hero) hero.classList.add("is-cinematic");
-const startReveal=()=>{ hero?.classList.add("is-revealed"); };
+const addStage=(name:string)=>hero?.classList.add(name);
+const startReveal=()=>{ hero?.classList.add("is-revealed","is-hero-stage"); };
 if(hero){
   const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
   if(seen) window.setTimeout(startReveal,40);
-  window.addEventListener("guruverse:intro-reveal",startReveal,{once:true});
+  window.addEventListener("guruverse:portrait-build-start",()=>addStage("is-portrait-stage"),{once:true});
+  window.addEventListener("guruverse:identity-scan",()=>addStage("is-scan-stage"),{once:true});
+  window.addEventListener("guruverse:identity-verified",()=>addStage("is-verified-stage"),{once:true});
+  window.addEventListener("guruverse:hero-lock",startReveal,{once:true});
   window.addEventListener("guruverse:intro-complete",startReveal,{once:true});
 }
 if(portrait&&canvas&&frame){
@@ -61,7 +65,7 @@ if(portrait&&canvas&&frame){
     }}
     const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const startTime=performance.now();
-    const duration=reduce?1:1900;
+    const duration=reduce?1:2450;
     const animate=(now:number)=>{
       const p=Math.min(1,(now-startTime)/duration);
       const eased=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
@@ -84,6 +88,7 @@ if(portrait&&canvas&&frame){
       else {
         frame.classList.add("is-identity-built");
         if(status)status.textContent="IDENTITY VERIFIED · GURU CHARAN MAVUDURU";
+        window.dispatchEvent(new CustomEvent("guruverse:portrait-built"));
       }
     };
     requestAnimationFrame(animate);
@@ -91,11 +96,13 @@ if(portrait&&canvas&&frame){
 
   let started=false;
   const startBuild=()=>{if(started)return;started=true;build();};
-  window.addEventListener("guruverse:intro-reveal",startBuild,{once:true});
-  window.addEventListener("guruverse:intro-complete",startBuild,{once:true});
+  window.addEventListener("guruverse:portrait-build-start",startBuild,{once:true});
+  window.addEventListener("guruverse:hero-lock",startBuild,{once:true});
   const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
-  if(seen){ if(portrait.complete) window.setTimeout(startBuild,60); else portrait.addEventListener("load",()=>window.setTimeout(startBuild,60),{once:true}); }
-  else if(portrait.complete){ /* wait for cinematic reveal */ } else portrait.addEventListener("load",()=>{}, {once:true});
+  if(seen){
+    if(portrait.complete) window.setTimeout(startBuild,60);
+    else portrait.addEventListener("load",()=>window.setTimeout(startBuild,60),{once:true});
+  }
   window.addEventListener("resize",()=>{if(started)build()},{passive:true});
 }
 if(binary){binary.textContent=Array.from({length:42},(_,i)=>`${(i%2)?"1":"0"}${((i*7)%2)?"0":"1"}${((i*3)%2)?"1":"0"}`).join(" · ");}
