@@ -1,127 +1,98 @@
 ---
 import "../../features/projects/styles/project-details.css";
-
 import BaseLayout from "../../layouts/BaseLayout.astro";
-
 import { projects } from "../../features/projects/data/projects";
-
 import ProjectHero from "../../features/projects/components/ProjectHero.astro";
 import ProjectBreadcrumbs from "../../features/projects/components/ProjectBreadcrumbs.astro";
 import ProjectSectionTitle from "../../features/projects/components/ProjectSectionTitle.astro";
-import ProjectOverview from "../../features/projects/components/ProjectOverview.astro";
+import ProjectCaseStudy from "../../features/projects/components/ProjectCaseStudy.astro";
 import ProjectArchitecture from "../../features/projects/components/ProjectArchitecture.astro";
 import ProjectWorkflow from "../../features/projects/components/ProjectWorkflow.astro";
 import ProjectTechStack from "../../features/projects/components/ProjectTechStack.astro";
+import ProjectEvidence from "../../features/projects/components/ProjectEvidence.astro";
+import ProjectLimitations from "../../features/projects/components/ProjectLimitations.astro";
+import ProjectEvolution from "../../features/projects/components/ProjectEvolution.astro";
 import ProjectGallery from "../../features/projects/components/ProjectGallery.astro";
 import ProjectMetrics from "../../features/projects/components/ProjectMetrics.astro";
 import ProjectLinks from "../../features/projects/components/ProjectLinks.astro";
 import ProjectNavigation from "../../features/projects/components/ProjectNavigation.astro";
 
 export function getStaticPaths() {
-    return projects.map((project) => ({
-        params: {
-            slug: project.id,
-        },
-        props: {
-            project,
-        },
-    }));
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project }
+  }));
 }
 
 const { project } = Astro.props;
-
 ---
 
 <BaseLayout
-    title={`${project.title} — GURUVERSE`}
-    description={project.description}
-    image={project.image}
-    type="article"
-    project={project}
+  title={`${project.title} — GURUVERSE`}
+  description={project.description}
+  image={project.image}
+  type="article"
+  project={project}
 >
-    <ProjectBreadcrumbs
-        title={project.title}
+  <ProjectBreadcrumbs title={project.title} />
+  <ProjectHero project={project} />
+
+  <main class="project-content">
+    <ProjectCaseStudy project={project} />
+
+    {project.architecture && (
+      <>
+        <ProjectSectionTitle
+          eyebrow="SYSTEM"
+          title="Architecture"
+          description="The system is shown as a chain of responsibilities rather than a decorative technology list."
+        />
+        <ProjectArchitecture architecture={project.architecture} />
+      </>
+    )}
+
+    {project.workflow && (
+      <>
+        <ProjectSectionTitle
+          eyebrow="PROCESS"
+          title="System Flow"
+          description="Follow the operational path from input to analyst-facing output."
+        />
+        <ProjectWorkflow workflow={project.workflow} />
+      </>
+    )}
+
+    <ProjectSectionTitle
+      eyebrow="TECH"
+      title="Technology Stack"
+      description="The implementation layer currently represented by this project record."
     />
+    <ProjectTechStack technologies={project.technologies} />
 
-    <ProjectHero
-        project={project}
-    />
+    <ProjectEvidence project={project} />
 
-    <section class="project-content">
+    {project.metrics?.length ? (
+      <>
         <ProjectSectionTitle
-            eyebrow="OVERVIEW"
-            title="Project Overview"
+          eyebrow="MEASURED"
+          title="Results"
+          description="Only measured or explicitly documented results are shown here."
         />
+        <ProjectMetrics metrics={project.metrics} />
+      </>
+    ) : null}
 
-        {
-            project.overview && (
-                <ProjectOverview
-                    overview={project.overview}
-                />
-            )
-        }
+    {project.screenshots?.length ? (
+      <>
+        <ProjectSectionTitle eyebrow="VISUALS" title="Evidence Gallery" />
+        <ProjectGallery screenshots={project.screenshots} />
+      </>
+    ) : null}
 
-        <ProjectSectionTitle
-            eyebrow="SYSTEM"
-            title="Architecture"
-        />
+    <ProjectLimitations project={project} />
+    <ProjectEvolution project={project} />
 
-        {
-            project.architecture && (
-                <ProjectArchitecture
-                    architecture={project.architecture}
-                />
-            )
-        }
-
-        <ProjectSectionTitle
-            eyebrow="PROCESS"
-            title="Workflow"
-        />
-
-        {
-            project.workflow && (
-                <ProjectWorkflow
-                    workflow={project.workflow}
-                />
-            )
-        }
-
-        <ProjectSectionTitle
-            eyebrow="TECH"
-            title="Technology Stack"
-        />
-
-        <ProjectTechStack
-            technologies={project.technologies}
-        />
-
-        <ProjectSectionTitle
-            eyebrow="VISUALS"
-            title="Gallery"
-        />
-
-        <ProjectGallery
-            screenshots={project.screenshots}
-        />
-
-        <ProjectSectionTitle
-            eyebrow="RESULTS"
-            title="Project Metrics"
-        />
-
-        <ProjectMetrics
-            metrics={project.metrics}
-        />
-
-        <ProjectLinks
-            github={project.github}
-            demo={project.demo}
-        />
-
-        <ProjectNavigation
-            projects={projects}
-            currentSlug={project.id}
-        />
-    </section>
+    <ProjectLinks github={project.github} demo={project.demo} />
+    <ProjectNavigation projects={projects} currentSlug={project.id} />
+  </main>
 </BaseLayout>
