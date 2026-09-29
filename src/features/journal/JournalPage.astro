@@ -1,0 +1,34 @@
+---
+import type { JournalEntry } from "./types/journal";
+import JournalCard from "./components/JournalCard.astro";
+import "./styles/journal.css";
+interface Props { entries: JournalEntry[]; }
+const { entries } = Astro.props;
+const kinds = [...new Set(entries.map((entry) => entry.kind))];
+---
+<section class="journal-page" aria-labelledby="journal-title">
+  <div class="journal-page__header">
+    <div>
+      <span class="journal-page__eyebrow">JOURNAL / 06</span>
+      <h1 id="journal-title">The engineering log.</h1>
+      <p>Not a generic blog. A record of investigations, build decisions, experiments, lessons and system evolution.</p>
+    </div>
+    <div class="journal-page__signal"><span>SOURCE</span><strong>GURUVERSE BLOGS</strong><small>{entries.length} narrative nodes</small></div>
+  </div>
+  <div class="journal-page__filters" aria-label="Journal filters">
+    <button type="button" class="is-active" data-journal-filter="all">All</button>
+    {kinds.map((kind) => <button type="button" data-journal-filter={kind}>{kind}</button>)}
+  </div>
+  <div class="journal-page__rail">
+    {entries.map((entry, index) => <JournalCard entry={entry} index={index} />)}
+  </div>
+</section>
+<script>
+  const buttons = document.querySelectorAll("[data-journal-filter]");
+  const cards = document.querySelectorAll("[data-journal-kind]");
+  buttons.forEach((button) => button.addEventListener("click", () => {
+    const filter = button.getAttribute("data-journal-filter");
+    buttons.forEach((item) => item.classList.toggle("is-active", item === button));
+    cards.forEach((card) => card.toggleAttribute("hidden", filter !== "all" && card.getAttribute("data-journal-kind") !== filter));
+  }));
+</script>
