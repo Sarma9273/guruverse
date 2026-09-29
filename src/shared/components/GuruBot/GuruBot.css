@@ -980,13 +980,24 @@ html.guruverse-booting .guru-bot-dock{
 }
 .guru-bot--boot-emerging{
   opacity:1!important;
-  transform:translate(-50%,-50%) scale(2.75)!important;
   border-color:rgba(191,250,255,.9)!important;
   box-shadow:0 0 110px rgba(0,229,255,.48),0 0 30px rgba(124,77,255,.24),inset 0 0 28px rgba(0,229,255,.2);
+  animation:guru-bot-boot-emerge 1.15s cubic-bezier(.12,.82,.18,1) forwards;
 }
 .guru-bot--boot-holding{
   opacity:1!important;
   transform:translate(-50%,-50%) scale(2.55)!important;
+  animation:guru-bot-boot-hover 2.4s ease-in-out infinite;
+}
+@keyframes guru-bot-boot-emerge{
+  0%{opacity:0;transform:translate(-50%,-38%) scale(.08) rotate(-3deg);filter:brightness(1)}
+  35%{opacity:1;transform:translate(-50%,-47%) scale(.95) rotate(1deg);filter:brightness(1.35)}
+  72%{opacity:1;transform:translate(-50%,-53%) scale(2.35) rotate(-.5deg);filter:brightness(1.08)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(2.55) rotate(0);filter:brightness(1)}
+}
+@keyframes guru-bot-boot-hover{
+  0%,100%{margin-top:0}
+  50%{margin-top:-7px}
 }
 .guru-bot--post-reveal-flight{
   right:auto!important;
@@ -1017,6 +1028,6 @@ html.guruverse-docked .guru-bot-dock{
 }
 @media(prefers-reduced-motion:reduce){
   .guru-bot--booting{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important}
-  .guru-bot--boot-emerging,.guru-bot--boot-holding{transform:translate(-50%,-50%) scale(1)!important}
+  .guru-bot--boot-emerging,.guru-bot--boot-holding{animation:none!important;transform:translate(-50%,-50%) scale(1)!important}
   .guru-bot--post-reveal-flight{transition:none!important}
 }
