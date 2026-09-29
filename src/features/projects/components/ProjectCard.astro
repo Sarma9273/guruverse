@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         )
     }
 
-    <div class="project-card__image" aria-label={`${project.title} visual placeholder`}>
+    <div class="project-card__image" aria-label={`${project.title} project visual`}>
         <img
             src={`${base}${project.image.startsWith("/") ? project.image : `/${project.image}`}`}
             alt=""
