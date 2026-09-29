@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../features/projects/data/projects";
+import { research } from "../../features/research/data/research";
+---
+<BaseLayout title="Mission Control — GURUVERSE" description="GURUVERSE intelligence layer: canonical knowledge, GURU-BOT modes, project context, research context, and command navigation.">
+  <main class="mission-control">
+    <section class="mission-control__hero">
+      <div>
+        <span class="mission-control__eyebrow">INTELLIGENCE / 05</span>
+        <h1>Mission <span>Control.</span></h1>
+        <p>A grounded interaction layer for navigating the GURUVERSE knowledge system. GURU-BOT answers from documented project, research, journey, and experience records.</p>
+      </div>
+      <div class="mission-control__core" aria-hidden="true"><span>G</span><i></i><i></i><i></i></div>
+    </section>
+    <section class="mission-control__grid">
+      <article class="mission-control__panel mission-control__panel--wide">
+        <span class="mission-control__label">KNOWLEDGE FABRIC</span>
+        <h2>One canonical source. Multiple experiences.</h2>
+        <p>Projects, research, experience, and journey records remain structured data. GURU-BOT reads those records locally instead of inventing a second content system.</p>
+        <div class="mission-control__metrics">
+          <div><strong>{projects.length}</strong><span>Systems indexed</span></div>
+          <div><strong>{research.length}</strong><span>Research tracks</span></div>
+          <div><strong>4</strong><span>Interaction modes</span></div>
+          <div><strong>0</strong><span>External AI keys</span></div>
+        </div>
+      </article>
+      <article class="mission-control__panel">
+        <span class="mission-control__label">GURU-BOT MODES</span>
+        <ul>
+          <li><strong>Explore</strong><span>Navigate the complete knowledge fabric.</span></li>
+          <li><strong>Recruiter</strong><span>Focus on professional practice and project outcomes.</span></li>
+          <li><strong>Engineer</strong><span>Focus on architecture, workflow, stack, evidence, and boundaries.</span></li>
+          <li><strong>Researcher</strong><span>Focus on questions, methods, findings, evidence, and next investigations.</span></li>
+        </ul>
+      </article>
+      <article class="mission-control__panel">
+        <span class="mission-control__label">GROUNDING RULE</span>
+        <h3>Claim smaller than evidence.</h3>
+        <p>Benchmark results remain tied to their documented corpus. Future research remains marked as future. Missing information is surfaced rather than fabricated.</p>
+      </article>
+      <article class="mission-control__panel mission-control__panel--wide">
+        <span class="mission-control__label">COMMAND SURFACE</span>
+        <h2>Control the universe without leaving the page.</h2>
+        <p>Use <kbd>Ctrl</kbd> + <kbd>K</kbd> or <kbd>⌘</kbd> + <kbd>K</kbd> to open the command palette. Search projects, research, identity, journey, contact, or Mission Control.</p>
+        <div class="mission-control__actions">
+          <a href={import.meta.env.BASE_URL + "projects/"}>Project Universe ↗</a>
+          <a href={import.meta.env.BASE_URL + "research/"}>Research Universe ↗</a>
+        </div>
+      </article>
+    </section>
+  </main>
+</BaseLayout>
