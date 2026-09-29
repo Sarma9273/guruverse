@@ -843,3 +843,7 @@
 .guru-bot__ask input{min-width:0;padding:.72rem .8rem;border:1px solid var(--color-border);border-radius:.65rem;background:rgba(255,255,255,.035);color:var(--color-text);font:inherit;font-size:.75rem}
 .guru-bot__ask input:focus{outline:2px solid var(--color-primary);outline-offset:2px}
 .guru-bot__ask button{padding:.72rem .9rem;border:1px solid var(--color-primary);border-radius:.65rem;background:rgba(0,229,255,.08);color:var(--color-primary);font:700 .72rem var(--font-code);cursor:pointer}
+
+.guru-bot__modebar{display:flex;flex-wrap:wrap;gap:.35rem;width:100%;padding:.35rem;border:1px solid var(--color-border);background:rgba(255,255,255,.018)}
+.guru-bot__modebar button{border:0;background:transparent;color:var(--color-text-muted);padding:.42rem .55rem;font:700 .62rem var(--font-code);cursor:pointer}
+.guru-bot__modebar button.is-active,.guru-bot__modebar button:hover{color:var(--color-primary);background:rgba(0,229,255,.07)}
