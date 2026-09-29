@@ -1,0 +1,23 @@
+---
+import type { Research } from "../types/research";
+interface Props { research: Research; }
+const { research } = Astro.props;
+---
+
+<section class="research-lineage">
+  <div class="research-section-heading">
+    <span>RESEARCH LINEAGE</span>
+    <h2>From engineering question to next investigation.</h2>
+  </div>
+  <div class="research-lineage__track">
+    {research.lineage.map((stage, index) => (
+      <article>
+        <span>{String(index + 1).padStart(2, "0")}</span>
+        <div>
+          <h3>{stage.title}</h3>
+          <p>{stage.description}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
