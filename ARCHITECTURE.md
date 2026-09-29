@@ -2079,7 +2079,7 @@ Architectural decisions should remain understandable for future contributors and
 | **1.0.0** | Initial public release with feature-based architecture, modular components, design tokens, repository standards, and engineering documentation. |
 | **1.0.1** | Planned quality release focusing on accessibility, SEO, performance, documentation improvements, and production readiness. |
 | **1.1** | Planned engineering maturity release introducing CI/CD, ADR documentation, repository templates, and release workflow improvements. |
-| **2.0** | Planned platform evolution introducing GuruBot, shared design systems, service integrations, and advanced interactive experiences. |
+| **2.0.0** | Interactive engineering platform layer with GURU-BOT, Mission Control, project exploration, research exploration, Journal, and deterministic client-side intelligence. |
 | **3.0** | Planned engineering ecosystem with AI-powered learning, research exploration, cybersecurity modules, and knowledge management capabilities. |
 
 ---
