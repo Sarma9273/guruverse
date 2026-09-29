@@ -1,0 +1,24 @@
+---
+import type { Project } from "../types/project";
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+{project.evolution?.length && (
+  <section class="project-evolution" aria-labelledby="evolution-title">
+    <div class="project-evolution__header">
+      <span class="project-kicker">SYSTEM EVOLUTION</span>
+      <h2 id="evolution-title">How the system changed</h2>
+    </div>
+    <div class="project-evolution__rail">
+      {project.evolution.map((stage, index) => (
+        <div class="project-evolution__stage">
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <strong>{stage.title}</strong>
+            <p>{stage.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
