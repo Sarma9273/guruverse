@@ -355,7 +355,7 @@ function animatePrankFlight(startX:number,startY:number,targetX:number,targetY:n
 }
 
 function startScreenPrank() {
-  if (!launcher || !dock || !screenIdleStage !== "active" || bootRoot.classList.contains("guruverse-booting")) return;
+  if (!launcher || !dock || screenIdleStage === "active" || bootRoot.classList.contains("guruverse-booting")) return;
   bootRoot.classList.remove("guru-bot-idle-help");
   launcher.classList.remove("guru-bot--idle-help");
   launcher.classList.add("guru-bot--screen-prank");
@@ -365,13 +365,13 @@ function startScreenPrank() {
   const targetX=window.innerWidth/2-rect.width/2;
   const targetY=window.innerHeight/2-rect.height/2;
   animatePrankFlight(startX,startY,targetX,targetY,()=>{
-    if(!screenIdleStage !== "active")return;
+    if(screenIdleStage === "active")return;
     window.setTimeout(()=>tapStep(1),350);
   });
 }
 
 function tapStep(step:number) {
-  if (!screenIdleStage !== "active" || !launcher) return;
+  if (screenIdleStage === "active" || !launcher) return;
   launcher.classList.remove("guru-bot--tap-1","guru-bot--tap-2","guru-bot--tap-3");
   launcher.classList.add("guru-bot--tap-"+step);
   bootRoot.classList.remove("guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3");
@@ -380,7 +380,7 @@ function tapStep(step:number) {
     window.setTimeout(()=>tapStep(step+1),850);
   }else{
     window.setTimeout(()=>{
-      if(!screenIdleStage !== "active")return;
+      if(screenIdleStage === "active")return;
       bootRoot.classList.add("guru-bot-screen-broken");
       window.setTimeout(repairScreen,700);
     },650);
@@ -388,15 +388,15 @@ function tapStep(step:number) {
 }
 
 function repairScreen() {
-  if(!screenIdleStage !== "active" || !launcher)return;
+  if(screenIdleStage === "active" || !launcher)return;
   launcher.classList.add("guru-bot--repairing");
   window.setTimeout(()=>{
-    if(!screenIdleStage !== "active")return;
+    if(screenIdleStage === "active")return;
     bootRoot.classList.remove("guru-bot-screen-broken","guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3");
     bootRoot.classList.add("guru-bot-screen-repaired","guru-bot-prank-complete");
     launcher.classList.remove("guru-bot--repairing");
     window.setTimeout(()=>{
-      if(!screenIdleStage !== "active")return;
+      if(screenIdleStage === "active")return;
       cancelIdleInteraction(true);
       startIdleWatch();
     },2200);
