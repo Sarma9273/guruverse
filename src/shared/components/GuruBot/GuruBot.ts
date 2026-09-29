@@ -15,6 +15,7 @@ const actionButtons = root?.querySelectorAll<HTMLButtonElement>("[data-guru-acti
 let mode: GuruMode = (document.documentElement.dataset.experienceMode as GuruMode) || "explore";
 
 const STORAGE_KEY = "guruverse-guru-bot-position";
+const bootRoot = document.documentElement;
 const EDGE = 14;
 const DOCK_SNAP_DISTANCE = 110;
 
@@ -426,18 +427,33 @@ function initialiseCinematicBot() {
   dock?.classList.remove("is-active");
   updateModeUI();
 
-  window.addEventListener("guruverse:bot-emerge", () => {
+  const startBootBot = () => {
     launcher.classList.add("guru-bot--boot-emerging");
-  }, { once: true });
-
-  window.addEventListener("guruverse:boot-whiteout", () => {
+  };
+  const holdBootBot = () => {
     launcher.classList.remove("guru-bot--boot-emerging");
     launcher.classList.add("guru-bot--boot-holding");
-  }, { once: true });
+  };
+  const revealWebsite = () => {
+    /* Event + state flag makes the choreography reliable even when the
+       intro's inline script fires before this hydrated module attaches. */
+    bootRoot.dataset.guruverseReveal = "pending";
+    window.setTimeout(beginPostRevealDocking, 120);
+  };
 
-  window.addEventListener("guruverse:website-revealed", () => {
-    window.setTimeout(beginPostRevealDocking, 360);
-  }, { once: true });
+  window.addEventListener("guruverse:bot-emerge", startBootBot, { once: true });
+  window.addEventListener("guruverse:boot-whiteout", holdBootBot, { once: true });
+  window.addEventListener("guruverse:website-revealed", revealWebsite, { once: true });
+
+  if (bootRoot.dataset.guruverseBootPhase === "bot" || bootRoot.dataset.guruverseBootPhase === "complete") {
+    startBootBot();
+  }
+  if (bootRoot.dataset.guruverseBootPhase === "complete") {
+    holdBootBot();
+  }
+  if (bootRoot.dataset.guruverseReveal === "true") {
+    revealWebsite();
+  }
 }
 
 initialiseCinematicBot();
