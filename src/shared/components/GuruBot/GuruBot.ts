@@ -377,9 +377,9 @@ function beginPostRevealDocking() {
 
   const targetX = dock.left - baseWidth / 2;
   const targetY = dock.top - baseHeight / 2;
-  const controlX = window.innerWidth * 0.64;
-  const controlY = Math.min(window.innerHeight * 0.36, targetY - 55);
-  const duration = 1550;
+  const controlX = window.innerWidth * 0.62;
+  const controlY = Math.min(window.innerHeight * 0.38, targetY - 70);
+  const duration = 2800;
   const started = performance.now();
 
   /* Remove loader ownership only after the first flight frame is staged. */
@@ -387,7 +387,7 @@ function beginPostRevealDocking() {
 
   const step = (now: number) => {
     const raw = Math.min(1, (now - started) / duration);
-    const eased = 1 - Math.pow(1 - raw, 3);
+    const eased = raw < 0.12 ? 0.5 * Math.pow(raw / 0.12, 2) * 0.12 : 0.06 + 0.94 * (1 - Math.pow(1 - ((raw - 0.12) / 0.88), 3));
     const x = (1-eased)*(1-eased)*startX + 2*(1-eased)*eased*controlX + eased*eased*targetX;
     const y = (1-eased)*(1-eased)*startY + 2*(1-eased)*eased*controlY + eased*eased*targetY;
     const scale = 2.55 - 1.55*eased;
