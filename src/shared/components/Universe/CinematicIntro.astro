@@ -1,71 +1,90 @@
 <div class="gv-intro" data-cinematic-intro aria-label="GURUVERSE boot sequence">
-  <div class="gv-intro__field"></div>
+  <div class="gv-intro__noise"></div>
   <div class="gv-intro__grid"></div>
-  <div class="gv-intro__stars"></div>
-  <div class="gv-intro__trajectory"></div>
+  <div class="gv-intro__rings" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
 
   <div class="gv-intro__ship" aria-hidden="true">
-    <span class="gv-intro__ship-core"></span>
+    <span class="gv-intro__ship-body"></span>
     <span class="gv-intro__ship-wing gv-intro__ship-wing--left"></span>
     <span class="gv-intro__ship-wing gv-intro__ship-wing--right"></span>
+    <span class="gv-intro__ship-window"></span>
     <span class="gv-intro__ship-engine"></span>
+    <span class="gv-intro__ship-trail"></span>
+  </div>
+
+  <div class="gv-intro__core" aria-hidden="true">
+    <span class="gv-intro__core-ring gv-intro__core-ring--one"></span>
+    <span class="gv-intro__core-ring gv-intro__core-ring--two"></span>
+    <span class="gv-intro__core-light"></span>
   </div>
 
   <div class="gv-intro__bot" aria-hidden="true">
-    <div class="gv-intro__bot-orbit gv-intro__bot-orbit--one"></div>
-    <div class="gv-intro__bot-orbit gv-intro__bot-orbit--two"></div>
-    <div class="gv-intro__bot-core"><span></span><span></span></div>
-    <div class="gv-intro__bot-ring"></div>
+    <span class="gv-intro__bot-orbit gv-intro__bot-orbit--one"></span>
+    <span class="gv-intro__bot-orbit gv-intro__bot-orbit--two"></span>
+    <span class="gv-intro__bot-face"><i></i><i></i></span>
   </div>
 
   <div class="gv-intro__dock" aria-hidden="true">
-    <span class="gv-intro__dock-ring"></span>
-    <span class="gv-intro__dock-label">DOCK 01 · GURU-BOT</span>
+    <span></span><small>DOCK 01</small>
   </div>
 
-  <div class="gv-intro__readout">
-    <span>GURUVERSE // BOOT SEQUENCE</span>
-    <strong data-intro-status>SHIP SIGNAL ACQUIRED</strong>
-    <span data-intro-progress>00 — 05</span>
+  <div class="gv-intro__copy">
+    <span class="gv-intro__kicker">GURUVERSE // IDENTITY INITIALISATION</span>
+    <h1><span data-intro-title>INITIALISING</span><br><strong>GURUVERSE</strong></h1>
+    <p data-intro-status>SHIP SIGNAL ACQUIRED</p>
+    <div class="gv-intro__progress"><span data-intro-progress></span></div>
+    <small data-intro-code>VECTOR 00 · CORE OFFLINE</small>
   </div>
-  <div class="gv-intro__identity">GURU<span>CHARAN</span></div>
+
+  <div class="gv-intro__identity">GURU<br><span>CHARAN</span></div>
   <button class="gv-intro__skip" type="button" data-intro-skip>SKIP INTRO <span>ESC</span></button>
 </div>
 
 <style>
-.gv-intro{position:fixed;inset:0;z-index:var(--z-loader);overflow:hidden;background:#02040a;color:#f7fbff;isolation:isolate;opacity:1;transition:opacity .8s var(--ease-cinematic),visibility .8s;pointer-events:auto}
+.gv-intro{position:fixed;inset:0;z-index:var(--z-loader);overflow:hidden;background:#020307;color:#f6f8fa;isolation:isolate;opacity:1;transition:opacity .75s var(--ease-cinematic),visibility .75s;pointer-events:auto}
 .gv-intro.is-complete{opacity:0;visibility:hidden;pointer-events:none}
-.gv-intro__field,.gv-intro__grid,.gv-intro__stars,.gv-intro__trajectory{position:absolute;inset:0;pointer-events:none}
-.gv-intro__field{background:radial-gradient(circle at 50% 50%,rgba(0,229,255,.14),transparent 18%),radial-gradient(circle at 20% 30%,rgba(124,77,255,.1),transparent 30%),#02040a}
-.gv-intro__grid{opacity:.22;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(circle at 50% 50%,#000 0 35%,transparent 78%)}
-.gv-intro__stars{opacity:.45;background-image:radial-gradient(circle,rgba(223,252,255,.7) 0 1px,transparent 1.5px);background-size:110px 130px;animation:gv-stars 8s linear infinite}
-.gv-intro__trajectory{opacity:0;inset:auto auto 50% 0;width:48vw;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.55),transparent);transform:rotate(24deg);transform-origin:left center;animation:gv-trajectory 1.8s .25s ease-out forwards}
-.gv-intro__ship{position:absolute;left:-18px;top:6vh;width:30px;height:18px;z-index:3;filter:drop-shadow(0 0 12px rgba(0,229,255,.65));transform:rotate(18deg);animation:gv-ship-flight 2.55s .15s var(--ease-cinematic) forwards}
-.gv-intro__ship-core{position:absolute;left:8px;top:4px;width:15px;height:10px;border:1px solid rgba(230,252,255,.95);border-radius:50% 65% 55% 45%;background:linear-gradient(90deg,rgba(0,229,255,.2),rgba(247,251,255,.85));box-shadow:0 0 18px rgba(0,229,255,.6)}
-.gv-intro__ship-wing{position:absolute;top:5px;width:12px;height:8px;border:1px solid rgba(0,229,255,.45);background:rgba(0,229,255,.06);transform:skewX(-25deg)}
-.gv-intro__ship-wing--left{left:1px}.gv-intro__ship-wing--right{right:1px;transform:scaleX(-1) skewX(-25deg)}
-.gv-intro__ship-engine{position:absolute;left:-10px;top:7px;width:12px;height:4px;border-radius:50%;background:linear-gradient(90deg,transparent,rgba(124,77,255,.9));box-shadow:0 0 14px rgba(124,77,255,.65)}
-.gv-intro__bot{position:absolute;left:50%;top:50%;width:min(82vw,760px);aspect-ratio:1;display:grid;place-items:center;z-index:4;opacity:0;transform:translate(-50%,-50%) scale(.08);animation:gv-bot-deploy 3.05s 2.25s var(--ease-cinematic) forwards}
-.gv-intro__bot-core{position:relative;width:27%;aspect-ratio:1.15;border:2px solid rgba(0,229,255,.8);border-radius:28%;background:radial-gradient(circle,rgba(0,229,255,.28),rgba(4,7,13,.92) 58%);box-shadow:0 0 70px rgba(0,229,255,.35),inset 0 0 55px rgba(124,77,255,.18);display:flex;align-items:center;justify-content:center;gap:12%;z-index:2}
-.gv-intro__bot-core span{width:8%;aspect-ratio:1;border-radius:50%;background:#dffcff;box-shadow:0 0 22px rgba(0,229,255,.95)}
-.gv-intro__bot-ring{position:absolute;inset:34%;border:1px solid rgba(0,229,255,.6);border-radius:50%;box-shadow:0 0 45px rgba(0,229,255,.2)}
-.gv-intro__bot-orbit{position:absolute;border:1px solid rgba(0,229,255,.34);border-radius:50%;inset:10%;transform:rotate(28deg) rotateX(65deg)}
-.gv-intro__bot-orbit--one{animation:gv-orbit-one 2.8s linear infinite}.gv-intro__bot-orbit--two{inset:2%;border-color:rgba(124,77,255,.28);transform:rotate(-32deg) rotateX(64deg);animation:gv-orbit-two 3.6s linear infinite}
-.gv-intro__dock{position:absolute;right:18px;top:50%;width:120px;height:120px;transform:translateY(-50%);border:1px solid rgba(0,229,255,.18);border-radius:50%;display:grid;place-items:center;z-index:2;background:radial-gradient(circle,rgba(0,229,255,.09),transparent 62%);box-shadow:inset 0 0 38px rgba(0,229,255,.05),0 0 55px rgba(0,229,255,.04);opacity:0;animation:gv-dock-in .7s 4.75s ease-out forwards}
-.gv-intro__dock::before,.gv-intro__dock::after{content:"";position:absolute;border:1px solid rgba(0,229,255,.22);border-radius:50%;inset:16px}.gv-intro__dock::after{inset:29px;border-color:rgba(124,77,255,.22);transform:rotate(30deg) scaleX(1.35)}
-.gv-intro__dock-ring{width:34px;height:34px;border:1px solid rgba(0,229,255,.55);border-radius:50%;box-shadow:0 0 30px rgba(0,229,255,.2)}
-.gv-intro__dock-label{position:absolute;right:calc(100% + 10px);white-space:nowrap;color:rgba(223,252,255,.42);font:600 .52rem var(--font-code);letter-spacing:.12em}
-.gv-intro__readout{position:absolute;left:clamp(1rem,5vw,5rem);bottom:clamp(1rem,5vw,4rem);display:grid;gap:.35rem;font:500 .68rem/1.3 var(--font-code);letter-spacing:.16em;text-transform:uppercase;color:rgba(247,251,255,.58);z-index:6}
-.gv-intro__readout strong{color:#dffcff;font-size:clamp(.78rem,1.2vw,1rem);letter-spacing:.11em}
-.gv-intro__identity{position:absolute;right:clamp(1rem,5vw,5rem);top:clamp(1rem,5vw,4rem);font:700 clamp(.8rem,1.2vw,1rem)/1 var(--font-display);letter-spacing:.2em;z-index:6}.gv-intro__identity span{display:block;color:rgba(0,229,255,.65);font-size:.62em;margin-top:.6em;letter-spacing:.35em}
-.gv-intro__skip{position:absolute;right:clamp(1rem,5vw,5rem);bottom:clamp(1rem,5vw,4rem);padding:.65rem .8rem;border:1px solid rgba(255,255,255,.16);border-radius:999px;color:rgba(247,251,255,.65);font:600 .65rem/1 var(--font-code);letter-spacing:.12em;background:rgba(255,255,255,.025);cursor:pointer;z-index:7}
-.gv-intro__skip:hover,.gv-intro__skip:focus-visible{color:#fff;border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.06)}.gv-intro__skip span{margin-left:.55rem;opacity:.5}
-@keyframes gv-ship-flight{0%{left:-18px;top:6vh;transform:rotate(18deg) scale(.35);opacity:0}12%{opacity:1}52%{left:38vw;top:42vh;transform:rotate(18deg) scale(2.1)}72%{left:50%;top:50%;transform:translate(-50%,-50%) rotate(18deg) scale(5.5)}100%{left:50%;top:50%;transform:translate(-50%,-50%) rotate(0) scale(7);opacity:1}}
-@keyframes gv-bot-deploy{0%{opacity:0;transform:translate(-50%,-50%) scale(.08)}18%{opacity:1;transform:translate(-50%,-50%) scale(.12)}55%{opacity:1;transform:translate(-50%,-50%) scale(1)}76%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:1;left:calc(100% - 78px);top:50%;transform:translate(-50%,-50%) scale(.095)}}
-@keyframes gv-dock-in{to{opacity:1}}@keyframes gv-stars{to{transform:translate3d(-110px,-130px,0)}}@keyframes gv-trajectory{70%{opacity:1}100%{opacity:.15}}
-@keyframes gv-orbit-one{to{transform:rotate(388deg) rotateX(65deg)}}@keyframes gv-orbit-two{to{transform:rotate(-392deg) rotateX(64deg)}}
-@media(max-width:700px){.gv-intro__ship{top:10vh}.gv-intro__bot{width:105vw}.gv-intro__dock{right:8px;width:88px;height:88px}.gv-intro__dock-label{display:none}.gv-intro__readout{bottom:1rem;left:1rem}.gv-intro__skip{right:1rem;bottom:4.4rem}.gv-intro__identity{top:1rem;right:1rem}}
-@media(prefers-reduced-motion:reduce){.gv-intro__ship,.gv-intro__bot,.gv-intro__trajectory,.gv-intro__stars,.gv-intro__dock{animation:none}.gv-intro__ship{left:50%;top:50%;transform:translate(-50%,-50%) scale(4)}.gv-intro__bot{opacity:1;left:calc(100% - 78px);top:50%;transform:translate(-50%,-50%) scale(.095)}.gv-intro__dock{opacity:1}}
+.gv-intro__noise,.gv-intro__grid,.gv-intro__rings{position:absolute;inset:0;pointer-events:none}
+.gv-intro__noise{opacity:.18;background-image:radial-gradient(rgba(255,255,255,.35) .6px,transparent .7px);background-size:5px 5px;mix-blend-mode:screen}
+.gv-intro__grid{opacity:.15;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(circle at 50% 50%,#000 0 28%,transparent 75%)}
+.gv-intro__rings span{position:absolute;left:50%;top:50%;width:min(62vw,760px);aspect-ratio:1;border:1px solid rgba(214,240,246,.13);border-radius:50%;transform:translate(-50%,-50%) scale(.25);opacity:0;animation:gv-rings-in 4.7s .2s var(--ease-cinematic) forwards}
+.gv-intro__rings span:nth-child(2){width:min(44vw,540px);border-color:rgba(0,229,255,.17);animation-delay:.45s}
+.gv-intro__rings span:nth-child(3){width:min(82vw,1000px);border-color:rgba(124,77,255,.1);animation-delay:.7s}
+.gv-intro__copy{position:absolute;left:clamp(1.4rem,8vw,8rem);top:50%;transform:translateY(-50%);z-index:8;width:min(610px,72vw);pointer-events:none}
+.gv-intro__kicker{display:block;margin-bottom:1rem;color:rgba(214,240,246,.48);font:600 .62rem/1 var(--font-code);letter-spacing:.18em;text-transform:uppercase}
+.gv-intro__copy h1{margin:0;font:600 clamp(3.2rem,8vw,8.5rem)/.84 var(--font-display);letter-spacing:-.07em;text-transform:uppercase}
+.gv-intro__copy h1 strong{font-weight:700;color:#fff;text-shadow:0 0 35px rgba(0,229,255,.12)}
+.gv-intro__copy p{margin-top:2rem;color:rgba(0,229,255,.72);font:600 .65rem/1 var(--font-code);letter-spacing:.15em;text-transform:uppercase}
+.gv-intro__progress{width:min(420px,58vw);height:2px;margin-top:.9rem;background:rgba(255,255,255,.09);overflow:hidden}
+.gv-intro__progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,rgba(0,229,255,.15),#dffcff);box-shadow:0 0 16px rgba(0,229,255,.7);animation:gv-progress 5.8s linear forwards}
+.gv-intro__copy>small{display:block;margin-top:.7rem;color:rgba(214,240,246,.32);font:500 .55rem/1 var(--font-code);letter-spacing:.14em}
+.gv-intro__identity{position:absolute;right:clamp(1.4rem,5vw,5rem);top:clamp(1.4rem,5vw,4rem);z-index:8;font:700 .8rem/1 var(--font-display);letter-spacing:.24em;text-align:right}.gv-intro__identity span{color:rgba(0,229,255,.6);font-size:.7em;letter-spacing:.36em}
+.gv-intro__skip{position:absolute;right:clamp(1.4rem,5vw,5rem);bottom:clamp(1.4rem,5vw,4rem);z-index:9;padding:.65rem .8rem;border:1px solid rgba(255,255,255,.14);border-radius:999px;color:rgba(246,248,250,.58);background:rgba(255,255,255,.025);font:600 .6rem/1 var(--font-code);letter-spacing:.12em;cursor:pointer}.gv-intro__skip:hover{color:#fff;border-color:rgba(0,229,255,.45)}.gv-intro__skip span{margin-left:.5rem;opacity:.45}
+
+.gv-intro__ship{position:absolute;left:-34px;top:7vh;width:38px;height:24px;z-index:5;transform:rotate(16deg) scale(.25);opacity:0;filter:drop-shadow(0 0 15px rgba(0,229,255,.75));animation:gv-ship-flight 2.8s .15s var(--ease-cinematic) forwards}
+.gv-intro__ship-body{position:absolute;left:9px;top:5px;width:24px;height:14px;border:1px solid rgba(235,252,255,.9);border-radius:65% 45% 55% 40%;background:linear-gradient(90deg,rgba(0,229,255,.1),rgba(246,252,255,.88));box-shadow:0 0 22px rgba(0,229,255,.5)}
+.gv-intro__ship-wing{position:absolute;top:8px;width:14px;height:8px;border:1px solid rgba(0,229,255,.55);background:rgba(0,229,255,.08);transform:skewX(-25deg)}.gv-intro__ship-wing--left{left:0}.gv-intro__ship-wing--right{right:0;transform:scaleX(-1) skewX(-25deg)}
+.gv-intro__ship-window{position:absolute;left:18px;top:8px;width:5px;height:5px;border-radius:50%;background:#e7fdff;box-shadow:0 0 10px #00e5ff}
+.gv-intro__ship-engine{position:absolute;left:-12px;top:10px;width:16px;height:4px;border-radius:50%;background:linear-gradient(90deg,transparent,#7c4dff);box-shadow:0 0 18px rgba(124,77,255,.8)}
+.gv-intro__ship-trail{position:absolute;left:-80px;top:11px;width:82px;height:2px;background:linear-gradient(90deg,transparent,rgba(124,77,255,.6),rgba(0,229,255,.65));filter:blur(.4px)}
+
+.gv-intro__core{position:absolute;left:50%;top:50%;width:min(82vw,820px);aspect-ratio:1;z-index:4;transform:translate(-50%,-50%) scale(.03);opacity:0;animation:gv-core-form 2.5s 2.25s var(--ease-cinematic) forwards}
+.gv-intro__core-ring{position:absolute;inset:8%;border:1px solid rgba(0,229,255,.25);border-radius:50%;transform:rotateX(68deg);animation:gv-core-spin 2.4s linear infinite}.gv-intro__core-ring--two{inset:24%;border-color:rgba(124,77,255,.3);transform:rotateY(68deg)}.gv-intro__core-light{position:absolute;inset:38%;border-radius:50%;background:radial-gradient(circle,#f6ffff 0 2%,rgba(0,229,255,.65) 8%,rgba(0,229,255,.08) 38%,transparent 70%);box-shadow:0 0 110px rgba(0,229,255,.45),0 0 180px rgba(124,77,255,.2)}
+
+.gv-intro__bot{position:absolute;left:50%;top:50%;width:min(66vw,620px);aspect-ratio:1;z-index:6;display:grid;place-items:center;opacity:0;transform:translate(-50%,-50%) scale(.04);animation:gv-bot-emerge 3s 3.25s var(--ease-cinematic) forwards}
+.gv-intro__bot-face{width:25%;aspect-ratio:1.2;border:2px solid rgba(0,229,255,.85);border-radius:27%;background:radial-gradient(circle,rgba(0,229,255,.2),rgba(4,7,13,.94) 62%);box-shadow:0 0 70px rgba(0,229,255,.3),inset 0 0 40px rgba(124,77,255,.16);display:flex;align-items:center;justify-content:center;gap:14%}.gv-intro__bot-face i{display:block;width:8%;aspect-ratio:1;border-radius:50%;background:#e6fdff;box-shadow:0 0 24px rgba(0,229,255,.95)}
+.gv-intro__bot-orbit{position:absolute;inset:5%;border:1px solid rgba(0,229,255,.3);border-radius:50%;transform:rotate(25deg) rotateX(66deg)}.gv-intro__bot-orbit--two{inset:18%;border-color:rgba(124,77,255,.28);transform:rotate(-30deg) rotateX(64deg)}
+
+.gv-intro__dock{position:absolute;right:18px;top:50%;width:122px;height:122px;z-index:3;transform:translateY(-50%);border:1px solid rgba(0,229,255,.2);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(0,229,255,.1),transparent 62%);box-shadow:inset 0 0 42px rgba(0,229,255,.05),0 0 60px rgba(0,229,255,.04);opacity:0;animation:gv-dock-reveal .7s 5.45s ease-out forwards}.gv-intro__dock::before,.gv-intro__dock::after{content:"";position:absolute;border:1px solid rgba(0,229,255,.22);border-radius:50%;inset:16px}.gv-intro__dock::after{inset:29px;border-color:rgba(124,77,255,.22);transform:rotate(30deg) scaleX(1.35)}.gv-intro__dock span{width:34px;height:34px;border:1px solid rgba(0,229,255,.7);border-radius:50%;box-shadow:0 0 32px rgba(0,229,255,.22)}.gv-intro__dock small{position:absolute;right:calc(100% + 10px);white-space:nowrap;color:rgba(214,240,246,.38);font:600 .5rem var(--font-code);letter-spacing:.12em}
+
+@keyframes gv-ship-flight{0%{left:-34px;top:7vh;transform:rotate(16deg) scale(.25);opacity:0}12%{opacity:1}48%{left:25vw;top:25vh;transform:rotate(16deg) scale(2)}74%{left:50%;top:50%;transform:translate(-50%,-50%) rotate(16deg) scale(8)}100%{left:50%;top:50%;transform:translate(-50%,-50%) rotate(0) scale(10);opacity:0}}
+@keyframes gv-core-form{0%{opacity:0;transform:translate(-50%,-50%) scale(.03)}30%{opacity:1;transform:translate(-50%,-50%) scale(.3)}70%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes gv-bot-emerge{0%{opacity:0;transform:translate(-50%,-50%) scale(.04)}28%{opacity:1;transform:translate(-50%,-50%) scale(.55)}55%{opacity:1;transform:translate(-50%,-50%) scale(1)}72%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:1;left:calc(100% - 78px);top:50%;transform:translate(-50%,-50%) scale(.095)}}
+@keyframes gv-dock-reveal{to{opacity:1}}@keyframes gv-rings-in{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}30%{opacity:.8}100%{opacity:.25;transform:translate(-50%,-50%) scale(1)}}@keyframes gv-progress{to{width:100%}}@keyframes gv-core-spin{to{transform:rotateX(68deg) rotate(360deg)}}
+
+@media(max-width:700px){.gv-intro__copy{left:1rem;width:88vw}.gv-intro__copy h1{font-size:clamp(3rem,14vw,6rem)}.gv-intro__dock{right:8px;width:88px;height:88px}.gv-intro__dock small{display:none}.gv-intro__identity{top:1rem;right:1rem}}
+@media(prefers-reduced-motion:reduce){.gv-intro__ship,.gv-intro__core,.gv-intro__bot,.gv-intro__rings span,.gv-intro__dock,.gv-intro__progress span{animation:none}.gv-intro__ship{left:50%;top:50%;transform:translate(-50%,-50%) scale(7);opacity:0}.gv-intro__core{opacity:1;transform:translate(-50%,-50%) scale(1)}.gv-intro__bot{opacity:1;left:calc(100% - 78px);top:50%;transform:translate(-50%,-50%) scale(.095)}.gv-intro__dock{opacity:1}.gv-intro__progress span{width:100%}}
 </style>
 
 <script>
@@ -73,29 +92,32 @@ const intro=document.querySelector<HTMLElement>("[data-cinematic-intro]");
 if(intro){
   const skip=intro.querySelector<HTMLButtonElement>("[data-intro-skip]");
   const status=intro.querySelector<HTMLElement>("[data-intro-status]");
-  const progress=intro.querySelector<HTMLElement>("[data-intro-progress]");
+  const code=intro.querySelector<HTMLElement>("[data-intro-code]");
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const stages=["SHIP SIGNAL ACQUIRED","VECTOR LOCKED · GURUVERSE CORE","INTELLIGENCE CORE DEPLOYING","GURU-BOT DEPLOYED","DOCK 01 · SYSTEM READY"];
-  let timer:number|undefined;
+  const stages=[
+    ["SHIP SIGNAL ACQUIRED","VECTOR 01 · ENTRY"],
+    ["IDENTITY CORE INITIALISING","VECTOR 02 · ORBIT LOCK"],
+    ["GURU-BOT CORE ONLINE","VECTOR 03 · INTELLIGENCE"],
+    ["DOCK 01 · SYSTEM READY","VECTOR 04 · LANDING"]
+  ];
   let stage=0;
+  let timer:number|undefined;
   const finish=()=>{
     if(timer) window.clearInterval(timer);
     sessionStorage.setItem("guruverse-intro-seen","1");
     intro.classList.add("is-complete");
-    window.setTimeout(()=>intro.remove(),850);
+    window.setTimeout(()=>intro.remove(),800);
   };
-  if(reduce){
-    finish();
-  }else{
+  if(reduce){ finish(); }
+  else{
     timer=window.setInterval(()=>{
-      stage++;
-      if(stage>=stages.length){ if(status) status.textContent=stages[stages.length-1]; if(progress) progress.textContent="05 — 05"; return; }
-      if(status) status.textContent=stages[stage];
-      if(progress) progress.textContent=String(stage).padStart(2,"0")+" — 05";
-    },850);
-    window.setTimeout(finish,5600);
+      stage=Math.min(stage+1,stages.length-1);
+      if(status) status.textContent=stages[stage][0];
+      if(code) code.textContent=stages[stage][1];
+    },1350);
+    window.setTimeout(finish,6900);
   }
   skip?.addEventListener("click",finish);
-  window.addEventListener("keydown",e=>{if(e.key==="Escape")finish()});
+  window.addEventListener("keydown",e=>{if(e.key==="Escape") finish()});
 }
 </script>

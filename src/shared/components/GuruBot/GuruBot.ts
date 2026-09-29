@@ -105,17 +105,83 @@ function positionPanel() {
   root.style.setProperty("--guru-bot-panel-top", `${y}px`);
 }
 
+function clearInactivityTimer() {
+  if (inactivityTimer) window.clearTimeout(inactivityTimer);
+  inactivityTimer = undefined;
+}
+
+function armInactivityTimer() {
+  clearInactivityTimer();
+  lastInteractionAt = Date.now();
+  inactivityTimer = window.setTimeout(() => {
+    if (Date.now() - lastInteractionAt >= INACTIVITY_MS) returnToDock("inactivity");
+  }, INACTIVITY_MS + 20);
+}
+
+function returnToDock(reason = "manual") {
+  if (!launcher || launcher.classList.contains("guru-bot--returning")) return;
+  clearInactivityTimer();
+  closeBot();
+  const point = dockPoint();
+  if (!point) {
+    setLauncherAtDock(true);
+    return;
+  }
+
+  const rect = launcher.getBoundingClientRect();
+  const startX = rect.left;
+  const startY = rect.top;
+  const targetX = point.left - rect.width / 2;
+  const targetY = point.top - rect.height / 2;
+  const start = performance.now();
+  const duration = reason === "inactivity" ? 1050 : 850;
+
+  launcher.classList.add("guru-bot--returning");
+  const travelAngle = Math.atan2(targetY - startY, targetX - startX) * 180 / Math.PI;
+  launcher.style.setProperty("--guru-bot-flight-transform", `rotate(${travelAngle}deg)`);
+
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const x = startX + (targetX - startX) * eased;
+    const y = startY + (targetY - startY) * eased;
+    setLauncherPosition(x, y, false);
+    if (progress < 1) {
+      returnAnimationFrame = requestAnimationFrame(step);
+    } else {
+      launcher.classList.remove("guru-bot--returning");
+      launcher.style.removeProperty("--guru-bot-flight-transform");
+      setLauncherAtDock(true);
+      dock?.classList.add("is-active");
+      window.setTimeout(() => dock?.classList.remove("is-active"), 700);
+      returnAnimationFrame = undefined;
+    }
+  };
+  if (returnAnimationFrame) cancelAnimationFrame(returnAnimationFrame);
+  returnAnimationFrame = requestAnimationFrame(step);
+}
+
+function noteInteraction() {
+  lastInteractionAt = Date.now();
+  if (root?.classList.contains("guru-bot-panel--open") || launcher?.classList.contains("guru-bot--placed")) {
+    armInactivityTimer();
+  }
+}
+
 function openBot() {
+  if (launcher?.classList.contains("guru-bot--returning")) return;
   root?.classList.add("guru-bot-panel--open");
   root?.setAttribute("aria-hidden", "false");
   launcher?.setAttribute("aria-expanded", "true");
   requestAnimationFrame(() => {
     positionPanel();
     input?.focus();
+    armInactivityTimer();
   });
 }
 
 function closeBot() {
+  clearInactivityTimer();
   root?.classList.remove("guru-bot-panel--open");
   root?.setAttribute("aria-hidden", "true");
   launcher?.setAttribute("aria-expanded", "false");
@@ -149,12 +215,14 @@ function updateModeUI() {
 }
 
 function clearChat() {
+  noteInteraction();
   if (conversation) conversation.innerHTML = "";
   if (response) response.textContent = `${mode.toUpperCase()} MODE · CHAT CLEARED`;
   input?.focus();
 }
 
 function ask(message: string) {
+  noteInteraction();
   const text = message.trim();
   if (!text) return;
   addMessage("user", text);
@@ -167,6 +235,7 @@ modeButtons?.forEach((button) => {
   button.addEventListener("click", () => {
     mode = (button.dataset.guruMode as GuruMode) || "explore";
     updateModeUI();
+    noteInteraction();
   });
 });
 
@@ -179,6 +248,10 @@ let dragStartLeft = 0;
 let dragStartTop = 0;
 let didDrag = false;
 let suppressClick = false;
+let inactivityTimer: number | undefined;
+let returnAnimationFrame: number | undefined;
+let lastInteractionAt = Date.now();
+const INACTIVITY_MS = 10000;
 
 launcher?.addEventListener("pointerdown", (event) => {
   if (event.button !== 0 || !launcher) return;
@@ -190,6 +263,7 @@ launcher?.addEventListener("pointerdown", (event) => {
   dragStartLeft = launcher.classList.contains("guru-bot--placed") ? parseFloat(computed.left) || rect.left : rect.left;
   dragStartTop = launcher.classList.contains("guru-bot--placed") ? parseFloat(computed.top) || rect.top : rect.top;
   didDrag = false;
+  noteInteraction();
   launcher.setPointerCapture(event.pointerId);
 });
 
@@ -200,7 +274,8 @@ launcher?.addEventListener("pointermove", (event) => {
   if (!didDrag && Math.hypot(dx, dy) < 5) return;
   didDrag = true;
   launcher.classList.add("guru-bot--dragging");
-  setLauncherPosition(dragStartLeft + dx, dragStartTop + dy);
+  setLauncherPosition(dragStartLeft + dx, dragStartTop + dy, false);
+  noteInteraction();
 });
 
 launcher?.addEventListener("pointerup", (event) => {
@@ -208,6 +283,7 @@ launcher?.addEventListener("pointerup", (event) => {
   if (didDrag) {
     snapToDockIfClose();
     suppressClick = true;
+    armInactivityTimer();
   }
   launcher.releasePointerCapture(event.pointerId);
   launcher.classList.remove("guru-bot--dragging");
@@ -232,12 +308,20 @@ launcher?.addEventListener("click", (event) => {
 closeButton?.addEventListener("click", closeBot);
 form?.addEventListener("submit", (event) => {
   event.preventDefault();
+  noteInteraction();
   if (input) { ask(input.value); input.value = ""; }
 });
 
 root?.querySelectorAll<HTMLButtonElement>("[data-guru-action]").forEach((button) => {
-  button.addEventListener("click", () => ask(button.dataset.guruAction || "What is GURUVERSE?"));
+  button.addEventListener("click", () => {
+    noteInteraction();
+    ask(button.dataset.guruAction || "What is GURUVERSE?");
+  });
 });
+
+input?.addEventListener("input", noteInteraction);
+root?.addEventListener("pointerdown", noteInteraction);
+root?.addEventListener("keydown", noteInteraction);
 
 window.addEventListener("resize", () => {
   if (!launcher) return;
