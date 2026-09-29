@@ -1,0 +1,67 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { research } from "../../features/research/data/research";
+import ResearchCaseStudy from "../../features/research/components/ResearchCaseStudy.astro";
+import ResearchEvidence from "../../features/research/components/ResearchEvidence.astro";
+import ResearchBoundaries from "../../features/research/components/ResearchBoundaries.astro";
+import ResearchLineage from "../../features/research/components/ResearchLineage.astro";
+import "../../features/research/styles/research.css";
+
+export function getStaticPaths() {
+  return research.map((item) => ({
+    params: { slug: item.id },
+    props: { item }
+  }));
+}
+
+const { item } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+  title={item.title + " — GURUVERSE Research"}
+  description={item.summary}
+  type="article"
+>
+  <main class="research-detail">
+    <header class="research-detail__hero">
+      <a class="research-detail__back" href={base + "/research/"}>← Research Universe</a>
+      <div class="research-detail__meta">
+        <span>{item.kind}</span>
+        <span>{item.status}</span>
+        <span>{item.category}</span>
+      </div>
+      <p class="research-detail__eyebrow">RESEARCH RECORD / {item.id.toUpperCase()}</p>
+      <h1>{item.title}</h1>
+      <p class="research-detail__summary">{item.summary}</p>
+      <div class="research-detail__tags">
+        {item.technologies.map((technology) => <span>{technology}</span>)}
+      </div>
+    </header>
+
+    <ResearchCaseStudy research={item} />
+
+    <section class="research-findings">
+      <div class="research-section-heading">
+        <span>FINDINGS / CURRENT STATE</span>
+        <h2>What the current evidence supports.</h2>
+      </div>
+      <div class="research-findings__grid">
+        {item.findings.map((finding, index) => (
+          <article><span>0{index + 1}</span><p>{finding}</p></article>
+        ))}
+      </div>
+    </section>
+
+    <ResearchEvidence research={item} />
+    <ResearchBoundaries research={item} />
+    <ResearchLineage research={item} />
+
+    <footer class="research-detail__footer">
+      <a href={base + "/research/"}>Back to research index</a>
+      {item.relatedProject && (
+        <a href={base + "/projects/" + item.relatedProject + "/"}>Inspect related project ↗</a>
+      )}
+    </footer>
+  </main>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import type { Research } from "../types/research";
+interface Props { research: Research; }
+const { research } = Astro.props;
+---
+
+<section class="research-boundaries">
+  <div class="research-section-heading">
+    <span>BOUNDARIES / NEXT</span>
+    <h2>Keep the claim smaller than the evidence.</h2>
+  </div>
+  <div class="research-boundaries__grid">
+    <div>
+      <h3>Current boundaries</h3>
+      <ul>{research.boundaries.map((item) => <li>{item}</li>)}</ul>
+    </div>
+    <div>
+      <h3>Next research steps</h3>
+      <ul>{research.nextSteps.map((item) => <li>{item}</li>)}</ul>
+    </div>
+  </div>
+</section>

@@ -1,148 +1,23 @@
 ---
-import type { Research } from "../data/research";
-
-interface Props{
-
-    research:Research;
-
-}
-
-const{
-
-    research
-
-}=Astro.props;
+import type { Research } from "../types/research";
+interface Props { research: Research; }
+const { research } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <article class="research-card">
-
-    {
-
-            research.status==="Published" && (
-
-                <span class="research-card__ribbon">
-
-                    IEEE RESEARCH
-
-                </span>
-
-            )
-
-        }
-
-        {
-
-            research.status==="Ongoing" && (
-
-                <span class="research-card__ribbon">
-
-                    ACTIVE
-
-                </span>
-
-            )
-
-        }
-
-        {
-
-            research.status==="Future" && (
-
-                <span class="research-card__ribbon">
-
-                    VISION
-
-                </span>
-
-            )
-
-            }
-
-    <span class="research-card__category">
-
-        {research.category}
-
-    </span>
-
-    <h3>
-
-        {research.title}
-
-    </h3>
-
-    <p class="research-card__description">
-
-        {research.description}
-
-    </p>
-
-    <div class="research-card__tech">
-
-        {
-
-            research.technologies.map(
-
-                technology=>(
-
-                    <span>
-
-                        {technology}
-
-                    </span>
-
-                )
-
-            )
-
-        }
-
-    </div>
-    {
-
-    research.featured && (
-
-        <div class="research-card__featured">
-
-            ★ Featured
-
-        </div>
-
-    )
-
-}
-
-    <div class="research-card__footer">
-
-        <span class={`research-card__status research-card__status--${research.status.toLowerCase()}`}>
-
-            {research.status}
-
-        </span>
-
-        {
-
-            research.link && (
-
-                <a
-
-                    href={research.link}
-
-                    target="_blank"
-
-                    rel="noopener noreferrer"
-
-                >
-
-                    View Research →
-
-                </a>
-
-            )
-
-        }
-
-        
-
-    </div>
-
+  <div class="research-card__top">
+    <span class="research-card__kind">{research.kind}</span>
+    <span class={'research-card__status research-card__status--' + research.status.toLowerCase()}>{research.status}</span>
+  </div>
+  <p class="research-card__category">{research.category}</p>
+  <h3>{research.title}</h3>
+  <p class="research-card__description">{research.summary}</p>
+  <div class="research-card__tech">
+    {research.technologies.map((technology) => <span>{technology}</span>)}
+  </div>
+  <div class="research-card__footer">
+    <span>RECORD / {research.id.toUpperCase()}</span>
+    <a href={base + "/research/" + research.id + "/"}>Inspect ↗</a>
+  </div>
 </article>

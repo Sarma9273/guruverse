@@ -1,0 +1,23 @@
+---
+import type { Research } from "../types/research";
+interface Props { research: Research; }
+const { research } = Astro.props;
+---
+
+<section class="research-evidence">
+  <div class="research-section-heading">
+    <span>EVIDENCE / VERIFICATION</span>
+    <h2>What supports the research record.</h2>
+  </div>
+  <div class="research-evidence__grid">
+    {research.evidence.map((item, index) => (
+      <article>
+        <span class="research-evidence__number">0{index + 1}</span>
+        <p class="research-evidence__type">{item.type}</p>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
+        {item.href && <a href={item.href} target="_blank" rel="noopener noreferrer">{item.linkLabel ?? "Open evidence"} ↗</a>}
+      </article>
+    ))}
+  </div>
+</section>
