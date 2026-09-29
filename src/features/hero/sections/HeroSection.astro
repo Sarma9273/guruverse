@@ -10,11 +10,51 @@ const base=import.meta.env.BASE_URL;
   <HeroBackground />
   <div class="hero__frame">
     <div class="hero__copy"><HeroContent /><HeroCTA /><HeroStats /></div>
-    <div class="hero-portrait" aria-label="Portrait of Guru Charan Mavuduru">
-      <div class="hero-portrait__halo"></div><div class="hero-portrait__ring hero-portrait__ring--one"></div><div class="hero-portrait__ring hero-portrait__ring--two"></div>
-      <div class="hero-portrait__frame"><img src={base + "images/profile.jpeg?v=3"} alt="Guru Charan Mavuduru" width="640" height="800" fetchpriority="high" decoding="async" /><span class="hero-portrait__scan"></span></div>
-      <div class="hero-portrait__label"><span>SUBJECT / 001</span><strong>GURU CHARAN MAVUDURU</strong><small>AI &amp; DATA SCIENCE · SECURITY · SOFTWARE</small></div>
+    <div class="hero-portrait" aria-label="Identity reveal portrait of Guru Charan Mavuduru">
+      <div class="hero-portrait__halo"></div>
+      <div class="hero-portrait__ring hero-portrait__ring--one"></div>
+      <div class="hero-portrait__ring hero-portrait__ring--two"></div>
+      <div class="hero-portrait__frame">
+        <img id="guru-portrait-source" src={base + "images/profile.jpeg?v=4"} alt="" width="640" height="800" fetchpriority="high" decoding="async" />
+        <canvas class="hero-portrait__particles" aria-hidden="true"></canvas>
+        <div class="hero-portrait__binary" aria-hidden="true"></div>
+        <span class="hero-portrait__scan"></span>
+      </div>
+      <div class="hero-portrait__verify" aria-live="polite"><span></span><b>IDENTITY VERIFICATION</b><small data-identity-status>SCANNING SUBJECT / 001</small></div>
+      <div class="hero-portrait__label"><span>SUBJECT / 001</span><strong>GURU CHARAN MAVUDURU</strong><small>AI &amp; DATA SCIENCE · SECURITY · SOFTWARE · RESEARCH</small></div>
     </div>
   </div>
   <a class="hero-scroll" href="#about" aria-label="Continue to identity"><span>CONTINUE EXPLORATION</span><i></i></a>
 </section>
+<script>
+const portrait=document.querySelector<HTMLImageElement>("#guru-portrait-source");
+const canvas=document.querySelector<HTMLCanvasElement>(".hero-portrait__particles");
+const frame=document.querySelector<HTMLElement>(".hero-portrait__frame");
+const status=document.querySelector<HTMLElement>("[data-identity-status]");
+const binary=document.querySelector<HTMLElement>(".hero-portrait__binary");
+if(portrait&&canvas&&frame){
+  const ctx=canvas.getContext("2d",{willReadFrequently:true});
+  const build=()=>{
+    if(!ctx||!portrait.naturalWidth)return;
+    const rect=frame.getBoundingClientRect();
+    const w=Math.max(180,Math.floor(rect.width)),h=Math.max(225,Math.floor(rect.height));
+    canvas.width=w;canvas.height=h;
+    const sample=document.createElement("canvas");sample.width=100;sample.height=Math.round(100*h/w);
+    const sc=sample.getContext("2d",{willReadFrequently:true});if(!sc)return;
+    sc.drawImage(portrait,0,0,sample.width,sample.height);
+    const data=sc.getImageData(0,0,sample.width,sample.height).data;
+    ctx.clearRect(0,0,w,h);ctx.textAlign="center";ctx.textBaseline="middle";
+    const sx=w/sample.width,sy=h/sample.height;
+    for(let y=0;y<sample.height;y+=2){for(let x=0;x<sample.width;x+=2){
+      const i=(y*sample.width+x)*4,l=.2126*data[i]+.7152*data[i+1]+.0722*data[i+2];
+      if(l>38){const a=Math.min(1,(l-28)/150);ctx.globalAlpha=.16+a*.72;ctx.fillStyle=l>175?"#eaffff":l>105?"#00e5ff":"#7c4dff";ctx.font=`${Math.max(5,Math.round(sx*.9))}px monospace`;ctx.fillText(((x+y)&1)?"1":"0",(x+.5)*sx,(y+.5)*sy);}
+    }}
+    ctx.globalAlpha=1;
+    frame.classList.add("is-identity-built");
+    if(status)status.textContent="IDENTITY VERIFIED · GURU CHARAN MAVUDURU";
+  };
+  if(portrait.complete)build();else portrait.addEventListener("load",build,{once:true});
+  window.addEventListener("resize",build,{passive:true});
+}
+if(binary){binary.textContent=Array.from({length:42},(_,i)=>`${(i%2)?"1":"0"}${((i*7)%2)?"0":"1"}${((i*3)%2)?"1":"0"}`).join(" · ");}
+</script>
