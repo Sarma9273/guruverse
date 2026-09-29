@@ -9,3 +9,48 @@
 .hero-portrait__verify span{width:5px;height:5px;border-radius:50%;background:#00ffa3;box-shadow:0 0 10px #00ffa3}
 .hero-portrait__verify b{font-size:.55rem;letter-spacing:.1em;color:#eaffff}.hero-portrait__verify small{font-size:.46rem;letter-spacing:.08em;color:rgba(220,242,248,.5)}
 @media(max-width:640px){.hero-portrait__verify{left:.55rem;top:.55rem}.hero-portrait__verify b{font-size:.48rem}.hero-portrait__verify small{font-size:.4rem}}
+
+/* ==========================================================
+   GURUVERSE 2.0 — CINEMATIC HERO SEQUENCING
+   ========================================================== */
+.hero.is-cinematic .hero__copy,
+.hero.is-cinematic .hero-portrait,
+.hero.is-cinematic .hero-scroll{
+  opacity:0;
+  transform:translateY(28px) scale(.985);
+  filter:blur(5px);
+}
+.hero.is-cinematic .hero-portrait{transform:translate3d(34px,0,0) scale(.965)}
+.hero.is-cinematic .hero-portrait__frame{opacity:.18}
+.hero.is-revealed .hero__copy,
+.hero.is-revealed .hero-portrait,
+.hero.is-revealed .hero-scroll{
+  animation:gv-hero-enter 1.15s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero.is-revealed .hero-portrait{animation-delay:.15s}
+.hero.is-revealed .hero-portrait__frame{animation:gv-frame-lock 1.4s .9s ease forwards}
+.hero.is-revealed .hero__copy{animation-delay:1.05s}
+.hero.is-revealed .hero-scroll{animation-delay:2.65s}
+.hero.is-revealed .hero__title span:first-child{animation:gv-title-line .85s 1.65s cubic-bezier(.16,1,.3,1) both}
+.hero.is-revealed .hero__title span:last-child{animation:gv-title-line .85s 1.82s cubic-bezier(.16,1,.3,1) both}
+.hero.is-revealed .hero__subtitle{animation:gv-copy-line .7s 2.08s ease both}
+.hero.is-revealed .hero__description{animation:gv-copy-line .7s 2.22s ease both}
+.hero.is-revealed .hero-meta{animation:gv-copy-line .7s 2.36s ease both}
+.hero.is-revealed .hero-cta{animation:gv-cta-enter .8s 2.52s cubic-bezier(.16,1,.3,1) both}
+.hero.is-revealed .hero-telemetry{animation:gv-copy-line .7s 2.7s ease both}
+.hero.is-revealed .hero-portrait__scan{animation:gv-final-scan 1.25s 1.25s ease-in-out 1 forwards}
+.hero.is-revealed .hero-portrait__label{animation:gv-label-enter .7s 2.5s ease both}
+.hero.is-revealed .hero-portrait__verify{animation:gv-verify-enter .65s .55s ease both}
+.hero-scroll{transition:opacity .5s ease}
+@keyframes gv-hero-enter{to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes gv-frame-lock{to{box-shadow:0 0 0 1px rgba(0,229,255,.14),0 35px 100px rgba(0,0,0,.55),0 0 75px rgba(0,229,255,.12)}}
+@keyframes gv-title-line{from{opacity:0;transform:translateY(32px);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes gv-copy-line{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes gv-cta-enter{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes gv-label-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes gv-verify-enter{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes gv-final-scan{0%{top:0;opacity:0}15%{opacity:1}82%{top:96%;opacity:1}100%{top:100%;opacity:0}}
+@media(prefers-reduced-motion:reduce){
+  .hero.is-cinematic .hero__copy,.hero.is-cinematic .hero-portrait,.hero.is-cinematic .hero-scroll{opacity:1;transform:none;filter:none}
+  .hero.is-revealed .hero__copy,.hero.is-revealed .hero-portrait,.hero.is-revealed .hero-scroll,.hero.is-revealed .hero__title span:first-child,.hero.is-revealed .hero__title span:last-child,.hero.is-revealed .hero__subtitle,.hero.is-revealed .hero__description,.hero.is-revealed .hero-meta,.hero.is-revealed .hero-cta,.hero.is-revealed .hero-telemetry,.hero.is-revealed .hero-portrait__scan,.hero.is-revealed .hero-portrait__label,.hero.is-revealed .hero-portrait__verify{animation:none!important;opacity:1;transform:none;filter:none}
+}
