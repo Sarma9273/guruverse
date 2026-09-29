@@ -1,12 +1,8 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import ExperienceSystem from "../../shared/components/ExperienceSystem.astro";
-import Navigation from "../../features/navigation/Navigation.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import JournalPage from "../../features/journal/JournalPage.astro";
 import { journalEntries } from "../../features/journal/data/journal";
 ---
-<Layout title="Journal — GURUVERSE" description="The engineering log of GURUVERSE.">
-  <Navigation />
-  <main><JournalPage entries={journalEntries} /></main>
-  <ExperienceSystem />
-</Layout>
+<BaseLayout title="Journal — GURUVERSE" description="The engineering log of GURUVERSE: investigations, build decisions, experiments, lessons and system evolution.">
+  <JournalPage entries={journalEntries} />
+</BaseLayout>
