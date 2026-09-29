@@ -1506,18 +1506,22 @@ html.guru-bot-screen-broken .guru-bot-crack{opacity:.78;transform:translate(-50%
 .guru-bot--idle-help{
   animation:guru-bot-idle-wave 2.2s ease-in-out infinite!important;
 }
-.guru-bot--idle-help .guru-bot__arm--right{
-  animation:guru-bot-help-wave .42s ease-in-out infinite!important;
+.guru-bot--idle-help .guru-bot__arm--left{
+  animation:guru-bot-help-wave .48s ease-in-out infinite!important;
   transform-origin:top center;
+  z-index:4;
 }
-.guru-bot--idle-help .guru-bot__arm--left{opacity:.75}
+.guru-bot--idle-help .guru-bot__arm--right{
+  transform:rotate(-8deg);
+  opacity:.42;
+}
 @keyframes guru-bot-help-wave{
-  0%{transform:rotate(-18deg)}
-  18%{transform:rotate(-62deg)}
-  36%{transform:rotate(-30deg)}
-  54%{transform:rotate(-68deg)}
-  72%{transform:rotate(-34deg)}
-  100%{transform:rotate(-18deg)}
+  0%{transform:rotate(-142deg) translate(0,0)}
+  18%{transform:rotate(-168deg) translate(-1px,-2px)}
+  36%{transform:rotate(-145deg) translate(1px,0)}
+  54%{transform:rotate(-174deg) translate(-2px,-3px)}
+  72%{transform:rotate(-150deg) translate(1px,-1px)}
+  100%{transform:rotate(-142deg) translate(0,0)}
 }
 .guru-bot--idle-help .guru-bot__torso{
   animation:guru-bot-help-body .84s ease-in-out infinite!important;
@@ -1550,22 +1554,37 @@ html.guru-bot-screen-broken .guru-bot-crack{opacity:.78;transform:translate(-50%
   transform:scale(1.65)!important;
   cursor:default!important;
 }
+.guru-bot--screen-prank .guru-bot__arm--left,
 .guru-bot--screen-prank .guru-bot__arm--right{
   transform-origin:top center;
+}
+.guru-bot--screen-prank.guru-bot--tap-1 .guru-bot__arm--left,
+.guru-bot--screen-prank.guru-bot--tap-2 .guru-bot__arm--left,
+.guru-bot--screen-prank.guru-bot--tap-3 .guru-bot__arm--left{
+  animation:guru-bot-screen-tap-left .55s cubic-bezier(.2,.9,.3,1) both;
 }
 .guru-bot--screen-prank.guru-bot--tap-1 .guru-bot__arm--right,
 .guru-bot--screen-prank.guru-bot--tap-2 .guru-bot__arm--right,
 .guru-bot--screen-prank.guru-bot--tap-3 .guru-bot__arm--right{
-  animation:guru-bot-screen-tap .55s cubic-bezier(.2,.9,.3,1) both;
+  animation:guru-bot-screen-tap-right .55s cubic-bezier(.2,.9,.3,1) both;
 }
-@keyframes guru-bot-screen-tap{
+@keyframes guru-bot-screen-tap-left{
+  0%{transform:rotate(8deg) translate(0,0)}
+  18%{transform:rotate(-85deg) translate(-2px,-3px)}
+  42%{transform:rotate(-145deg) translate(-5px,-6px)}
+  52%{transform:rotate(-170deg) translate(-6px,-8px)}
+  64%{transform:rotate(-158deg) translate(-5px,-6px)}
+  82%{transform:rotate(-110deg) translate(-2px,-3px)}
+  100%{transform:rotate(-145deg) translate(-1px,-2px)}
+}
+@keyframes guru-bot-screen-tap-right{
   0%{transform:rotate(-8deg) translate(0,0)}
-  18%{transform:rotate(-48deg) translate(2px,-2px)}
-  42%{transform:rotate(-86deg) translate(5px,-4px)}
-  52%{transform:rotate(-98deg) translate(7px,-7px)}
-  64%{transform:rotate(-88deg) translate(5px,-4px)}
-  82%{transform:rotate(-42deg) translate(1px,-1px)}
-  100%{transform:rotate(-8deg) translate(0,0)}
+  18%{transform:rotate(85deg) translate(2px,-3px)}
+  42%{transform:rotate(145deg) translate(5px,-6px)}
+  52%{transform:rotate(170deg) translate(6px,-8px)}
+  64%{transform:rotate(158deg) translate(5px,-6px)}
+  82%{transform:rotate(110deg) translate(2px,-3px)}
+  100%{transform:rotate(145deg) translate(1px,-2px)}
 }
 .guru-bot--screen-prank .guru-bot__torso{
   animation:guru-bot-tap-body .55s ease-out both;
@@ -1631,6 +1650,7 @@ html.guru-bot-screen-repaired:after{
 @media(prefers-reduced-motion:reduce){
   .guru-bot--idle-help,
   .guru-bot--idle-help .guru-bot__arm--right,
+  .guru-bot--screen-prank .guru-bot__arm--left,
   .guru-bot--screen-prank .guru-bot__arm--right,
   .guru-bot--screen-prank.guru-bot--repairing .guru-bot__chest:before,
   html.guru-bot-screen-broken:after{animation:none!important}
