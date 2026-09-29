@@ -437,7 +437,8 @@ function initialiseCinematicBot() {
   const revealWebsite = () => {
     /* Event + state flag makes the choreography reliable even when the
        intro's inline script fires before this hydrated module attaches. */
-    bootRoot.dataset.guruverseReveal = "pending";
+    bootRoot.dataset.guruverseReveal = "true";
+    bootRoot.dataset.guruverseBootPhase = "complete";
     window.setTimeout(beginPostRevealDocking, 320);
   };
 
