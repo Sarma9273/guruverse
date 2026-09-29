@@ -39,9 +39,10 @@
   <button class="gv-intro__skip" type="button" data-intro-skip>SKIP <kbd>ESC</kbd></button>
 </div>
 
-<style>
+<style is:inline>
 .gv-intro{position:fixed;inset:0;z-index:var(--z-loader);overflow:hidden;background:#010203;color:#eefcff;isolation:isolate;perspective:1400px;opacity:1;visibility:visible;pointer-events:auto}
 .gv-intro.is-complete{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .8s ease,visibility .8s}
+.gv-intro.is-waiting .gv-intro__progress i{width:94% !important;transition:width .45s ease}.gv-intro.is-waiting .gv-intro__title p{color:rgba(0,229,255,.9);animation:status-pulse 1.4s ease-in-out infinite}.gv-intro.is-waiting .gv-intro__cloud,.gv-intro.is-waiting .gv-intro__whiteout{display:none}
 .gv-intro__space,.gv-intro__stars,.gv-intro__grid,.gv-intro__scanlines,.gv-intro__vignette,.gv-intro__cloud,.gv-intro__whiteout{position:absolute;inset:0;pointer-events:none}
 .gv-intro__space{background:radial-gradient(circle at 50% 48%,rgba(0,229,255,.06),transparent 25%),radial-gradient(circle at 75% 35%,rgba(124,77,255,.08),transparent 34%),#010203}
 .gv-intro__stars{opacity:.72;background-image:radial-gradient(circle,rgba(240,255,255,.85) 0 1px,transparent 1.5px),radial-gradient(circle,rgba(0,229,255,.5) 0 1px,transparent 1.6px);background-size:113px 127px,197px 181px;background-position:9px 17px,70px 88px;animation:stars 14s linear infinite}
@@ -62,7 +63,7 @@
 .gv-intro.phase-dock .gv-intro__progress i{width:88%}.gv-intro.phase-dock .gv-intro__ship{animation:ship-depart 1.3s ease forwards}.gv-intro.phase-dock .gv-intro__bot{animation:bot-dock 1.8s cubic-bezier(.12,.78,.12,1) forwards}.gv-intro.phase-dock .gv-intro__dock{opacity:1;transform:translateY(-50%) scale(1)}
 .gv-intro.phase-white .gv-intro__progress i{width:100%}.gv-intro.phase-white .gv-intro__cloud{opacity:1}.gv-intro.phase-white .gv-intro__cloud i{animation:cloud-bloom 1.05s cubic-bezier(.1,.7,.1,1) forwards}.gv-intro.phase-white .gv-intro__whiteout{animation:whiteout 1.2s ease forwards}.gv-intro.phase-white .gv-intro__bot{animation:bot-dock-final .95s cubic-bezier(.12,.8,.12,1) forwards}.gv-intro.phase-white .gv-intro__dock{opacity:1;transform:translateY(-50%) scale(1)}
 .gv-intro.phase-ready .gv-intro__dock{opacity:1;transform:translateY(-50%) scale(1)}.gv-intro.phase-ready .gv-intro__bot{left:calc(100% - 3.5vw - 85px);top:50%;opacity:1;transform:translate(-50%,-50%) scale(.39)}
-@keyframes stars{to{background-position:130px 80px,10px 10px}}@keyframes spin{to{transform:rotateX(68deg) rotate(360deg)}}@keyframes fade-in{to{opacity:1}}
+@keyframes stars{to{background-position:130px 80px,10px 10px}}@keyframes status-pulse{0%,100%{opacity:.55}50%{opacity:1}}@keyframes spin{to{transform:rotateX(68deg) rotate(360deg)}}@keyframes fade-in{to{opacity:1}}
 @keyframes ship-arrive{0%{left:7vw;top:15vh;transform:translate(-50%,-50%) scale(.025) rotate(-20deg);opacity:0}8%{opacity:1}34%{left:18vw;top:23vh;transform:translate(-50%,-50%) scale(.12) rotate(-15deg)}68%{left:36vw;top:39vh;transform:translate(-50%,-50%) scale(.55) rotate(-7deg)}100%{left:50%;top:50%;transform:translate(-50%,-50%) scale(1.35) rotate(0);opacity:1}}
 @keyframes bot-exit{0%{opacity:0;left:50%;top:50%;transform:translate(-50%,-38%) scale(.04)}35%{opacity:1;transform:translate(-50%,-38%) scale(.4)}72%{transform:translate(-50%,-5%) scale(1.05)}100%{opacity:1;transform:translate(-50%,10%) scale(1.45)}}
 @keyframes bot-land{0%{left:50%;top:56%;transform:translate(-50%,-50%) scale(1.45)}55%{left:50%;top:58%;transform:translate(-50%,-50%) scale(1.85)}100%{left:50%;top:58%;transform:translate(-50%,-50%) scale(1.85)}}
@@ -73,25 +74,91 @@
 @media(prefers-reduced-motion:reduce){.gv-intro__stars,.bot-orbit{animation:none}.gv-intro__progress i{transition:none;width:100%}.gv-intro__ship{opacity:0}.gv-intro__bot{left:calc(100% - 7vw - 56px);top:50%;opacity:1;transform:translate(-50%,-50%) scale(.39)}.gv-intro__dock{opacity:1;transform:translateY(-50%) scale(1)}.gv-intro__whiteout{display:none}}
 </style>
 
-<script>
-const intro=document.querySelector<HTMLElement>("[data-cinematic-intro]");
-if(intro){
-  const status=intro.querySelector<HTMLElement>("[data-intro-status]");
-  const code=intro.querySelector<HTMLElement>("[data-intro-code]");
-  const skip=intro.querySelector<HTMLButtonElement>("[data-intro-skip]");
-  const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let finished=false;
-  const setStage=(name:string,statusText:string,codeText:string)=>{if(finished)return;intro.classList.remove("phase-ship","phase-door","phase-bot","phase-dock","phase-white","phase-ready");intro.classList.add(name);if(status)status.textContent=statusText;if(code)code.textContent=codeText};
-  const finish=()=>{if(finished)return;finished=true;intro.classList.add("phase-ready");window.dispatchEvent(new CustomEvent("guruverse:intro-reveal"));window.setTimeout(()=>intro.classList.add("is-complete"),700);window.setTimeout(()=>intro.remove(),1600)};
-  const timers:number[]=[];const later=(fn:()=>void,ms:number)=>timers.push(window.setTimeout(fn,ms));const cleanup=()=>timers.forEach(window.clearTimeout);
-  if(reduce){setStage("phase-ready","SYSTEM READY","REDUCED MOTION");window.setTimeout(finish,700)}else{
-    setStage("phase-ship","VESSEL APPROACHING","01 / FAR ORBIT");
-    later(()=>setStage("phase-door","VESSEL LOCKED / DOOR OPEN","02 / IDENTITY TRANSFER"),3200);
-    later(()=>setStage("phase-bot","GURU-BOT EMERGING","03 / INTELLIGENCE CORE"),4700);
-    later(()=>setStage("phase-dock","RETURNING TO DOCK 01","04 / CHARGING"),6250);
-    later(()=>setStage("phase-white","UNIVERSE ONLINE","05 / 100 PERCENT"),8050);
-    later(finish,9250);
+<script is:inline>
+(function () {
+  const intro = document.querySelector("[data-cinematic-intro]");
+  if (!intro) return;
+
+  const status = intro.querySelector("[data-intro-status]");
+  const code = intro.querySelector("[data-intro-code]");
+  const skip = intro.querySelector("[data-intro-skip]");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let finished = false;
+  let pageReady = document.readyState === "interactive" || document.readyState === "complete";
+  let whiteStageStarted = false;
+  const timers = [];
+
+  const setStage = (name, statusText, codeText) => {
+    if (finished) return;
+    intro.classList.remove("phase-ship", "phase-door", "phase-bot", "phase-dock", "phase-white", "phase-ready");
+    intro.classList.remove("is-waiting");
+    intro.classList.add(name);
+    if (status) status.textContent = statusText;
+    if (code) code.textContent = codeText;
+  };
+
+  const later = (fn, ms) => timers.push(window.setTimeout(fn, ms));
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    intro.classList.remove("is-waiting");
+    intro.classList.add("phase-ready");
+    window.dispatchEvent(new CustomEvent("guruverse:intro-reveal"));
+    window.setTimeout(() => intro.classList.add("is-complete"), 700);
+    window.setTimeout(() => intro.remove(), 1600);
+  };
+
+  const startWhiteTransition = () => {
+    if (finished || whiteStageStarted || !pageReady) return;
+    whiteStageStarted = true;
+    setStage("phase-white", "UNIVERSE ONLINE", "05 / 100 PERCENT");
+    later(finish, 1200);
+  };
+
+  const onReady = () => {
+    pageReady = true;
+    if (performance.now() >= 8050) startWhiteTransition();
+  };
+
+  if (reduce) {
+    setStage("phase-ready", "SYSTEM READY", "REDUCED MOTION");
+    later(finish, 700);
+  } else {
+    setStage("phase-ship", "VESSEL APPROACHING", "01 / FAR ORBIT");
+    later(() => setStage("phase-door", "VESSEL LOCKED / DOOR OPEN", "02 / IDENTITY TRANSFER"), 3200);
+    later(() => setStage("phase-bot", "GURU-BOT EMERGING", "03 / INTELLIGENCE CORE"), 4700);
+    later(() => setStage("phase-dock", "RETURNING TO DOCK 01", "04 / CHARGING"), 6250);
+    later(() => {
+      if (pageReady) {
+        startWhiteTransition();
+      } else {
+        intro.classList.add("is-waiting");
+        if (status) status.textContent = "SYNCHRONISING / HOLDING FOR PAGE";
+        if (code) code.textContent = "04 / READY GATE";
+      }
+    }, 8050);
+    later(() => {
+      if (pageReady) startWhiteTransition();
+      else {
+        intro.classList.add("is-waiting");
+        if (status) status.textContent = "SYNCHRONISING / HOLDING FOR PAGE";
+        if (code) code.textContent = "04 / READY GATE";
+      }
+    }, 9050);
   }
-  const onKey=(event:KeyboardEvent)=>{if(event.key==="Escape")finish()};skip?.addEventListener("click",finish);window.addEventListener("keydown",onKey);window.addEventListener("pagehide",cleanup,{once:true});
-}
+
+  const onKey = (event) => {
+    if (event.key === "Escape") finish();
+  };
+
+  skip && skip.addEventListener("click", finish);
+  window.addEventListener("keydown", onKey);
+  if (pageReady) {
+    window.setTimeout(onReady, 0);
+  } else {
+    window.addEventListener("DOMContentLoaded", onReady, { once: true });
+  }
+})();
 </script>
