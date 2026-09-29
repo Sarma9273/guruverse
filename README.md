@@ -266,14 +266,19 @@ Guruverse is built upon five core engineering principles:
 
 ## Version 2.0.0 — Completed
 
-- Accessibility foundations
-- SEO and structured metadata
-- GitHub Pages CI/CD
-- Base-path-safe routing
-- Project universe with case-study architecture, evidence, limitations, and evolution
-- Project-aware GURU-BOT
-- Experience modes and command palette
-- Release engineering and documentation
+- Cinematic visual foundation and identity-led opening sequence
+- Accessibility foundations and reduced-motion behavior
+- SEO, canonical metadata and sitemap
+- GitHub Pages CI/CD and base-path-safe routing
+- Project Universe with case studies, evidence, limitations and evolution
+- Research Universe with evidence, boundaries and lineage
+- Canonical local GURU-BOT with Explore, Recruiter, Engineer and Researcher modes
+- Mission Control and command palette
+- Journal engineering log
+- Interactive project explorer and domain filters
+- Supplied personal/project imagery integrated into the experience
+- Responsive, performance-conscious interaction surfaces
+- Release documentation and architecture alignment
 
 ---
 
@@ -283,28 +288,15 @@ The 1.0.1 release established the production portfolio baseline.
 
 ---
 
-## Version 2 — Completed
+## Version 3 — Planned
 
-- Conversational local GURU-BOT
-- Project-aware natural-language intent detection
-- Shared service-layer foundation
-- Interactive project search and domain filters
-- Expanded motion and interaction primitives
-- Responsive interaction surfaces
-- Release and documentation alignment
-
----
-
-## Version 3
-
-Project Universe is being developed as the current implementation phase: projects are presented as inspectable system worlds rather than summary cards.
-
+Future work may expand GURUVERSE with deeper interactive systems such as:
 
 - 3D Interactive Universe
-- Recruiter Mode
-- AI Mentor
+- AI Mentor extensions
 - Knowledge Graph
-- Research Explorer
+- Advanced research exploration
+- Additional engineering simulations
 
 ---
 
@@ -348,13 +340,13 @@ The project follows:
 
 # 🤝 Contributing
 
-Contribution guidelines will be introduced in Version 1.1.
+Contribution guidance is maintained in `CONTRIBUTING.md`.
 
 ---
 
 # 📜 License
 
-This project will be released under the **MIT License**.
+This project is released under the **MIT License**.
 
 ---
 
