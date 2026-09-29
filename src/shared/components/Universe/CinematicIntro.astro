@@ -113,8 +113,9 @@
     later(()=>{state("phase-bot","GURU-BOT HOLDING / FINALISING LOAD","04 / 78%",78)},6100);
     later(()=>{state("phase-bot","LOAD COMPLETE / 100 PERCENT","05 / 100%",100)},7600);
     later(()=>{state("phase-white","ATMOSPHERIC TRANSITION","06 / WHITE CLOUD",100);document.documentElement.classList.add("guruverse-whiteout");emit("guruverse:boot-whiteout")},8050);
-    later(()=>{state("phase-reveal","GURUVERSE ONLINE / WEBSITE REVEALED","07 / REVEALED",100);document.documentElement.classList.remove("guruverse-whiteout","guruverse-booting");emit("guruverse:website-reveal-start");emit("guruverse:website-revealed")},8850);
-    later(finish,9650);
+    later(()=>{state("phase-reveal","GURUVERSE ONLINE / WEBSITE REVEALED","07 / REVEALED",100);document.documentElement.classList.remove("guruverse-whiteout","guruverse-booting");emit("guruverse:website-reveal-start");emit("guruverse:website-revealed");later(finish,180)},8850);
+    /* The loader is removed immediately after reveal. The real GURU-BOT
+       then travels across the now-visible website, rather than underneath it. */
   }
   skip?.addEventListener("click",()=>{cancelAnimationFrame(raf);document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");emit("guruverse:website-revealed");finish()});
   addEventListener("keydown",e=>{if(e.key==="Escape")skip?.click()},{once:true});
