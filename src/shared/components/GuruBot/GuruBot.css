@@ -990,9 +990,10 @@ html.guruverse-booting .guru-bot-dock{
   animation:guru-bot-boot-hover 2.4s ease-in-out infinite;
 }
 @keyframes guru-bot-boot-emerge{
-  0%{opacity:0;transform:translate(-50%,-38%) scale(.08) rotate(-3deg);filter:brightness(1)}
-  35%{opacity:1;transform:translate(-50%,-47%) scale(.95) rotate(1deg);filter:brightness(1.35)}
-  72%{opacity:1;transform:translate(-50%,-53%) scale(2.35) rotate(-.5deg);filter:brightness(1.08)}
+  0%{opacity:0;transform:translate(-50%,18%) scale(.06) rotate(2deg);filter:brightness(1)}
+  18%{opacity:.55;transform:translate(-50%,5%) scale(.22) rotate(1deg);filter:brightness(1.6)}
+  42%{opacity:1;transform:translate(-50%,-18%) scale(.8) rotate(0);filter:brightness(1.45)}
+  68%{opacity:1;transform:translate(-50%,-42%) scale(1.9) rotate(-.5deg);filter:brightness(1.15)}
   100%{opacity:1;transform:translate(-50%,-50%) scale(2.55) rotate(0);filter:brightness(1)}
 }
 @keyframes guru-bot-boot-hover{
