@@ -120,7 +120,7 @@ const base = import.meta.env.BASE_URL;
   const code=intro.querySelector("[data-intro-code]");
   const skip=intro.querySelector("[data-intro-skip]");
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
+  const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen-v3")==="true"}catch{return false}})();
   let done=false;
   const timers=[];
   const later=(fn,ms)=>timers.push(window.setTimeout(fn,ms));
@@ -140,7 +140,7 @@ const base = import.meta.env.BASE_URL;
     timers.forEach(clearTimeout);
     emit("guruverse:intro-complete");
     intro.classList.add("is-complete");
-    try{sessionStorage.setItem("guruverse-intro-seen","true")}catch{}
+    try{sessionStorage.setItem("guruverse-intro-seen-v3","true")}catch{}
     window.setTimeout(()=>intro.remove(),950);
   }
 
