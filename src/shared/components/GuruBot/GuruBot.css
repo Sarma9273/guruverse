@@ -1440,7 +1440,7 @@ html.guruverse-docked .guru-bot__chest:after{
   white-space:nowrap;
   transition:opacity .35s ease,transform .35s ease,visibility .35s ease;
 }
-.guru-bot-help-bubble{right:auto;bottom:calc(50% + 72px)}
+.guru-bot-help-bubble{left:auto;right:30px;bottom:auto;top:calc(50% - 105px)}
 .guru-bot-help-bubble span,
 .guru-bot-prank-message span{
   display:block;
@@ -1551,7 +1551,7 @@ html.guru-bot-screen-repaired:after{
   100%{opacity:0}
 }
 @media(max-width:768px){
-  .guru-bot-help-bubble{bottom:calc(50% + 58px)}
+  .guru-bot-help-bubble{right:20px;top:calc(50% - 88px)}
   .guru-bot-prank-message{top:calc(50% + 90px)}
   .guru-bot-crack{width:78vw;height:55vw}
 }
@@ -1561,4 +1561,28 @@ html.guru-bot-screen-repaired:after{
   .guru-bot--screen-prank .guru-bot__arm--right,
   .guru-bot--screen-prank.guru-bot--repairing .guru-bot__chest:before,
   html.guru-bot-screen-broken:after{animation:none!important}
+}
+
+.guru-bot-screen-tap-1:before,
+.guru-bot-screen-tap-2:before,
+.guru-bot-screen-tap-3:before{
+  content:"";
+  position:fixed;
+  left:50%;
+  top:50%;
+  width:14px;
+  height:14px;
+  border:1px solid rgba(180,250,255,.85);
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(.3);
+  opacity:0;
+  pointer-events:none;
+  z-index:calc(var(--z-robot) + 5);
+}
+.guru-bot-screen-tap-1:before{animation:guru-bot-tap-ripple .55s ease-out}
+.guru-bot-screen-tap-2:before{animation:guru-bot-tap-ripple .55s .04s ease-out}
+.guru-bot-screen-tap-3:before{animation:guru-bot-tap-ripple .55s .08s ease-out}
+@keyframes guru-bot-tap-ripple{
+  0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(4.5)}
 }
