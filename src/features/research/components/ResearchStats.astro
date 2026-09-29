@@ -1,35 +1,13 @@
-<section class="research-stats">
+---
+import { research } from "../data/research";
+const completed = research.filter((item) => item.status === "Completed").length;
+const ongoing = research.filter((item) => item.status === "Ongoing").length;
+const future = research.filter((item) => item.status === "Future").length;
+---
 
-    <div>
-
-        <h3>03</h3>
-
-        <p>Research Domains</p>
-
-    </div>
-
-    <div>
-
-        <h3>15+</h3>
-
-        <p>Algorithms Studied</p>
-
-    </div>
-
-    <div>
-
-        <h3>100+</h3>
-
-        <p>Simulation Hours</p>
-
-    </div>
-
-    <div>
-
-        <h3>AI</h3>
-
-        <p>Future Vision</p>
-
-    </div>
-
-</section>
+<div class="research-stats" aria-label="Research index summary">
+  <div><strong>{research.length}</strong><span>Research tracks</span></div>
+  <div><strong>{completed}</strong><span>Completed records</span></div>
+  <div><strong>{ongoing}</strong><span>Active tracks</span></div>
+  <div><strong>{future}</strong><span>Future directions</span></div>
+</div>
