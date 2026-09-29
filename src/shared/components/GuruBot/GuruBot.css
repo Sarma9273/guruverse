@@ -910,8 +910,9 @@
 /* ==========================================================
    AUTONOMOUS RETURN / JETPACK
    ========================================================== */
-.guru-bot--returning{
+ .guru-bot--returning{
     transition:none!important;
+    transform:var(--guru-bot-flight-transform,none)!important;
     pointer-events:none;
     cursor:default;
     z-index:calc(var(--z-robot) + 2);
