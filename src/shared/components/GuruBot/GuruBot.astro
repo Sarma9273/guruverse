@@ -1,176 +1,41 @@
 ---
 import "./GuruBot.css";
-interface ProjectContext {
-    id: string;
-    title: string;
-    tagline: string;
-    description: string;
-    category: string;
-    status: string;
-    technologies: string[];
-    overview?: string;
-    architecture?: string[];
-    workflow?: string[];
-}
-
-interface Props {
-    label?: string;
-    project?: ProjectContext;
-}
-
-const {
-    label = "Open GURU-BOT",
-    project,
-} = Astro.props;
+interface Props { label?: string; project?: { title:string; tagline:string; description:string; category:string; status:string; technologies:string[]; }; }
+const { label = "Open GURU-BOT", project } = Astro.props;
 ---
-
-<button
-    class="guru-bot"
-    type="button"
-    aria-label={label}
-    aria-expanded="false"
-    aria-controls="guru-bot-panel"
->
-    <span class="guru-bot__core">
-        <span class="guru-bot__pulse"></span>
-
-        <span class="guru-bot__eye guru-bot__eye--left"></span>
-
-        <span class="guru-bot__eye guru-bot__eye--right"></span>
-    </span>
-
-    <span class="guru-bot__orbit guru-bot__orbit--one"></span>
-
-    <span class="guru-bot__orbit guru-bot__orbit--two"></span>
-
-    <span class="guru-bot__status">
-        GURU-BOT
-    </span>
+<button class="guru-bot" type="button" aria-label={label} aria-expanded="false" aria-controls="guru-bot-panel">
+  <span class="guru-bot__core"><span class="guru-bot__pulse"></span><span class="guru-bot__eye guru-bot__eye--left"></span><span class="guru-bot__eye guru-bot__eye--right"></span></span>
+  <span class="guru-bot__orbit guru-bot__orbit--one"></span><span class="guru-bot__orbit guru-bot__orbit--two"></span>
+  <span class="guru-bot__status">GURU-BOT</span>
 </button>
-
-<section
-    id="guru-bot-panel"
-    class="guru-bot-panel"
-    aria-hidden="true"
->
-    <div class="guru-bot-panel__header">
-
-        <div>
-            <span class="guru-bot-panel__eyebrow">
-                GURUVERSE AI
-            </span>
-
-            <h2>GURU-BOT</h2>
-        </div>
-
-        <button
-            class="guru-bot-panel__close"
-            type="button"
-            aria-label="Close GURU-BOT"
-        >
-            ×
-        </button>
-
+<section id="guru-bot-panel" class="guru-bot-panel" aria-hidden="true">
+  <div class="guru-bot-panel__header">
+    <div><span class="guru-bot-panel__eyebrow">GURUVERSE INTELLIGENCE</span><h2>GURU-BOT</h2></div>
+    <button class="guru-bot-panel__close" type="button" aria-label="Close GURU-BOT">×</button>
+  </div>
+  <div class="guru-bot-panel__body">
+    <div class="guru-bot-panel__indicator"></div>
+    <div class="guru-bot__modebar" role="group" aria-label="GURU-BOT mode">
+      <button type="button" data-guru-mode="explore" class="is-active">Explore</button>
+      <button type="button" data-guru-mode="recruiter">Recruiter</button>
+      <button type="button" data-guru-mode="engineer">Engineer</button>
+      <button type="button" data-guru-mode="researcher">Researcher</button>
     </div>
-
-    <div class="guru-bot-panel__body">
-
-        <div class="guru-bot-panel__indicator"></div>
-
-        {
-            project ? (
-                <>
-                    <div class="guru-bot__project">
-
-                        <span class="guru-bot__project-label">
-                            CURRENT PROJECT
-                        </span>
-
-                        <h3 class="guru-bot__project-title">
-                            {project.title}
-                        </h3>
-
-                        <p class="guru-bot__project-tagline">
-                            {project.tagline}
-                        </p>
-
-                    </div>
-
-                    <div class="guru-bot__actions">
-
-                        <button
-                            type="button"
-                            class="guru-bot__action"
-                            data-guru-action="overview"
-                        >
-                            What is {project.title}?
-                        </button>
-
-                        <button
-                            type="button"
-                            class="guru-bot__action"
-                            data-guru-action="architecture"
-                        >
-                            Explain Architecture
-                        </button>
-
-                        <button
-                            type="button"
-                            class="guru-bot__action"
-                            data-guru-action="workflow"
-                        >
-                            Explain Workflow
-                        </button>
-
-                        <button
-                            type="button"
-                            class="guru-bot__action"
-                            data-guru-action="technologies"
-                        >
-                            Show Tech Stack
-                        </button>
-
-                    </div>
-
-                    <div class="guru-bot__conversation" data-guru-conversation aria-live="polite"></div>
-                    <form class="guru-bot__ask" data-guru-form>
-                        <label class="sr-only" for="guru-bot-input">Ask GURU-BOT</label>
-                        <input id="guru-bot-input" data-guru-input type="text" autocomplete="off" placeholder="Ask about architecture, workflow, stack…" />
-                        <button type="submit">Ask</button>
-                    </form>
-                    <div class="guru-bot__response" data-guru-response aria-live="polite"></div>
-                </>
-            ) : (
-                <>
-                    <p>
-                        GURU-BOT is initializing.
-                    </p>
-
-                    <p>
-                        Interactive intelligence will be connected here.
-                    </p>
-                </>
-            )
-        }
-
+    {project && <div class="guru-bot__project"><span class="guru-bot__project-label">CURRENT PROJECT</span><h3 class="guru-bot__project-title">{project.title}</h3><p class="guru-bot__project-tagline">{project.tagline}</p></div>}
+    <div class="guru-bot__actions">
+      <button type="button" class="guru-bot__action" data-guru-action="What is GURUVERSE?">What is this system?</button>
+      <button type="button" class="guru-bot__action" data-guru-action="Explain the architecture">Architecture</button>
+      <button type="button" class="guru-bot__action" data-guru-action="Show the evidence">Evidence</button>
+      <button type="button" class="guru-bot__action" data-guru-action="What are the limitations?">Boundaries</button>
     </div>
-
-    <div class="guru-bot-panel__footer">
-        SYSTEM ONLINE
-    </div>
-
+    <div class="guru-bot__conversation" data-guru-conversation aria-live="polite"></div>
+    <form class="guru-bot__ask" data-guru-form>
+      <label class="sr-only" for="guru-bot-input">Ask GURU-BOT</label>
+      <input id="guru-bot-input" data-guru-input type="text" autocomplete="off" placeholder="Ask about projects, research, journey…" />
+      <button type="submit">Ask</button>
+    </form>
+    <div class="guru-bot__response" data-guru-response aria-live="polite"></div>
+  </div>
+  <div class="guru-bot-panel__footer">LOCAL KNOWLEDGE · NO EXTERNAL AI API</div>
 </section>
-
-{
-    project && (
-        <script
-            type="application/json"
-            data-guru-project
-            set:html={JSON.stringify(project)}
-        />
-    )
-}
-
-<script>
-    import "./GuruBot.ts";
-</script>
+<script>import "./GuruBot.ts";</script>
