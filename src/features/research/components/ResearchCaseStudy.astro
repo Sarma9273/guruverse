@@ -1,0 +1,27 @@
+---
+import type { Research } from "../types/research";
+interface Props { research: Research; }
+const { research } = Astro.props;
+---
+
+<section class="research-case-study">
+  <div class="research-section-heading">
+    <span>RESEARCH QUESTION</span>
+    <h2>{research.question}</h2>
+  </div>
+  <div class="research-case-study__objective">
+    <span>OBJECTIVE</span>
+    <p>{research.objective}</p>
+  </div>
+  <div class="research-methodology">
+    <span>METHOD / 0{research.methodology.length}</span>
+    <div class="research-methodology__grid">
+      {research.methodology.map((step, index) => (
+        <article>
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <p>{step}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
