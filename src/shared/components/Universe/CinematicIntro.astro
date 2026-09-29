@@ -79,7 +79,19 @@
   function finish(){if(done)return;done=true;root.classList.add("is-complete");document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");later(()=>emit("guruverse:intro-complete"),120);later(()=>root.remove(),800)}
   function run(){
     document.documentElement.classList.add("guruverse-booting");
-    /* Reduced-motion disables decorative motion, not the cinematic sequence itself. The boot remains readable. */\n    if(reduce){\n      state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);\n      document.documentElement.dataset.guruverseBootPhase="system";\n      later(()=>state("phase-core","IDENTITY CORE ONLINE","02 / CORE",28),2600);\n      later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},6000);\n      later(()=>state("phase-bot","GURU-BOT STANDING / LOADING","04 / 78%",78),7600);\n      later(()=>state("phase-bot","GURU-BOT READY / 100%","05 / COMPLETE",100),9800);\n      later(()=>{state("phase-white","SYSTEM COMPLETE / REVEALING","06 / WHITEOUT",100);document.documentElement.classList.add("guruverse-whiteout");emit("guruverse:boot-whiteout")},12000);\n      later(()=>{state("phase-reveal","GURUVERSE ONLINE","07 / WEBSITE",100);document.documentElement.classList.remove("guruverse-whiteout","guruverse-booting");document.documentElement.dataset.guruverseReveal="true";emit("guruverse:website-reveal-start");emit("guruverse:website-revealed");later(finish,700)},14000);\n      return;\n    }\n    state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);emit("guruverse:boot-start");
+    /* Reduced-motion disables decorative motion, not the cinematic sequence itself. The boot remains readable. */
+    if(reduce){
+      state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);
+      document.documentElement.dataset.guruverseBootPhase="system";
+      later(()=>state("phase-core","IDENTITY CORE ONLINE","02 / CORE",28),2600);
+      later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},6000);
+      later(()=>state("phase-bot","GURU-BOT STANDING / LOADING","04 / 78%",78),7600);
+      later(()=>state("phase-bot","GURU-BOT READY / 100%","05 / COMPLETE",100),9800);
+      later(()=>{state("phase-white","SYSTEM COMPLETE / REVEALING","06 / WHITEOUT",100);document.documentElement.classList.add("guruverse-whiteout");emit("guruverse:boot-whiteout")},12000);
+      later(()=>{state("phase-reveal","GURUVERSE ONLINE","07 / WEBSITE",100);document.documentElement.classList.remove("guruverse-whiteout","guruverse-booting");document.documentElement.dataset.guruverseReveal="true";emit("guruverse:website-reveal-start");emit("guruverse:website-revealed");later(finish,700)},14000);
+      return;
+    }
+    state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);emit("guruverse:boot-start");
     later(()=>{state("phase-core","IDENTITY CORE ONLINE","02 / CORE",28)},3000);
     later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},4700);
     later(()=>{state("phase-bot","GURU-BOT STANDING / LOADING","04 / 78%",78)},9000);
