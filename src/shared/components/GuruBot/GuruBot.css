@@ -906,3 +906,46 @@
   .guru-bot-dock__label{display:none}
 }
 @media(prefers-reduced-motion:reduce){.guru-bot-dock.is-active{animation:none}}
+
+/* ==========================================================
+   AUTONOMOUS RETURN / JETPACK
+   ========================================================== */
+.guru-bot--returning{
+    transition:none!important;
+    pointer-events:none;
+    cursor:default;
+    z-index:calc(var(--z-robot) + 2);
+}
+.guru-bot--returning:hover{transform:var(--guru-bot-flight-transform,none)!important}
+.guru-bot__jetpack{
+    position:absolute;
+    left:50%;
+    top:calc(100% - 2px);
+    width:28px;
+    height:18px;
+    transform:translateX(-50%);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .15s ease;
+}
+.guru-bot--returning .guru-bot__jetpack{opacity:1}
+.guru-bot__jetpack i{
+    position:absolute;
+    top:0;
+    width:6px;
+    height:18px;
+    border-radius:50%;
+    background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(0,229,255,.75) 32%,rgba(124,77,255,.72) 68%,transparent);
+    filter:blur(.3px);
+    box-shadow:0 0 13px rgba(0,229,255,.65),0 8px 18px rgba(124,77,255,.35);
+    animation:guru-bot-jetpack .18s ease-in-out infinite alternate;
+}
+.guru-bot__jetpack i:first-child{left:7px}
+.guru-bot__jetpack i:last-child{right:7px;animation-delay:.08s}
+@keyframes guru-bot-jetpack{
+    from{height:12px;opacity:.65;transform:scaleX(.8)}
+    to{height:23px;opacity:1;transform:scaleX(1.15)}
+}
+@media(prefers-reduced-motion:reduce){
+    .guru-bot__jetpack i{animation:none;height:15px}
+}
