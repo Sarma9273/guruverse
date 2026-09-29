@@ -4,7 +4,7 @@ const base=import.meta.env.BASE_URL.replace(/\/$/,"");
 ---
 <header class="gv-navbar" data-navigation>
   <div class="gv-navbar__container">
-    <a href={base + "/"} class="gv-logo" aria-label="GURUVERSE home"><span class="gv-logo__mark" aria-hidden="true"><i></i><i></i><i></i></span><span>GURUVERSE</span></a>
+    <button class="gv-command" type="button" data-command-open aria-label="Open GURUVERSE command palette"><span>⌘</span><span>K</span></button><a href={base + "/"} class="gv-logo" aria-label="GURUVERSE home"><span class="gv-logo__mark" aria-hidden="true"><i></i><i></i><i></i></span><span>GURUVERSE</span></a>
     <nav class="gv-nav" aria-label="Primary navigation"><a href={base + "/#about"}>Identity</a><a href={base + "/#timeline"}>Journey</a><a href={base + "/projects/"}>Projects</a><a href={base + "/research/"}>Research</a><a href={base + "/journal/"}>Journal</a></nav>
     <div class="gv-actions"><a href={base + "/resume/"} class="gv-resume">Resume <span>↗</span></a><button class="gv-menu" type="button" aria-expanded="false" aria-controls="gv-mobile-nav" data-mobile-toggle><span></span><span></span><span></span><b>Menu</b></button></div>
   </div>

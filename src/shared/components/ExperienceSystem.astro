@@ -8,9 +8,6 @@ import "./experience-system.css";
     <button type="button" data-mode="engineer" aria-pressed="false">Engineer</button>
     <button type="button" data-mode="researcher" aria-pressed="false">Researcher</button>
   </div>
-  <button class="experience-system__command" type="button" data-command-open aria-label="Open GURUVERSE command palette">
-    <span>⌘</span><span>K</span>
-  </button>
   <dialog class="command-palette" data-command-dialog aria-labelledby="command-title">
     <div class="command-palette__panel">
       <div class="command-palette__header">
@@ -28,7 +25,7 @@ import "./experience-system.css";
   if (root) {
     const modes = root.querySelectorAll("[data-mode]");
     const dialog = root.querySelector("[data-command-dialog]");
-    const open = root.querySelector("[data-command-open]");
+    const open = document.querySelector("[data-command-open]");
     const close = root.querySelector("[data-command-close]");
     const input = root.querySelector("[data-command-input]");
     const results = root.querySelector("[data-command-results]");
@@ -61,7 +58,7 @@ import "./experience-system.css";
     modes.forEach(button => button.addEventListener("click", () => setMode(button.dataset.mode)));
     try { setMode(localStorage.getItem("guruverse-experience-mode") || "explore"); } catch { setMode("explore"); }
     const show = () => { render(input.value); dialog.showModal(); requestAnimationFrame(() => input.focus()); };
-    open.addEventListener("click", show);
+    open?.addEventListener("click", show);
     close.addEventListener("click", () => dialog.close());
     input.addEventListener("input", () => render(input.value));
     dialog.addEventListener("click", event => { if (event.target === dialog) dialog.close(); });
