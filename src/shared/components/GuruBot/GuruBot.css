@@ -950,3 +950,73 @@
 @media(prefers-reduced-motion:reduce){
     .guru-bot__jetpack i{animation:none;height:15px}
 }
+
+
+/* ==========================================================
+   CINEMATIC BOOT / POST-REVEAL DOCKING
+   The launcher itself is the same robot seen during arrival.
+   Docking is intentionally unavailable until the website is revealed.
+   ========================================================== */
+html.guruverse-booting .guru-bot-dock{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+.guru-bot--booting{
+  position:fixed!important;
+  left:50%!important;
+  top:50%!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:82px!important;
+  height:82px!important;
+  z-index:calc(var(--z-loader) + 5)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  cursor:default!important;
+  transform:translate(-50%,-50%) scale(.045)!important;
+  transition:none!important;
+  will-change:transform,opacity;
+  box-shadow:0 0 80px rgba(0,229,255,.42),inset 0 0 24px rgba(0,229,255,.12);
+}
+.guru-bot--boot-emerging{
+  opacity:1!important;
+  transform:translate(-50%,-50%) scale(2.75)!important;
+  border-color:rgba(191,250,255,.9)!important;
+  box-shadow:0 0 110px rgba(0,229,255,.48),0 0 30px rgba(124,77,255,.24),inset 0 0 28px rgba(0,229,255,.2);
+}
+.guru-bot--boot-holding{
+  opacity:1!important;
+  transform:translate(-50%,-50%) scale(2.55)!important;
+}
+.guru-bot--post-reveal-flight{
+  right:auto!important;
+  bottom:auto!important;
+  transition:none!important;
+  pointer-events:none!important;
+  cursor:default!important;
+  z-index:calc(var(--z-robot) + 4)!important;
+  transform:var(--guru-bot-post-transform,none)!important;
+  will-change:left,top,transform;
+}
+.guru-bot--post-reveal-flight .guru-bot__jetpack{
+  opacity:1;
+}
+html.guruverse-docking .guru-bot-dock{
+  opacity:1;
+  visibility:visible;
+  animation:guru-bot-dock-arrival .65s ease-out;
+}
+html.guruverse-docked .guru-bot-dock{
+  opacity:1;
+  visibility:visible;
+}
+@keyframes guru-bot-dock-arrival{
+  0%{transform:translateY(-50%) scale(.72);opacity:.18}
+  55%{transform:translateY(-50%) scale(1.1);opacity:1}
+  100%{transform:translateY(-50%) scale(1);opacity:.82}
+}
+@media(prefers-reduced-motion:reduce){
+  .guru-bot--booting{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important}
+  .guru-bot--boot-emerging,.guru-bot--boot-holding{transform:translate(-50%,-50%) scale(1)!important}
+  .guru-bot--post-reveal-flight{transition:none!important}
+}
