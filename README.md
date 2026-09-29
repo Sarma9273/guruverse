@@ -270,7 +270,7 @@ Guruverse is built upon five core engineering principles:
 - SEO and structured metadata
 - GitHub Pages CI/CD
 - Base-path-safe routing
-- Project case-study architecture
+- Project universe with case-study architecture, evidence, limitations, and evolution
 - Project-aware GURU-BOT
 - Experience modes and command palette
 - Release engineering and documentation
@@ -296,6 +296,9 @@ The 1.0.1 release established the production portfolio baseline.
 ---
 
 ## Version 3
+
+Project Universe is being developed as the current implementation phase: projects are presented as inspectable system worlds rather than summary cards.
+
 
 - 3D Interactive Universe
 - Recruiter Mode
