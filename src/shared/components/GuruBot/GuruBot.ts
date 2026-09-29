@@ -438,7 +438,7 @@ function initialiseCinematicBot() {
     /* Event + state flag makes the choreography reliable even when the
        intro's inline script fires before this hydrated module attaches. */
     bootRoot.dataset.guruverseReveal = "pending";
-    window.setTimeout(beginPostRevealDocking, 120);
+    window.setTimeout(beginPostRevealDocking, 320);
   };
 
   window.addEventListener("guruverse:bot-emerge", startBootBot, { once: true });
