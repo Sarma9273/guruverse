@@ -15,15 +15,24 @@ const normalize = (value: string) =>
 const list = (items?: string[]) =>
   items?.length ? items.map((item, i) => `${i + 1}. ${item}`).join("\n") : "No additional information is documented yet.";
 
+const modeLens = (mode: GuruMode): string => {
+  if (mode === "recruiter") return "RECRUITER LENS — professional scope, responsibilities, project evidence, and documented outcomes.";
+  if (mode === "engineer") return "ENGINEER LENS — architecture, implementation flow, technology choices, and engineering boundaries.";
+  if (mode === "researcher") return "RESEARCHER LENS — methodology, evidence, findings, limitations, and next investigations.";
+  return "EXPLORE LENS — orientation, system context, and how the documented parts connect.";
+};
+
+const modeWrap = (mode: GuruMode, text: string) => `${modeLens(mode)}\n\n${text}`;
+
 export function detectGuruIntent(message: string): GuruIntent {
   const text = normalize(message);
   if (!text) return "help";
   if (/research|paper|publication|methodology|experiment|investigation/.test(text)) return "research";
   if (/journey|timeline|education|career path|background/.test(text)) return "journey";
-  if (/experience|work|role|job|teaching|trainer/.test(text)) return "experience";
+  if (/experience|work|role|job|teaching|trainer|professional profile/.test(text)) return "experience";
   if (/evidence|verification|proof|repository|benchmark/.test(text)) return "evidence";
   if (/limitation|limitations|boundary|boundaries|not included/.test(text)) return "limitations";
-  if (/architecture|structure|components|design/.test(text)) return "architecture";
+  if (/architecture|structure|components|design|system map/.test(text)) return "architecture";
   if (/workflow|process|works|working|pipeline/.test(text)) return "workflow";
   if (/technology|technologies|stack|tools|built with/.test(text)) return "technologies";
   if (/problem|challenge|need|why/.test(text)) return "problem";
@@ -56,50 +65,92 @@ export function answerGuruQuery(message: string, mode: GuruMode = "explore"): { 
     if (!item) {
       return {
         intent,
-        text: `Research in GURUVERSE is organized into ${research.length} documented tracks: ${research.map((entry) => entry.title).join(", ")}. Ask about a specific track, methodology, evidence, boundaries, or next step.`
+        text: modeWrap(mode, `Research in GURUVERSE is organized into ${research.length} documented tracks: ${research.map((entry) => entry.title).join(", ")}. Ask about a specific track, methodology, evidence, boundaries, or next step.`)
       };
     }
-    if (intent === "limitations") return { intent, subject: item.title, text: `Boundaries of ${item.title}:\n\n${list(item.boundaries)}` };
-    if (intent === "evidence" || intent === "results") return { intent, subject: item.title, text: `Evidence for ${item.title}:\n\n${item.evidence.map((e, i) => `${i + 1}. ${e.type} — ${e.title}: ${e.description}`).join("\n")}` };
-    if (intent === "architecture" || intent === "workflow") return { intent, subject: item.title, text: `Methodology for ${item.title}:\n\n${list(item.methodology)}` };
-    return { intent, subject: item.title, text: `${item.title}\n\n${item.summary}\n\nQuestion: ${item.question}\n\nCurrent findings:\n${list(item.findings)}\n\nNext steps:\n${list(item.nextSteps)}` };
+    if (intent === "limitations") {
+      const emphasis = mode === "recruiter" ? "The documented boundaries are important when interpreting project scope." : mode === "engineer" ? "These boundaries define what the current implementation does not claim to solve." : "These boundaries define the evidence envelope for the research track.";
+      return { intent, subject: item.title, text: modeWrap(mode, `${emphasis}\n\nBoundaries of ${item.title}:\n\n${list(item.boundaries)}`) };
+    }
+    if (intent === "evidence" || intent === "results") {
+      const lead = mode === "recruiter" ? "Documented evidence relevant to professional credibility:" : mode === "engineer" ? "Implementation/evaluation evidence currently documented:" : "Research evidence currently documented:";
+      return { intent, subject: item.title, text: modeWrap(mode, `${lead}\n\n${item.evidence.map((e, i) => `${i + 1}. ${e.type} — ${e.title}: ${e.description}`).join("\n")}`) };
+    }
+    if (intent === "architecture" || intent === "workflow") {
+      return { intent, subject: item.title, text: modeWrap(mode, `Methodology for ${item.title}:\n\n${list(item.methodology)}`) };
+    }
+    return {
+      intent,
+      subject: item.title,
+      text: modeWrap(mode, `${item.title}\n\n${item.summary}\n\nQuestion: ${item.question}\n\nCurrent findings:\n${list(item.findings)}\n\nNext steps:\n${list(item.nextSteps)}`)
+    };
   }
 
   if (intent === "journey") {
-    return { intent, text: `Engineering journey:\n\n${timeline.map((event) => `${event.year} — ${event.title}: ${event.description}`).join("\n\n")}` };
+    const lead = mode === "recruiter" ? "Professional journey — focus on progression and applied experience:" : mode === "engineer" ? "Engineering journey — focus on capability progression:" : mode === "researcher" ? "Research journey — focus on how engineering work led into investigation:" : "Engineering journey:";
+    return { intent, text: modeWrap(mode, `${lead}\n\n${timeline.map((event) => `${event.year} — ${event.title}: ${event.description}`).join("\n\n")}`) };
   }
 
   if (intent === "experience") {
-    return { intent, text: `Professional practice:\n\n${experiences.map((entry) => `${entry.role} — ${entry.company} (${entry.duration})\n${entry.description}`).join("\n\n")}` };
+    const lead = mode === "recruiter" ? "Professional profile and documented roles:" : mode === "engineer" ? "Applied engineering and teaching practice:" : mode === "researcher" ? "Practice that informs the research direction:" : "Professional practice:";
+    return { intent, text: modeWrap(mode, `${lead}\n\n${experiences.map((entry) => `${entry.role} — ${entry.company} (${entry.duration})\n${entry.description}`).join("\n\n")}`) };
   }
 
   if (!project) {
     const modeHint = mode === "recruiter"
-      ? "Try asking about professional experience, project outcomes, or the engineering journey."
+      ? "Ask about professional experience, project outcomes, documented evidence, or the engineering journey."
       : mode === "engineer"
-        ? "Try naming a project and asking about architecture, workflow, technologies, evidence, or limitations."
+        ? "Name a project and ask about architecture, workflow, technologies, evidence, or limitations."
         : mode === "researcher"
-          ? "Try asking about research methodology, evidence, boundaries, or next investigations."
-          : "Try naming a project, research track, or ask about the journey.";
+          ? "Ask about a research track, methodology, evidence, boundaries, findings, or next investigations."
+          : "Name a project or research track, or ask about the journey.";
     return {
       intent,
-      text: `I can answer from the canonical GURUVERSE knowledge base. ${modeHint}\n\nAvailable systems: ${projects.map((entry) => entry.title).join(", ")}.\nResearch tracks: ${research.map((entry) => entry.shortTitle).join(", ")}.`
+      text: modeWrap(mode, `I answer only from the canonical GURUVERSE knowledge base. ${modeHint}\n\nAvailable systems: ${projects.map((entry) => entry.title).join(", ")}.\nResearch tracks: ${research.map((entry) => entry.shortTitle).join(", ")}.`)
     };
   }
 
-  if (intent === "architecture") return { intent, subject: project.title, text: `Architecture of ${project.title}:\n\n${list(project.architecture)}` };
-  if (intent === "workflow") return { intent, subject: project.title, text: `Workflow of ${project.title}:\n\n${list(project.workflow)}` };
-  if (intent === "technologies") return { intent, subject: project.title, text: `Technology stack for ${project.title}:\n\n${project.technologies.map((t) => `• ${t}`).join("\n")}` };
-  if (intent === "problem") return { intent, subject: project.title, text: `Problem space:\n\n${project.problem || project.description}` };
-  if (intent === "solution") return { intent, subject: project.title, text: `Engineering approach:\n\n${project.solution || project.overview || project.description}` };
-  if (intent === "evidence" || intent === "results") return { intent, subject: project.title, text: `Documented evidence for ${project.title}:\n\n${list(project.evidence?.map((e) => `${e.type} — ${e.title}: ${e.description}`))}` };
-  if (intent === "limitations") return { intent, subject: project.title, text: `Boundaries of ${project.title}:\n\n${list(project.limitations)}` };
-  if (intent === "help") return { intent, text: "Ask about a project, research track, architecture, workflow, technology stack, evidence, limitations, journey, or experience. GURU-BOT only uses the documented GURUVERSE knowledge base." };
+  if (intent === "architecture") {
+    const lead = mode === "recruiter" ? "Architecture evidence — what the system demonstrates technically:" : mode === "researcher" ? "Architecture as an engineering/research artifact:" : "Architecture:";
+    return { intent, subject: project.title, text: modeWrap(mode, `${lead} ${project.title}\n\n${list(project.architecture)}`) };
+  }
+  if (intent === "workflow") {
+    const lead = mode === "recruiter" ? "Workflow — how the documented system work can be explained:" : mode === "researcher" ? "Workflow — the reproducible sequence behind the system:" : "Workflow:";
+    return { intent, subject: project.title, text: modeWrap(mode, `${lead} ${project.title}\n\n${list(project.workflow)}`) };
+  }
+  if (intent === "technologies") {
+    const lead = mode === "recruiter" ? "Technology stack — the concrete tools behind the project:" : mode === "researcher" ? "Technology stack — tools supporting the documented investigation:" : "Technology stack:";
+    return { intent, subject: project.title, text: modeWrap(mode, `${lead} ${project.title}\n\n${project.technologies.map((t) => `• ${t}`).join("\n")}`) };
+  }
+  if (intent === "problem") return { intent, subject: project.title, text: modeWrap(mode, `Problem space for ${project.title}:\n\n${project.problem || project.description}`) };
+  if (intent === "solution") return { intent, subject: project.title, text: modeWrap(mode, `Engineering approach for ${project.title}:\n\n${project.solution || project.overview || project.description}`) };
+  if (intent === "evidence" || intent === "results") {
+    const lead = mode === "recruiter" ? "Documented evidence and outcomes:" : mode === "researcher" ? "Evaluation/evidence record:" : "Documented evidence:";
+    return { intent, subject: project.title, text: modeWrap(mode, `${lead} ${project.title}\n\n${list(project.evidence?.map((e) => `${e.type} — ${e.title}: ${e.description}`))}`) };
+  }
+  if (intent === "limitations") {
+    return { intent, subject: project.title, text: modeWrap(mode, `Boundaries of ${project.title}:\n\n${list(project.limitations)}`) };
+  }
+  if (intent === "help") {
+    const help = mode === "recruiter"
+      ? "Ask about experience, project outcomes, evidence, or the journey."
+      : mode === "engineer"
+        ? "Ask about architecture, workflow, technologies, implementation, or limitations."
+        : mode === "researcher"
+          ? "Ask about research, methodology, evidence, findings, limitations, or next steps."
+          : "Ask about a project, research track, architecture, workflow, technology stack, evidence, limitations, journey, or experience.";
+    return { intent, text: modeWrap(mode, `${help} GURU-BOT only uses the documented GURUVERSE knowledge base.`) };
+  }
 
-  const modePrefix = mode === "recruiter" ? "Professional snapshot" : mode === "engineer" ? "Engineering snapshot" : "System overview";
+  const modePrefix =
+    mode === "recruiter" ? "Professional project snapshot" :
+    mode === "engineer" ? "Engineering system snapshot" :
+    mode === "researcher" ? "Research-oriented project snapshot" :
+    "System overview";
+
   return {
     intent,
     subject: project.title,
-    text: `${modePrefix}: ${project.title}\n\n${project.tagline}\n\n${project.overview || project.description}\n\nStatus: ${project.status} · Category: ${project.category}`
+    text: modeWrap(mode, `${modePrefix}: ${project.title}\n\n${project.tagline}\n\n${project.overview || project.description}\n\nStatus: ${project.status} · Category: ${project.category}`)
   };
 }
