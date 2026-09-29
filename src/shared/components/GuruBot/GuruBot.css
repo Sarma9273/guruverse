@@ -847,3 +847,27 @@
 .guru-bot__modebar{display:flex;flex-wrap:wrap;gap:.35rem;width:100%;padding:.35rem;border:1px solid var(--color-border);background:rgba(255,255,255,.018)}
 .guru-bot__modebar button{border:0;background:transparent;color:var(--color-text-muted);padding:.42rem .55rem;font:700 .62rem var(--font-code);cursor:pointer}
 .guru-bot__modebar button.is-active,.guru-bot__modebar button:hover{color:var(--color-primary);background:rgba(0,229,255,.07)}
+
+
+/* ==========================================================
+   DRAGGABLE LAUNCHER
+   ========================================================== */
+.guru-bot{
+    touch-action:none;
+    user-select:none;
+    -webkit-user-select:none;
+    cursor:grab;
+}
+.guru-bot:active{cursor:grabbing}
+.guru-bot--placed{right:auto;bottom:auto;left:var(--guru-bot-left);top:var(--guru-bot-top)}
+.guru-bot--dragging{transition:none!important}
+.guru-bot--dragging:hover{transform:none}
+.guru-bot-panel{
+    right:auto;
+    bottom:auto;
+    left:var(--guru-bot-panel-left, auto);
+    top:var(--guru-bot-panel-top, auto);
+}
+@media(max-width:768px){
+    .guru-bot--placed{left:var(--guru-bot-left);top:var(--guru-bot-top)}
+}
