@@ -188,6 +188,7 @@ function closeBot() {
   root?.classList.remove("guru-bot-panel--open");
   root?.setAttribute("aria-hidden", "true");
   launcher?.setAttribute("aria-expanded", "false");
+  window.setTimeout(() => scheduleScreenIdle(), 0);
 }
 
 function addMessage(role: "user" | "bot", text: string) {
@@ -336,6 +337,8 @@ function tapStep(step:number) {
   if (!screenIdleActive || !launcher) return;
   launcher.classList.remove("guru-bot--tap-1","guru-bot--tap-2","guru-bot--tap-3");
   launcher.classList.add("guru-bot--tap-"+step);
+  bootRoot.classList.remove("guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3");
+  bootRoot.classList.add("guru-bot-screen-tap-"+step);
   if(step<3){
     window.setTimeout(()=>tapStep(step+1),850);
   }else{
@@ -352,7 +355,7 @@ function repairScreen() {
   launcher.classList.add("guru-bot--repairing");
   window.setTimeout(()=>{
     if(!screenIdleActive)return;
-    bootRoot.classList.remove("guru-bot-screen-broken");
+    bootRoot.classList.remove("guru-bot-screen-broken","guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3");
     bootRoot.classList.add("guru-bot-screen-repaired","guru-bot-prank-complete");
     launcher.classList.remove("guru-bot--repairing");
     window.setTimeout(()=>{
