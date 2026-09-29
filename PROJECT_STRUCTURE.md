@@ -341,7 +341,7 @@ Create a feature directory.
 Example:
 
 ```
-features/blog/
+features/journal/
 ```
 
 ---
@@ -553,7 +553,7 @@ These should be introduced only when justified by project growth.
 - Shared Design System
 - Services Layer
 - AI Modules
-- Blog
+- Journal
 - GuruBot
 
 ---
