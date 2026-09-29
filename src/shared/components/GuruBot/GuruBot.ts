@@ -169,7 +169,8 @@ function noteInteraction() {
 }
 
 function openBot() {
-  if (launcher?.classList.contains("guru-bot--returning")) return;
+  if (document.documentElement.classList.contains("guruverse-booting")) return;
+  if (launcher?.classList.contains("guru-bot--returning") || launcher?.classList.contains("guru-bot--post-reveal-flight")) return;
   root?.classList.add("guru-bot-panel--open");
   root?.setAttribute("aria-hidden", "false");
   launcher?.setAttribute("aria-expanded", "true");
@@ -254,6 +255,7 @@ let lastInteractionAt = Date.now();
 const INACTIVITY_MS = 10000;
 
 launcher?.addEventListener("pointerdown", (event) => {
+  if (document.documentElement.classList.contains("guruverse-booting")) return;
   if (event.button !== 0 || !launcher) return;
   const rect = launcher.getBoundingClientRect();
   const computed = getComputedStyle(launcher);
@@ -336,13 +338,107 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeBot();
 });
 
-restoreLauncherPosition();
-updateModeUI();
+function bootCenterPosition() {
+  if (!launcher) return;
+  const rect = launcher.getBoundingClientRect();
+  return {
+    left: window.innerWidth / 2 - rect.width / 2,
+    top: window.innerHeight / 2 - rect.height / 2
+  };
+}
+
+function beginPostRevealDocking() {
+  if (!launcher || launcher.classList.contains("guru-bot--post-reveal-flight")) return;
+  clearInactivityTimer();
+  closeBot();
+
+  const start = bootCenterPosition();
+  if (!start) return;
+  setLauncherPosition(start.left, start.top, false);
+
+  launcher.classList.remove("guru-bot--booting","guru-bot--boot-emerging","guru-bot--boot-holding");
+  launcher.classList.add("guru-bot--post-reveal-flight");
+  document.documentElement.classList.add("guruverse-docking");
+
+  const rect = launcher.getBoundingClientRect();
+  const dock = dockPoint();
+  if (!dock) {
+    launcher.classList.remove("guru-bot--post-reveal-flight");
+    setLauncherAtDock(true);
+    document.documentElement.classList.remove("guruverse-docking");
+    document.documentElement.classList.add("guruverse-docked");
+    return;
+  }
+
+  const startX = start.left;
+  const startY = start.top;
+  const targetX = dock.left - rect.width / 2;
+  const targetY = dock.top - rect.height / 2;
+  const controlX = window.innerWidth * 0.66;
+  const controlY = Math.min(window.innerHeight * 0.34, targetY - 40);
+  const duration = 1450;
+  const started = performance.now();
+
+  const step = (now: number) => {
+    const raw = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - raw, 3);
+    const x = (1-eased)*(1-eased)*startX + 2*(1-eased)*eased*controlX + eased*eased*targetX;
+    const y = (1-eased)*(1-eased)*startY + 2*(1-eased)*eased*controlY + eased*eased*targetY;
+    const scale = 2.55 - 1.55*eased;
+    const dx = Math.max(-32, Math.min(32, (targetX - x) * .08));
+    launcher.style.setProperty("--guru-bot-flight-transform", `scale(${scale}) rotate(${dx}deg)`);
+    setLauncherPosition(x, y, false);
+
+    if (raw < 1) {
+      returnAnimationFrame = requestAnimationFrame(step);
+    } else {
+      launcher.classList.remove("guru-bot--post-reveal-flight");
+      launcher.style.removeProperty("--guru-bot-flight-transform");
+      setLauncherAtDock(true);
+      document.documentElement.classList.remove("guruverse-docking");
+      document.documentElement.classList.add("guruverse-docked");
+      returnAnimationFrame = undefined;
+      armInactivityTimer();
+    }
+  };
+  returnAnimationFrame = requestAnimationFrame(step);
+}
+
+function initialiseCinematicBot() {
+  if (!launcher) return;
+  const intro = document.querySelector("[data-cinematic-intro]");
+  if (!intro) {
+    restoreLauncherPosition();
+    updateModeUI();
+    return;
+  }
+
+  clearInactivityTimer();
+  launcher.classList.add("guru-bot--booting");
+  launcher.classList.remove("guru-bot--placed","guru-bot--active");
+  launcher.style.removeProperty("--guru-bot-left");
+  launcher.style.removeProperty("--guru-bot-top");
+  dock?.classList.remove("is-active");
+  updateModeUI();
+
+  window.addEventListener("guruverse:bot-emerge", () => {
+    launcher.classList.add("guru-bot--boot-emerging");
+  }, { once: true });
+
+  window.addEventListener("guruverse:boot-whiteout", () => {
+    launcher.classList.remove("guru-bot--boot-emerging");
+    launcher.classList.add("guru-bot--boot-holding");
+  }, { once: true });
+
+  window.addEventListener("guruverse:website-revealed", () => {
+    window.setTimeout(beginPostRevealDocking, 360);
+  }, { once: true });
+}
+
+initialiseCinematicBot();
 
 window.addEventListener("guruverse:hero-lock", () => {
   launcher?.classList.add("guru-bot--cinematic-online");
-  dock?.classList.add("is-active");
-  window.setTimeout(() => dock?.classList.remove("is-active"), 900);
 }, { once: true });
 
 
