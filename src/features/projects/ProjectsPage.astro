@@ -2,80 +2,36 @@
 import { projects } from "./data/projects";
 import ProjectCard from "./components/ProjectCard.astro";
 import ProjectExplorer from "./components/ProjectExplorer.astro";
+import ProjectEvolutionMap from "./components/ProjectEvolutionMap.astro";
 import "./styles/projects.css";
 ---
 
 <main class="projects-page">
+  <section class="projects-page__hero">
+    <div class="projects-page__hero-content">
+      <span class="projects-page__eyebrow">PROJECT UNIVERSE / 03</span>
+      <h1>Inspect the <span>systems</span>, not just the cards.</h1>
+      <p>
+        Every project world is organized around the problem, architecture, workflow,
+        evidence, boundaries, and evolution that make the engineering understandable.
+      </p>
+    </div>
+  </section>
 
-    <!-- =====================================================
-         PROJECT PAGE HERO
-         ===================================================== -->
+  <section class="projects-page__content">
+    <div class="projects-page__header">
+      <div>
+        <span class="projects-page__section-label">SYSTEM INDEX</span>
+        <h2>Built systems</h2>
+      </div>
+      <p>{projects.length} systems indexed</p>
+    </div>
 
-    <section class="projects-page__hero">
+    <ProjectExplorer projects={projects} />
+    <ProjectEvolutionMap />
 
-        <div class="projects-page__hero-content">
-
-            <span class="projects-page__eyebrow">
-                PROJECT UNIVERSE
-            </span>
-
-            <h1>
-                Engineering Through
-                <span>Projects</span>
-            </h1>
-
-            <p>
-                Explore the systems, experiments, and engineering
-                work behind GURUVERSE — spanning artificial intelligence,
-                cybersecurity, software engineering, and research.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         PROJECT COLLECTION
-         ===================================================== -->
-
-    <section class="projects-page__content">
-
-        <div class="projects-page__header">
-
-            <div>
-
-                <span class="projects-page__section-label">
-                    FEATURED WORK
-                </span>
-
-                <h2>
-                    Built Systems
-                </h2>
-
-            </div>
-
-            <p>
-                {projects.length} projects
-            </p>
-
-        </div>
-
-
-        <ProjectExplorer projects={projects} />
-
-        <div class="projects-page__grid">
-
-            {
-                projects.map((project) => (
-                    <ProjectCard
-                        project={project}
-                    />
-                ))
-            }
-
-        </div>
-
-    </section>
-
+    <div class="projects-page__grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
 </main>
