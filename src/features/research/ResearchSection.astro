@@ -1,72 +1,35 @@
 ---
-import { research } from "./data/research";
-
+import { featuredResearch } from "./data/research";
 import ResearchCard from "./components/ResearchCard.astro";
-
-import ResearchStats from "./components/ResearchStats.astro";
-
 import "./styles/research.css";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section
-
-    id="research"
-
-    class="research"
-
->
-
-    <div class="research__container">
-
-        <div class="research__header">
-
-            <span class="research__eyebrow">
-
-                RESEARCH & INNOVATION
-
-            </span>
-
-            <h2>
-
-                Engineering Through Research
-
-            </h2>
-
-            <p>
-
-                My research bridges Artificial Intelligence,
-                Cybersecurity, Renewable Energy, and Software
-                Engineering to develop intelligent, practical,
-                and scalable solutions for real-world challenges.
-
-            </p>
-
-        </div>
-
-        <div class="research__grid">
-
-            {
-
-                research.map(
-
-                    item => (
-
-                        <ResearchCard
-
-                            research={item}
-
-                        />
-
-                    )
-
-                )
-
-            }
-
-        </div>
-
-        <ResearchStats />
-
+<section id="research" class="research">
+  <div class="research__container">
+    <div class="research__header">
+      <div>
+        <span class="research__eyebrow">RESEARCH / 04</span>
+        <h2>Engineering questions, made inspectable.</h2>
+      </div>
+      <p>
+        Research is shown as a traceable record of questions, methods, evidence,
+        boundaries, and the next investigation—not as unsupported publication badges.
+      </p>
     </div>
 
+    <div class="research__signal">
+      <span>INQUIRY → METHOD → EVIDENCE → NEXT</span>
+      <div aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </div>
+
+    <div class="research__grid">
+      {featuredResearch.slice(0, 3).map((item) => <ResearchCard research={item} />)}
+    </div>
+
+    <div class="research__footer">
+      <span>{featuredResearch.length} active research records</span>
+      <a href={base + "/research/"}>Enter Research Universe ↗</a>
+    </div>
+  </div>
 </section>
