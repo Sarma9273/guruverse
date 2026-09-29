@@ -338,3 +338,12 @@ document.addEventListener("keydown", (event) => {
 
 restoreLauncherPosition();
 updateModeUI();
+
+window.addEventListener("guruverse:hero-lock", () => {
+  launcher?.classList.add("guru-bot--cinematic-online");
+  dock?.classList.add("is-active");
+  window.setTimeout(() => dock?.classList.remove("is-active"), 900);
+}, { once: true });
+
+
+/* CINEMATIC BOOT INTEGRATION */
