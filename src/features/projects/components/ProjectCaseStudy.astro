@@ -1,0 +1,31 @@
+---
+import type { Project } from "../types/project";
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<section class="project-case-study" aria-labelledby="case-study-title">
+  <div class="project-case-study__intro">
+    <span class="project-kicker">CASE STUDY</span>
+    <h2 id="case-study-title">Why this system exists</h2>
+    <p>{project.overview}</p>
+  </div>
+  <div class="project-case-study__grid">
+    <article>
+      <span>01 / PROBLEM</span>
+      <h3>Problem space</h3>
+      <p>{project.problem ?? "The project is documented around a defined technical problem rather than a generic feature list."}</p>
+    </article>
+    <article>
+      <span>02 / OBJECTIVE</span>
+      <h3>Engineering objective</h3>
+      <ul>
+        {(project.objectives ?? []).map(item => <li>{item}</li>)}
+      </ul>
+    </article>
+    <article>
+      <span>03 / APPROACH</span>
+      <h3>System approach</h3>
+      <p>{project.solution ?? project.challenge ?? project.description}</p>
+    </article>
+  </div>
+</section>
