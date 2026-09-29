@@ -12,7 +12,7 @@ export const projects: Project[] = [
     tagline: "AI-assisted Retrieval-Augmented Security Operations",
     description:
       "A retrieval-augmented security operations copilot for analyst-oriented incident investigation, security knowledge retrieval, MITRE ATT&CK mapping, and structured response workflows.",
-    image: "/images/projects/ra-xsoc.svg",
+    image: "/images/projects/ra-xsoc.webp",
     technologies: ["Python", "FastAPI", "FAISS", "SentenceTransformers", "MITRE ATT&CK", "PostgreSQL"],
     category: "Cybersecurity",
     status: "Completed",
@@ -111,7 +111,7 @@ export const projects: Project[] = [
     tagline: "AI Incident Response Copilot",
     description:
       "An early security copilot concept combining retrieval, language-model assistance, attack classification, MITRE ATT&CK context, and structured incident reporting.",
-    image: "/images/projects/cybergpt.svg",
+    image: "/images/projects/cybergpt.webp",
     technologies: ["Python", "LLM", "FAISS", "NLP", "RAG", "MITRE ATT&CK"],
     category: "AI",
     status: "Completed",
@@ -191,7 +191,7 @@ export const projects: Project[] = [
     tagline: "Interactive Engineering Universe",
     description:
       "A cinematic engineering environment connecting identity, journey, projects, research, knowledge, and interactive systems through a feature-based Astro architecture.",
-    image: "/images/projects/guruverse.svg",
+    image: "/images/projects/guruverse.webp",
     technologies: ["Astro", "TypeScript", "CSS", "Feature Architecture"],
     category: "Portfolio",
     status: "In Progress",
@@ -256,7 +256,7 @@ export const projects: Project[] = [
       "Expand the project universe with additional verified project records.",
       "Add the research explorer and canonical knowledge layer.",
       "Integrate the planned intelligence interfaces without turning the site into a generic chatbot shell.",
-      "Complete the final accessibility, performance, SEO, and responsive audits."
+      "Continue expanding the verified project universe while preserving the completed accessibility, performance, SEO, and responsive baseline."
     ],
     evolution: [
       {
