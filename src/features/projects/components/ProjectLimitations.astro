@@ -1,0 +1,26 @@
+---
+import type { Project } from "../types/project";
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<section class="project-limitations" aria-labelledby="limitations-title">
+  <div>
+    <span class="project-kicker">BOUNDARIES</span>
+    <h2 id="limitations-title">Limitations & next steps</h2>
+    <p>Engineering credibility includes stating what the system does not prove.</p>
+  </div>
+  <div class="project-limitations__columns">
+    <article>
+      <h3>Current limitations</h3>
+      <ul>
+        {(project.limitations ?? []).map(item => <li>{item}</li>)}
+      </ul>
+    </article>
+    <article>
+      <h3>Evolution path</h3>
+      <ul>
+        {(project.futureEnhancements ?? []).map(item => <li>{item}</li>)}
+      </ul>
+    </article>
+  </div>
+</section>
