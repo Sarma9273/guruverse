@@ -338,4 +338,3 @@ document.addEventListener("keydown", (event) => {
 
 restoreLauncherPosition();
 updateModeUI();
-armInactivityTimer();
