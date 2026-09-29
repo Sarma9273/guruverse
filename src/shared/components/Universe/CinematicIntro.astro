@@ -61,7 +61,7 @@
 </div>
 
 <style>
-.gv-intro{position:fixed;inset:0;z-index:var(--z-loader);overflow:hidden;background:#010204;color:#eef8fa;isolation:isolate;opacity:1;visibility:visible;pointer-events:auto;perspective:1200px;transition:opacity .45s cubic-bezier(.77,0,.18,1),visibility .45s}
+.gv-intro{position:fixed;inset:0;z-index:var(--z-loader);overflow:hidden;background:#010204;color:#eef8fa;isolation:isolate;opacity:1;visibility:visible;pointer-events:auto;perspective:1200px;transition:opacity .7s cubic-bezier(.77,0,.18,1),visibility .7s}
 .gv-intro.is-complete{opacity:0;visibility:hidden;pointer-events:none}
 .gv-intro__space,.gv-intro__stars,.gv-intro__grid,.gv-intro__vignette,.gv-intro__scanlines{position:absolute;inset:0;pointer-events:none}
 .gv-intro__space{background:radial-gradient(circle at 52% 48%,rgba(0,207,230,.07),transparent 24%),radial-gradient(circle at 76% 48%,rgba(95,57,220,.055),transparent 30%),#010204}
@@ -97,6 +97,18 @@
 
 @media(max-width:700px){.gv-intro__copy{left:1rem;width:86vw}.gv-intro__copy h1{font-size:clamp(3rem,14vw,5.8rem)}.gv-intro__hud--tr,.gv-intro__readout{display:none}.gv-intro__dock{right:8px;width:105px;height:105px}.gv-intro__dock small{display:none}.gv-intro__identity{right:1rem;top:4.4rem}.gv-intro__grid{background-size:55px 55px}.gv-intro__bot{width:82vw}}
 @media(prefers-reduced-motion:reduce){.gv-intro__stars,.gv-intro__orbital-field span,.gv-intro__core .core__ring{animation:none}.gv-intro__ship,.gv-intro__core,.gv-intro__bot,.gv-intro__dock,.gv-intro__copy,.gv-intro__progress span{animation:none}.gv-intro__core{opacity:1;transform:translate(-50%,-50%) scale(1)}.gv-intro__bot{opacity:1;left:calc(100% - 99px);top:50%;transform:translate(-50%,-50%) scale(.18)}.gv-intro__dock{opacity:1;transform:translateY(-50%) scale(1)}.gv-intro__copy{opacity:1;transform:translateY(-50%)}.gv-intro__progress span{width:100%}}
+
+/* v2.0 coordinated hero reveal */
+.gv-intro.is-revealing{opacity:.16;transition:opacity 1.25s ease;pointer-events:none}
+.gv-intro.is-revealing .gv-intro__copy,
+.gv-intro.is-revealing .gv-intro__ship,
+.gv-intro.is-revealing .gv-intro__bot,
+.gv-intro.is-revealing .gv-intro__dock,
+.gv-intro.is-revealing .gv-intro__identity,
+.gv-intro.is-revealing .gv-intro__readout,
+.gv-intro.is-revealing .gv-intro__hud,
+.gv-intro.is-revealing .gv-intro__skip{opacity:0!important;visibility:hidden}
+.gv-intro.is-revealing .gv-intro__vignette{opacity:.35}
 </style>
 
 <script>
@@ -131,7 +143,7 @@ if(intro){
   if(hasSeen()){
     intro.remove();
   }else{
-    const advance=()=>{
+    const reveal=()=>{\n      intro.classList.add("is-revealing");\n      window.dispatchEvent(new CustomEvent("guruverse:intro-reveal"));\n    };\n    window.setTimeout(reveal,2200);\n    const advance=()=>{
       stage=Math.min(stage+1,stages.length-1);
       if(status) status.textContent=stages[stage][0];
       if(code) code.textContent=stages[stage][1];
@@ -139,10 +151,10 @@ if(intro){
     if(reduce){
       if(status) status.textContent="SYSTEM READY";
       if(code) code.textContent="REDUCED MOTION";
-      finishTimer=window.setTimeout(finish,500);
+      window.setTimeout(()=>window.dispatchEvent(new CustomEvent("guruverse:intro-reveal")),120);\n      finishTimer=window.setTimeout(finish,700);
     }else{
-      timer=window.setInterval(advance,400);
-      finishTimer=window.setTimeout(finish,2100);
+      timer=window.setInterval(advance,1100);
+      finishTimer=window.setTimeout(finish,6000);
     }
     skip?.addEventListener("click",finish);
     window.addEventListener("keydown",e=>{if(e.key==="Escape") finish()},{once:false});
