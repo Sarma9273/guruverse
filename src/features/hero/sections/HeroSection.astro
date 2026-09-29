@@ -3,16 +3,18 @@ import HeroBackground from "../components/HeroBackground.astro";
 import HeroContent from "../components/HeroContent.astro";
 import HeroCTA from "../components/HeroCTA.astro";
 import HeroStats from "../components/HeroStats.astro";
-import HeroFloatingCards from "../components/HeroFloatingCards.astro";
 import "../styles/hero.css";
+const base=import.meta.env.BASE_URL;
 ---
-
-<section id="hero" class="hero">
-    <HeroBackground />
-    <div class="hero__content">
-        <HeroContent />
-        <HeroCTA />
-        <HeroStats />
-        <HeroFloatingCards />
+<section id="hero" class="hero" aria-labelledby="hero-title">
+  <HeroBackground />
+  <div class="hero__frame">
+    <div class="hero__copy"><HeroContent /><HeroCTA /><HeroStats /></div>
+    <div class="hero-portrait" aria-label="Portrait of Guru Charan Mavuduru">
+      <div class="hero-portrait__halo"></div><div class="hero-portrait__ring hero-portrait__ring--one"></div><div class="hero-portrait__ring hero-portrait__ring--two"></div>
+      <div class="hero-portrait__frame"><img src={base + "images/profile.jpeg"} alt="Guru Charan Mavuduru" width="640" height="800" fetchpriority="high" decoding="async" /><span class="hero-portrait__scan"></span></div>
+      <div class="hero-portrait__label"><span>SUBJECT / 001</span><strong>GURU CHARAN MAVUDURU</strong><small>AI &amp; DATA SCIENCE · SECURITY · SOFTWARE</small></div>
     </div>
+  </div>
+  <a class="hero-scroll" href="#about" aria-label="Continue to identity"><span>CONTINUE EXPLORATION</span><i></i></a>
 </section>
