@@ -933,3 +933,14 @@
 .project-explorer__status{margin-top:.8rem;color:var(--color-text-muted);font:600 .65rem var(--font-code);letter-spacing:.08em;text-transform:uppercase}
 .project-card[hidden]{display:none}
 @media(max-width:700px){.project-explorer__intro{display:block}.project-explorer__intro p{margin-top:.6rem}}
+
+/* PROJECT LINEAGE MAP */
+.project-evolution-map{margin:0 0 var(--space-10);padding:clamp(1.2rem,2.5vw,2rem);border:1px solid var(--color-border);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(0,229,255,.045),rgba(124,77,255,.025),rgba(255,255,255,.02))}
+.project-evolution-map__header{max-width:760px}.project-evolution-map__header h2{margin:.25rem 0 .5rem}.project-evolution-map__header p{color:var(--color-text-muted);line-height:1.7}
+.project-evolution-map__track{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:var(--space-4);align-items:stretch;margin-top:var(--space-7)}
+.project-evolution-map__track article{min-height:170px;padding:var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-lg);background:rgba(0,0,0,.18)}
+.project-evolution-map__track article>span{color:var(--color-primary);font:700 .68rem/1 var(--font-code);letter-spacing:.1rem}
+.project-evolution-map__track strong{display:block;margin:.7rem 0 .5rem;font-size:1.1rem}
+.project-evolution-map__track p{margin:0;color:var(--color-text-muted);line-height:1.65}
+.project-evolution-map__track i{display:grid;place-items:center;color:var(--color-primary);font-style:normal;font-size:1.4rem}
+@media(max-width:800px){.project-evolution-map__track{grid-template-columns:1fr;gap:var(--space-3)}.project-evolution-map__track i{transform:rotate(90deg);min-height:20px}}
