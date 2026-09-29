@@ -322,7 +322,7 @@ This approach improves maintainability, scalability, and readability while keepi
                      pages/index.astro
                            │
                            ▼
-                    layouts/Layout.astro
+                    layouts/BaseLayout.astro
                            │
                            ▼
                Home Feature Composition Layer
