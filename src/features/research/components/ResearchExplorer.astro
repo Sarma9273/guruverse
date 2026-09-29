@@ -1,0 +1,66 @@
+---
+import type { Research } from "../types/research";
+
+interface Props { research: Research[]; }
+const { research } = Astro.props;
+const categories = [...new Set(research.map((item) => item.category))];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<div class="research-explorer" data-research-explorer>
+  <div class="research-explorer__controls" role="tablist" aria-label="Research filters">
+    <button class="is-active" type="button" data-filter="all" role="tab" aria-selected="true">ALL</button>
+    {categories.map((category) => (
+      <button type="button" data-filter={category} role="tab" aria-selected="false">{category}</button>
+    ))}
+  </div>
+
+  <div class="research-explorer__count"><span data-research-count>{research.length}</span> research tracks indexed</div>
+
+  <div class="research-explorer__grid">
+    {research.map((item) => (
+      <article class="research-node" data-research-card data-category={item.category}>
+        <div class="research-node__index">{item.id.toUpperCase()}</div>
+        <div class="research-node__meta">
+          <span>{item.kind}</span>
+          <span class={'research-node__status research-node__status--' + item.status.toLowerCase()}>{item.status}</span>
+        </div>
+        <p class="research-node__category">{item.category}</p>
+        <h3>{item.title}</h3>
+        <p>{item.summary}</p>
+        <div class="research-node__tags">
+          {item.technologies.slice(0, 5).map((technology) => <span>{technology}</span>)}
+        </div>
+        <a href={base + "/research/" + item.id + "/"} aria-label={'Inspect ' + item.title}>
+          Inspect research <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+    ))}
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector("[data-research-explorer]");
+  if (root) {
+    const buttons = [...root.querySelectorAll("[data-filter]")];
+    const cards = [...root.querySelectorAll("[data-research-card]")];
+    const count = root.querySelector("[data-research-count]");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.getAttribute("data-filter");
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle("is-active", active);
+          item.setAttribute("aria-selected", String(active));
+        });
+        let visible = 0;
+        cards.forEach((card) => {
+          const match = filter === "all" || card.getAttribute("data-category") === filter;
+          card.toggleAttribute("hidden", !match);
+          if (match) visible += 1;
+        });
+        if (count) count.textContent = String(visible);
+      });
+    });
+  }
+</script>
