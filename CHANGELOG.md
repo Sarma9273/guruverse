@@ -2,7 +2,7 @@
 
 All notable changes to **GURUVERSE** will be documented here.
 
-# [2.0.0] - 2026-09-28
+# [2.0.0] - 2026-09-29
 
 ## Completed
 
@@ -14,6 +14,8 @@ All notable changes to **GURUVERSE** will be documented here.
 - Preserved static-first Astro rendering and removed the need for external AI credentials.
 - Expanded GURU-BOT accessibility and responsive interaction surfaces.
 - Updated package, lockfile, README, and architecture metadata to 2.0.0.
+- Completed the cinematic identity and visual-polish pass, including the supplied personal portrait in the opening sequence.
+- Completed responsive interaction-layer cleanup and project imagery alignment.
 
 ## 1.0.1
 
