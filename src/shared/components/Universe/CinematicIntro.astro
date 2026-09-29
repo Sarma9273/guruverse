@@ -21,9 +21,12 @@
     <span>GURU-BOT / INTELLIGENCE CORE</span>
   </div>
 
-  <div class="gv-loader__progress">
-    <div><span>GURUVERSE INITIALISATION</span><strong data-value>0%</strong></div>
-    <i><b data-bar></b></i>
+  <div class="gv-loader__progress" aria-label="GURUVERSE initialisation progress">
+    <div class="gv-loader__progress-ring" aria-hidden="true">
+      <i><b data-bar></b></i>
+      <strong data-value>0%</strong>
+    </div>
+    <span>GURUVERSE INITIALISATION</span>
   </div>
 
   <button class="gv-loader__skip" type="button" data-intro-skip>SKIP <kbd>ESC</kbd></button>
@@ -54,14 +57,18 @@
 .gv-loader__copy{position:absolute;z-index:8;left:50%;top:calc(50% + min(30vw,270px));transform:translateX(-50%);text-align:center;display:grid;gap:.3rem;text-transform:uppercase;pointer-events:none}
 .gv-loader__copy small,.gv-loader__copy span{font:600 .45rem var(--font-code);letter-spacing:.18em;color:rgba(225,250,255,.32)}
 .gv-loader__copy strong{font:700 clamp(1.1rem,2vw,1.8rem) var(--font-display);letter-spacing:.08em;color:#eaffff;text-shadow:0 0 24px rgba(0,229,255,.3)}
-.gv-loader__progress{position:absolute;left:18vw;right:18vw;bottom:9vh;z-index:8}
-.gv-loader__progress>div{display:flex;justify-content:space-between;margin-bottom:.5rem;font:600 .46rem var(--font-code);letter-spacing:.15em;color:rgba(225,250,255,.32)}
-.gv-loader__progress strong{color:#c9fbff}.gv-loader__progress>i{display:block;height:2px;background:rgba(225,250,255,.12);overflow:hidden}.gv-loader__progress>i b{display:block;width:0;height:100%;background:linear-gradient(90deg,#00bcd4,#eaffff,#7c4dff);box-shadow:0 0 18px rgba(0,229,255,.7)}
+.gv-loader__progress{position:absolute;left:50%;bottom:8vh;z-index:8;transform:translateX(-50%);display:grid;justify-items:center;gap:.7rem}
+.gv-loader__progress-ring{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#00d9f5 var(--progress,0%),rgba(225,250,255,.1) 0);box-shadow:0 0 24px rgba(0,229,255,.14)}
+.gv-loader__progress-ring:before{content:"";position:absolute;inset:2px;border-radius:50%;background:#02070d;box-shadow:inset 0 0 16px rgba(0,229,255,.08)}
+.gv-loader__progress-ring i{position:absolute;inset:0;border-radius:50%;display:block}
+.gv-loader__progress-ring i b{position:absolute;inset:-1px;border-radius:50%;display:block;box-shadow:0 0 18px rgba(0,229,255,.55);opacity:.7}
+.gv-loader__progress-ring strong{position:relative;z-index:1;color:#d9fdff;font:700 .7rem var(--font-code);letter-spacing:.04em}
+.gv-loader__progress>span{font:600 .42rem var(--font-code);letter-spacing:.16em;color:rgba(225,250,255,.34);text-transform:uppercase}
 .gv-loader__skip{position:absolute;right:4vw;bottom:4vh;z-index:10;border:0;background:none;color:rgba(236,255,255,.3);font:600 .48rem var(--font-code);letter-spacing:.15em;cursor:pointer}.gv-loader__skip kbd{margin-left:.4rem;color:#72efff;font:inherit}
 .gv-loader.phase-white .gv-loader__space,.gv-loader.phase-white .gv-loader__core,.gv-loader.phase-white .gv-loader__brand,.gv-loader.phase-white .gv-loader__readout,.gv-loader.phase-white .gv-loader__copy,.gv-loader.phase-white .gv-loader__progress{opacity:0;transition:opacity .28s ease}
 .gv-loader.phase-white:after{content:"";position:absolute;inset:-10%;z-index:9;background:radial-gradient(circle at 50% 50%,#fff 0,rgba(255,255,255,.97) 25%,rgba(255,255,255,.72) 50%,rgba(255,255,255,.18) 72%,transparent 84%);animation:gv-whiteout 1.8s cubic-bezier(.22,.61,.36,1) both}
 @keyframes gv-stars{to{transform:translateY(87px)}}@keyframes gv-spin{to{transform:rotate(360deg)}}@keyframes gv-spin-rev{to{transform:rotate(-360deg)}}@keyframes gv-pulse{0%,100%{transform:scale(.86);opacity:.72}50%{transform:scale(1.12);opacity:1}}@keyframes gv-scan{to{transform:rotate(360deg)}}@keyframes gv-whiteout{0%{opacity:0;transform:scale(.94)}38%{opacity:.72;transform:scale(1)}72%{opacity:1;transform:scale(1.04)}100%{opacity:.88;transform:scale(1.08)}}
-@media(max-width:700px){.gv-loader__core{width:min(82vw,430px);height:min(82vw,430px)}.gv-loader__copy{top:calc(50% + min(43vw,225px))}.gv-loader__progress{left:1rem;right:1rem;bottom:8vh}.gv-loader__brand{left:1rem}.gv-loader__readout{right:1rem}}
+@media(max-width:700px){.gv-loader__core{width:min(82vw,430px);height:min(82vw,430px)}.gv-loader__copy{top:calc(50% + min(43vw,225px))}.gv-loader__progress{bottom:6vh}.gv-loader__brand{left:1rem}.gv-loader__readout{right:1rem}}
 @media(prefers-reduced-motion:reduce){.gv-loader__space:before,.gv-loader__orbit,.gv-loader__core-light,.gv-loader__scan{animation:none}.gv-loader.phase-white:after{animation:none}}
 </style>
 
@@ -70,12 +77,12 @@
   const root=document.querySelector("[data-cinematic-intro]");
   if(!root)return;
   const status=root.querySelector("[data-status]"),stage=root.querySelector("[data-stage]"),code=root.querySelector("[data-code]");
-  const value=root.querySelector("[data-value]"),bar=root.querySelector("[data-bar]"),skip=root.querySelector("[data-intro-skip]");
+  const value=root.querySelector("[data-value]"),bar=root.querySelector("[data-bar]"),progressRing=root.querySelector(".gv-loader__progress-ring"),skip=root.querySelector("[data-intro-skip]");
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   let done=false;
   const later=(f,t)=>setTimeout(f,t);
   const emit=n=>dispatchEvent(new CustomEvent(n));
-  function state(cls,s,c,p){root.className="gv-loader "+cls;status.textContent=s;stage.textContent=cls.replace("phase-","").toUpperCase();code.textContent=c;value.textContent=p+"%";bar.style.width=p+"%";document.documentElement.dataset.guruverseBootPhase=cls.includes("bot")?"bot":cls.includes("white")?"complete":cls.includes("reveal")?"complete":"system"}
+  function state(cls,s,c,p){root.className="gv-loader "+cls;status.textContent=s;stage.textContent=cls.replace("phase-","").toUpperCase();code.textContent=c;value.textContent=p+"%";bar.style.width=p+"%";progressRing?.style.setProperty("--progress",p+"%");document.documentElement.dataset.guruverseBootPhase=cls.includes("bot")?"bot":cls.includes("white")?"complete":cls.includes("reveal")?"complete":"system"}
   function finish(){if(done)return;done=true;root.classList.add("is-complete");document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");later(()=>emit("guruverse:intro-complete"),120);later(()=>root.remove(),800)}
   function run(){
     document.documentElement.classList.add("guruverse-booting");
