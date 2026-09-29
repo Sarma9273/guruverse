@@ -4,7 +4,7 @@ interface Props { label?: string; project?: { title:string; tagline:string; desc
 const { label = "Open GURU-BOT", project } = Astro.props;
 ---
 <div class="guru-bot-dock" aria-hidden="true"><span class="guru-bot-dock__halo"></span><span class="guru-bot-dock__ring"></span><span class="guru-bot-dock__label">GURU-BOT / DOCK 01</span></div>\n<button class="guru-bot" type="button" aria-label={label} aria-expanded="false" aria-controls="guru-bot-panel">
-  <span class="guru-bot__core"><span class="guru-bot__pulse"></span><span class="guru-bot__eye guru-bot__eye--left"></span><span class="guru-bot__eye guru-bot__eye--right"></span></span>
+  <span class="guru-bot__jetpack" aria-hidden="true"><i></i><i></i></span><span class="guru-bot__core"><span class="guru-bot__pulse"></span><span class="guru-bot__eye guru-bot__eye--left"></span><span class="guru-bot__eye guru-bot__eye--right"></span></span>
   <span class="guru-bot__orbit guru-bot__orbit--one"></span><span class="guru-bot__orbit guru-bot__orbit--two"></span>
   <span class="guru-bot__status">GURU-BOT</span>
 </button>
