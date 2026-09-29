@@ -1,0 +1,34 @@
+---
+import { research } from "./data/research";
+import ResearchExplorer from "./components/ResearchExplorer.astro";
+import "./styles/research.css";
+---
+
+<main class="research-page">
+  <section class="research-page__hero">
+    <div class="research-page__hero-grid">
+      <div>
+        <span class="research-page__eyebrow">RESEARCH UNIVERSE / 04</span>
+        <h1>Questions become <span>systems of inquiry.</span></h1>
+        <p>
+          Research in GURUVERSE is presented as a traceable engineering record:
+          question, objective, method, evidence, boundaries, and next investigation.
+        </p>
+      </div>
+      <div class="research-page__signal" aria-hidden="true">
+        <span>R</span><i></i><i></i><i></i>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-page__content">
+    <div class="research-page__header">
+      <div>
+        <span class="research-page__section-label">RESEARCH INDEX</span>
+        <h2>Active lines of inquiry</h2>
+      </div>
+      <p>{research.length} tracks / {research.filter((item) => item.status === "Ongoing").length} active</p>
+    </div>
+    <ResearchExplorer research={research} />
+  </section>
+</main>
