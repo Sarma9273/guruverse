@@ -39,8 +39,15 @@ jobs:
 
       - name: Verify build output
         run: |
+          set -euo pipefail
           test -f dist/index.html
-          test -d dist
+          test -f dist/journal/index.html
+          test -f dist/intelligence/index.html
+          test -f dist/images/profile.jpeg
+          test -f dist/images/projects/ra-xsoc.webp
+          test -f dist/images/projects/cybergpt.webp
+          test -f dist/images/projects/guruverse.webp
+          test -d dist/_astro
           echo "Pages artifact ready: $(du -sh dist | cut -f1)"
 
       - name: Upload Pages artifact
