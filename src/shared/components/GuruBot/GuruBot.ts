@@ -395,11 +395,10 @@ function repairScreen() {
     bootRoot.classList.remove("guru-bot-screen-broken","guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3");
     bootRoot.classList.add("guru-bot-screen-repaired","guru-bot-prank-complete");
     launcher.classList.remove("guru-bot--repairing");
-    window.setTimeout(()=>{
-      if(screenIdleStage === "active")return;
-      cancelIdleInteraction(true);
-      startIdleWatch();
-    },2200);
+    /* Stay beside the repaired screen and wait for real user activity.
+       Do not auto-return to the dock after the prank. */
+    screenIdleStage = "prank";
+    lastInteractionAt = Date.now();
   },1400);
 }
 
