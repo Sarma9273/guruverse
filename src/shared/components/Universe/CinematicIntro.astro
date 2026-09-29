@@ -67,7 +67,7 @@
 .gv-loader__progress-svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
 .gv-loader__progress-track,.gv-loader__progress-value{fill:none;stroke-width:2.2}
 .gv-loader__progress-track{stroke:rgba(225,250,255,.08)}
-.gv-loader__progress-value{stroke:#00d9f5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;filter:drop-shadow(0 0 7px rgba(0,229,255,.65));transition:stroke-dashoffset .25s linear}
+.gv-loader__progress-value{stroke:#00d9f5;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:100;filter:drop-shadow(0 0 7px rgba(0,229,255,.65))}
 .gv-loader__progress-ring i{position:absolute;inset:22px;border:1px dashed rgba(124,77,255,.2);border-radius:50%;display:block;animation:gv-spin-rev 16s linear infinite}
 .gv-loader__progress-ring i b{position:absolute;inset:-1px;border-radius:50%;display:block;box-shadow:0 0 18px rgba(0,229,255,.35);opacity:.45}
 .gv-loader__progress-ring strong{position:absolute;left:50%;top:calc(100% + 10px);transform:translateX(-50%);z-index:1;color:#d9fdff;font:700 .62rem var(--font-code);letter-spacing:.04em;white-space:nowrap}
@@ -87,10 +87,24 @@
   const status=root.querySelector("[data-status]"),stage=root.querySelector("[data-stage]"),code=root.querySelector("[data-code]");
   const value=root.querySelector("[data-value]"),bar=root.querySelector("[data-bar]"),progressRing=root.querySelector(".gv-loader__progress-ring"),progressValue=root.querySelector("[data-progress-ring]"),skip=root.querySelector("[data-intro-skip]");
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let done=false;
+  let done=false,progressFrame=0,progressCurrent=0;
   const later=(f,t)=>setTimeout(f,t);
+  function smoothProgress(target,duration=900){
+    cancelAnimationFrame(progressFrame);
+    const from=progressCurrent,start=performance.now();
+    function tick(now){
+      const q=Math.min(1,(now-start)/duration);
+      const eased=q<.5?4*q*q*q:1-Math.pow(-2*q+2,3)/2;
+      progressCurrent=from+(target-from)*eased;
+      const display=Math.round(progressCurrent*10)/10;
+      value.textContent=Math.round(display)+"%";
+      progressValue?.style.setProperty("stroke-dashoffset",String(100-display));
+      if(q<1)progressFrame=requestAnimationFrame(tick); else progressCurrent=target;
+    }
+    progressFrame=requestAnimationFrame(tick);
+  }
   const emit=n=>dispatchEvent(new CustomEvent(n));
-  function state(cls,s,c,p){root.className="gv-loader "+cls;status.textContent=s;stage.textContent=cls.replace("phase-","").toUpperCase();code.textContent=c;value.textContent=p+"%";bar.style.width=p+"%";progressRing?.style.setProperty("--progress",p+"%");progressValue?.style.setProperty("stroke-dashoffset",String(100-p));document.documentElement.dataset.guruverseBootPhase=cls.includes("bot")?"bot":cls.includes("white")?"complete":cls.includes("reveal")?"complete":"system"}
+  function state(cls,s,c,p){root.className="gv-loader "+cls;status.textContent=s;stage.textContent=cls.replace("phase-","").toUpperCase();code.textContent=c;value.textContent=p+"%";bar.style.width=p+"%";progressRing?.style.setProperty("--progress",p+"%");smoothProgress(p,p===100?1200:850);document.documentElement.dataset.guruverseBootPhase=cls.includes("bot")?"bot":cls.includes("white")?"complete":cls.includes("reveal")?"complete":"system"}
   function finish(){if(done)return;done=true;root.classList.add("is-complete");document.documentElement.classList.remove("guruverse-booting","guruverse-whiteout");later(()=>emit("guruverse:intro-complete"),120);later(()=>root.remove(),800)}
   function run(){
     document.documentElement.classList.add("guruverse-booting");
@@ -108,7 +122,7 @@
     }
     state("phase-system","SYSTEM INITIALISING","01 / SYSTEM",0);emit("guruverse:boot-start");
     later(()=>{state("phase-core","IDENTITY CORE ONLINE","02 / CORE",28)},3000);
-    later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},4700);
+    later(()=>{state("phase-bot","GURU-BOT STANDING BY","03 / INTELLIGENCE",52);emit("guruverse:bot-emerge")},6000);
     later(()=>{state("phase-bot","GURU-BOT STANDING / LOADING","04 / 78%",78)},9000);
     later(()=>{state("phase-bot","GURU-BOT READY / 100%","05 / COMPLETE",100)},11000);
     later(()=>{state("phase-white","SYSTEM COMPLETE / REVEALING","06 / WHITEOUT",100);document.documentElement.classList.add("guruverse-whiteout");emit("guruverse:boot-whiteout")},12000);
