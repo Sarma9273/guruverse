@@ -1825,3 +1825,15 @@ html.guru-bot-screen-sleeping .guru-bot-dock__battery i{
 }
 .guru-bot-dock--screen-hidden{pointer-events:none}
 @media(max-width:768px){.guru-bot-dock{right:-24px}}
+
+
+/* ACTIVITY RETURN: Dock 01 shifts by one-quarter of the bot's circle diameter.
+   The bot follows the shifted dock so approximately 3/4 of its body stays visible. */
+.guru-bot-dock--resting-edge{
+  right:calc(-30px - var(--guru-bot-rest-edge-shift, 22px))!important;
+}
+@media(max-width:768px){
+  .guru-bot-dock--resting-edge{
+    right:calc(-24px - var(--guru-bot-rest-edge-shift, 20px))!important;
+  }
+}
