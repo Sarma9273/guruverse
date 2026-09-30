@@ -481,13 +481,18 @@ function startIdleWatch() {
 function noteScreenActivity() {
   if (
     bootRoot.classList.contains("guruverse-booting") ||
-    bootRoot.classList.contains("guruverse-docking")
+    (bootRoot.classList.contains("guruverse-docking") && screenIdleStage !== "sleep")
   ) return;
 
   lastInteractionAt = Date.now();
 
   if (screenIdleStage !== "active") {
+    const wasSleeping = screenIdleStage === "sleep";
     cancelIdleInteraction(true);
+    if (wasSleeping && dockPoint()) {
+      setLauncherAtDock(false);
+      bootRoot.classList.add("guruverse-docked");
+    }
     startIdleWatch();
     return;
   }
