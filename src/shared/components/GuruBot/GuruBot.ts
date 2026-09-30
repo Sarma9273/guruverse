@@ -207,7 +207,15 @@ function addMessage(role: "user" | "bot", text: string) {
 }
 
 function updateModeUI() {
-  modeButtons?.forEach((button) => {
+  dock?.addEventListener("click", () => openBot());
+dock?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openBot();
+  }
+});
+
+modeButtons?.forEach((button) => {
     button.classList.toggle("is-active", button.dataset.guruMode === mode);
   });
   actionButtons?.forEach((button, index) => {
