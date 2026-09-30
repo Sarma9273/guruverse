@@ -40,7 +40,9 @@ function clamp(value: number, min: number, max: number) {
 function dockPoint() {
   if (!dock) return null;
   const rect = dock.getBoundingClientRect();
-  return { left: rect.left + rect.width / 2, top: rect.top + rect.height / 2 };
+  // Keep the resting bot slightly toward the viewport edge so ~1/4 of its silhouette
+  // remains outside the screen while the dock stays visibly usable.
+  return { left: rect.left + rect.width / 2 + 8, top: rect.top + rect.height / 2 };
 }
 
 function setLauncherPosition(left: number, top: number, persist = true) {
