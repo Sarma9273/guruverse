@@ -743,13 +743,13 @@
         var(--radius-xl);
 
     background:
-        rgba(4, 7, 13, 0.88);
+        rgba(3, 8, 14, 0.34);
 
     backdrop-filter:
-        blur(24px);
+        blur(14px) saturate(1.15);
 
     -webkit-backdrop-filter:
-        blur(24px);
+        blur(14px) saturate(1.15);
 
     box-shadow:
         0 24px 80px
@@ -1021,6 +1021,41 @@
     }
 }
 /* GURUVERSE 2.0 conversational bot */
+.guru-bot-panel{
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(0,229,255,.28) transparent;
+}
+.guru-bot-panel__body{
+  min-height:0;
+}
+.guru-bot__conversation{
+  min-height:0;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(0,229,255,.24) transparent;
+}
+.guru-bot__message{
+  background:rgba(2,8,14,.68);
+  border-color:rgba(185,241,255,.12);
+  box-shadow:0 8px 26px rgba(0,0,0,.12);
+}
+.guru-bot__message--user{
+  background:rgba(0,229,255,.075);
+  border-color:rgba(0,229,255,.18);
+}
+.guru-bot__message-content{
+  color:rgba(239,248,252,.92);
+  line-height:1.65;
+  overflow-wrap:anywhere;
+}
+.guru-bot__ask{
+  background:rgba(2,8,14,.42);
+  border-color:rgba(185,241,255,.14);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
 .guru-bot__conversation{display:grid;gap:.65rem;width:100%;max-height:220px;overflow:auto;margin-top:.75rem}
 .guru-bot__message{padding:.65rem .75rem;border:1px solid var(--color-border);border-radius:.7rem;background:rgba(255,255,255,.025)}
 .guru-bot__message-role{display:block;font:700 .58rem var(--font-code);letter-spacing:.12em;color:var(--color-primary);margin-bottom:.3rem}
