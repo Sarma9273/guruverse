@@ -45,6 +45,16 @@ function dockPoint() {
   return { left: rect.left + rect.width / 2 + 8, top: rect.top + rect.height / 2 };
 }
 
+function isLauncherAtDock(tolerance = 12) {
+  if (!launcher || !dock) return false;
+  const point = dockPoint();
+  if (!point) return false;
+  const rect = launcher.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  return Math.hypot(centerX - point.left, centerY - point.top) <= tolerance;
+}
+
 function setLauncherPosition(left: number, top: number, persist = true) {
   if (!launcher) return;
   const rect = launcher.getBoundingClientRect();
@@ -497,9 +507,11 @@ function startIdleWatch() {
   clearScreenIdleTimers();
   lastInteractionAt = Date.now();
   screenIdleStage = "active";
-  hideDockForActivity();
-  scheduleDockReveal();
 
+  /* Starting/restarting the watchdog must not move or hide a docked bot.
+     Dock 01 is a stable resting state; only scrolling/activity transitions
+     can temporarily hide it, and the watchdog itself can trigger the
+     deliberate help/prank/sleep states. */
   idleWatchInterval = window.setInterval(() => {
     if (!launcher) return;
 
@@ -545,6 +557,14 @@ function moveDockToRestingEdge() {
 function flyBotToDockFromCurrentPosition() {
   if (!launcher || !dock) return;
   if (launcher.classList.contains("guru-bot--returning")) return;
+
+  /* A docked bot is a terminal resting state. Never launch another
+     docking flight merely because pointermove/keyboard activity fires. */
+  if (bootRoot.classList.contains("guruverse-docked") && isLauncherAtDock()) {
+    dock.classList.remove("guru-bot-dock--screen-hidden");
+    launcher.classList.remove("guru-bot--screen-hidden");
+    return;
+  }
 
   moveDockToRestingEdge();
   dock.classList.remove("guru-bot-dock--screen-hidden");
@@ -603,13 +623,20 @@ function flyBotToDockFromCurrentPosition() {
   returnAnimationFrame = requestAnimationFrame(step);
 }
 
-function noteScreenActivity() {
+function noteScreenActivity(eventType = "activity") {
   if (
     bootRoot.classList.contains("guruverse-booting") ||
     (bootRoot.classList.contains("guruverse-docking") && screenIdleStage !== "sleep")
   ) return;
 
   lastInteractionAt = Date.now();
+
+  /* Scrolling is the one normal activity that temporarily hides Dock 01.
+     The watchdog remains alive while the dock is hidden. */
+  if (eventType === "scroll" || eventType === "wheel") {
+    hideDockForActivity();
+    scheduleDockReveal();
+  }
 
   if (screenIdleStage !== "active") {
     const wasSleeping = screenIdleStage === "sleep";
@@ -622,9 +649,18 @@ function noteScreenActivity() {
     return;
   }
 
-  /* Every real screen activity immediately terminates the watchdog behavior.
-     The bot returns from wherever it currently is; Dock 01 then settles
-     slightly farther beyond the right edge so roughly 3/4 of the bot remains visible. */
+  /* Once GURU-BOT is docked, ordinary pointer movement, clicks and key
+     activity only keep the watchdog informed. They must never restart
+     the docking animation. */
+  if (
+    bootRoot.classList.contains("guruverse-docked") &&
+    isLauncherAtDock()
+  ) {
+    return;
+  }
+
+  /* If the bot is genuinely away from Dock 01, real user activity brings
+     it home once. The return guard prevents repeated flights. */
   if (
     !bootRoot.classList.contains("guruverse-docking") &&
     !launcher?.classList.contains("guru-bot--returning")
@@ -777,8 +813,12 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeBot();
 });
 
-["pointermove","pointerdown","wheel","scroll","touchstart","keydown"].forEach((eventName) => {
-  window.addEventListener(eventName, () => noteScreenActivity(), { passive: true });
+["pointermove","pointerdown","touchstart","keydown"].forEach((eventName) => {
+  window.addEventListener(eventName, () => noteScreenActivity(eventName), { passive: true });
+});
+
+["wheel","scroll"].forEach((eventName) => {
+  window.addEventListener(eventName, () => noteScreenActivity(eventName), { passive: true });
 });
 
 
