@@ -1,0 +1,19 @@
+/* FINAL GURU-BOT RESTING ACCESS
+   The dock and robot remain intentionally near the viewport edge.
+   The launcher is shifted 18px beyond the right edge after docking,
+   producing approximately 3/4 visible and 1/4 off-screen at desktop size.
+*/
+html.guruverse-docked .guru-bot--placed:not(.guru-bot--dragging){
+  transform:translateX(18px);
+}
+html.guruverse-docked .guru-bot--placed:not(.guru-bot--dragging):hover{
+  transform:translateX(18px) scale(1.08);
+}
+@media(max-width:768px){
+  html.guruverse-docked .guru-bot--placed:not(.guru-bot--dragging){
+    transform:translateX(16px);
+  }
+  html.guruverse-docked .guru-bot--placed:not(.guru-bot--dragging):hover{
+    transform:translateX(16px) scale(1.08);
+  }
+}
