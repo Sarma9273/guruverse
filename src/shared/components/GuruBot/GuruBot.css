@@ -1694,7 +1694,7 @@ html.guru-bot-screen-repaired:after{
   content:"";
   position:fixed;
   inset:0;
-  z-index:calc(var(--z-robot) + 1);
+  z-index:calc(var(--z-robot) - 1);
   pointer-events:none;
   background:rgba(2,7,12,.58);
   backdrop-filter:blur(7px) saturate(.72);
