@@ -264,6 +264,7 @@ const SCREEN_IDLE_HELP_MS = 30000;
 const SCREEN_IDLE_PRANK_MS = 30000;
 const SCREEN_SLEEP_MS = 15 * 60 * 1000;
 let dockRevealTimer: number | undefined;
+let sleepTransitionToken = 0;
 
 function clearScreenIdleTimers() {
   if (idleWatchInterval) window.clearInterval(idleWatchInterval);
@@ -273,10 +274,12 @@ function clearScreenIdleTimers() {
   if (dockRevealTimer) window.clearTimeout(dockRevealTimer);
   dockRevealTimer = undefined;
 }
+
 function hideDockForActivity() {
   dock?.classList.add("guru-bot-dock--screen-hidden");
   launcher?.classList.add("guru-bot--screen-hidden");
 }
+
 function scheduleDockReveal() {
   if (dockRevealTimer) window.clearTimeout(dockRevealTimer);
   dockRevealTimer = window.setTimeout(() => {
@@ -311,13 +314,127 @@ function resetIdleState() {
 }
 
 function cancelIdleInteraction(returnToDockNow = true) {
+  sleepTransitionToken += 1;
   clearScreenIdleTimers();
   resetIdleState();
+
+  if (returnAnimationFrame) {
+    cancelAnimationFrame(returnAnimationFrame);
+    returnAnimationFrame = undefined;
+    launcher?.classList.remove("guru-bot--returning");
+    launcher?.style.removeProperty("--guru-bot-flight-transform");
+  }
+
   dock?.classList.remove("guru-bot-dock--screen-hidden");
   launcher?.classList.remove("guru-bot--screen-hidden");
+
   if (returnToDockNow && launcher && bootRoot.classList.contains("guruverse-docked")) {
     setLauncherAtDock(false);
   }
+}
+
+function completeSleep(token: number) {
+  if (token !== sleepTransitionToken || screenIdleStage !== "sleep") return;
+  dock?.classList.remove("guru-bot-dock--screen-hidden");
+  launcher?.classList.remove("guru-bot--screen-hidden");
+  bootRoot.classList.add("guru-bot-screen-sleeping");
+}
+
+function moveBotToDockForSleep(token: number) {
+  if (!launcher || !dock || token !== sleepTransitionToken || screenIdleStage !== "sleep") return;
+
+  const point = dockPoint();
+  if (!point) {
+    completeSleep(token);
+    return;
+  }
+
+  const rect = launcher.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  if (Math.hypot(centerX - point.left, centerY - point.top) <= 8) {
+    setLauncherAtDock(false);
+    completeSleep(token);
+    return;
+  }
+
+  const startX = rect.left;
+  const startY = rect.top;
+  const targetX = point.left - rect.width / 2;
+  const targetY = point.top - rect.height / 2;
+  const started = performance.now();
+  const duration = 1050;
+
+  document.documentElement.classList.add("guruverse-docking");
+  launcher.classList.add("guru-bot--returning");
+
+  const step = (now: number) => {
+    if (token !== sleepTransitionToken || screenIdleStage !== "sleep") {
+      returnAnimationFrame = undefined;
+      return;
+    }
+
+    const progress = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    setLauncherPosition(
+      startX + (targetX - startX) * eased,
+      startY + (targetY - startY) * eased,
+      false
+    );
+
+    if (progress < 1) {
+      returnAnimationFrame = requestAnimationFrame(step);
+      return;
+    }
+
+    returnAnimationFrame = undefined;
+    launcher.classList.remove("guru-bot--returning");
+    launcher.style.removeProperty("--guru-bot-flight-transform");
+    document.documentElement.classList.remove("guruverse-docking");
+    document.documentElement.classList.add("guruverse-docked");
+    setLauncherAtDock(false);
+    completeSleep(token);
+  };
+
+  returnAnimationFrame = requestAnimationFrame(step);
+}
+
+function enterSleepCharging() {
+  if (!launcher || screenIdleStage === "sleep") return;
+
+  screenIdleStage = "sleep";
+  sleepTransitionToken += 1;
+  const token = sleepTransitionToken;
+
+  clearScreenIdleTimers();
+  clearInactivityTimer();
+
+  root?.classList.remove("guru-bot-panel--open");
+  root?.setAttribute("aria-hidden", "true");
+  launcher?.setAttribute("aria-expanded", "false");
+
+  bootRoot.classList.remove(
+    "guru-bot-idle-help",
+    "guru-bot-screen-broken",
+    "guru-bot-screen-repaired",
+    "guru-bot-screen-tap-1",
+    "guru-bot-screen-tap-2",
+    "guru-bot-screen-tap-3",
+    "guru-bot-prank-complete"
+  );
+  launcher.classList.remove(
+    "guru-bot--idle-help",
+    "guru-bot--screen-prank",
+    "guru-bot--tap-1",
+    "guru-bot--tap-2",
+    "guru-bot--tap-3",
+    "guru-bot--repairing"
+  );
+
+  dock?.classList.remove("guru-bot-dock--screen-hidden");
+  launcher?.classList.remove("guru-bot--screen-hidden");
+
+  moveBotToDockForSleep(token);
 }
 
 function startIdleWatch() {
@@ -326,8 +443,10 @@ function startIdleWatch() {
   screenIdleStage = "active";
   hideDockForActivity();
   scheduleDockReveal();
+
   idleWatchInterval = window.setInterval(() => {
     if (!launcher) return;
+
     if (
       bootRoot.classList.contains("guruverse-booting") ||
       bootRoot.classList.contains("guruverse-docking") ||
@@ -349,12 +468,12 @@ function startIdleWatch() {
       startScreenPrank();
     }
 
-    if (screenIdleStage === "prank" && idleFor >= SCREEN_SLEEP_MS) {
-      screenIdleStage = "sleep";
-      bootRoot.classList.add("guru-bot-screen-sleeping");
-      launcher.classList.remove("guru-bot--screen-prank","guru-bot--tap-1","guru-bot--tap-2","guru-bot--tap-3","guru-bot--repairing","guru-bot--idle-help");
-      bootRoot.classList.remove("guru-bot-idle-help","guru-bot-screen-broken","guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3","guru-bot-prank-complete");
-      if (bootRoot.classList.contains("guruverse-docked")) setLauncherAtDock(false);
+    if (
+      (screenIdleStage === "help" ||
+        screenIdleStage === "prank") &&
+      idleFor >= SCREEN_SLEEP_MS
+    ) {
+      enterSleepCharging();
     }
   }, 250);
 }
@@ -366,7 +485,6 @@ function noteScreenActivity() {
   ) return;
 
   lastInteractionAt = Date.now();
-  hideDockForActivity();
 
   if (screenIdleStage !== "active") {
     cancelIdleInteraction(true);
@@ -374,6 +492,7 @@ function noteScreenActivity() {
     return;
   }
 
+  hideDockForActivity();
   scheduleDockReveal();
 }
 
@@ -434,7 +553,6 @@ function repairScreen() {
     /* Stay beside the repaired screen and wait for real user activity.
        Do not auto-return to the dock after the prank. */
     screenIdleStage = "prank";
-    lastInteractionAt = Date.now();
   },1400);
 }
 
