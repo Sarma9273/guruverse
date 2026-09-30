@@ -1,0 +1,58 @@
+/* FINAL HERO IDENTITY COMPOSITION
+   Keep the portrait frame. Remove only the accidental section-wide screen treatment.
+   Planetary ellipse/orbit systems remain visible behind the identity reveal.
+*/
+.hero-portrait__frame{
+  position:relative;
+  width:min(31vw,430px);
+  aspect-ratio:4/5;
+  min-height:0;
+  overflow:hidden;
+  clip-path:polygon(8% 0,92% 0,100% 8%,100% 92%,92% 100%,8% 100%,0 92%,0 8%);
+  background:#09111a;
+  border:1px solid rgba(185,241,255,.22);
+  box-shadow:0 0 0 1px rgba(0,229,255,.08),0 35px 100px rgba(0,0,0,.55);
+}
+.hero-portrait__frame::before{
+  display:block;
+}
+.hero-portrait__frame img{
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:none;
+  max-height:none;
+  object-fit:cover;
+  object-position:center top;
+  opacity:1!important;
+  filter:saturate(.96) contrast(1.04);
+  drop-shadow:none;
+}
+.hero-portrait__particles{
+  opacity:.18;
+}
+.hero-portrait__binary{
+  opacity:.18;
+}
+.hero-portrait__scan{
+  opacity:.5;
+}
+.hero-portrait__ring--one{
+  width:min(39vw,540px);
+}
+.hero-portrait__ring--two{
+  width:min(28vw,390px);
+}
+.hero.is-hero-stage .hero-portrait__frame{
+  animation:gv-frame-lock 1.1s .25s ease both;
+}
+@media(max-width:980px){
+  .hero-portrait__frame{
+    width:min(48vw,360px);
+  }
+}
+@media(max-width:640px){
+  .hero-portrait__frame{
+    width:min(68vw,310px);
+  }
+}
