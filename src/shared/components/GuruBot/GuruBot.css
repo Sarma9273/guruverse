@@ -1803,3 +1803,25 @@ html.guru-bot-screen-sleeping .guru-bot-dock__battery i{
 /* Resting dock intentionally lives partly outside the viewport: ~3/4 visible, ~1/4 beyond the right edge. */
 .guru-bot-dock{right:-28px}
 @media(max-width:768px){.guru-bot-dock{right:-22px}}
+
+/* GURU-BOT resting access point: both dock and bot intentionally cross the viewport edge. */
+.guru-bot-dock{
+  right:-30px;
+  pointer-events:auto;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  color:inherit;
+  font:inherit;
+  padding:0;
+  transition:transform .35s ease,opacity .35s ease,box-shadow .35s ease;
+}
+.guru-bot-dock:hover,
+.guru-bot-dock:focus-visible{
+  opacity:1;
+  box-shadow:inset 0 0 35px rgba(0,229,255,.07),0 0 55px rgba(0,229,255,.12);
+  outline:1px solid rgba(0,229,255,.42);
+  outline-offset:3px;
+}
+.guru-bot-dock--screen-hidden{pointer-events:none}
+@media(max-width:768px){.guru-bot-dock{right:-24px}}
