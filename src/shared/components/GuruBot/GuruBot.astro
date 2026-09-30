@@ -1,5 +1,6 @@
 ---
 import "./GuruBot.css";
+import "./GuruBot-final.css";
 interface Props { label?: string; project?: { title:string; tagline:string; description:string; category:string; status:string; technologies:string[]; }; }
 const { label = "Open GURU-BOT", project } = Astro.props;
 ---
@@ -41,3 +42,18 @@ const { label = "Open GURU-BOT", project } = Astro.props;
   <div class="guru-bot-panel__footer">LOCAL KNOWLEDGE · NO EXTERNAL AI API</div>
 </section>
 <script>import "./GuruBot.ts";</script>
+
+<script is:inline>
+(() => {
+  const html = document.documentElement;
+  const revealRestingBot = () => {
+    if (!html.classList.contains("guruverse-docked")) return;
+    document.querySelector(".guru-bot-dock")?.classList.remove("guru-bot-dock--screen-hidden");
+    document.querySelector(".guru-bot")?.classList.remove("guru-bot--screen-hidden");
+    observer.disconnect();
+  };
+  const observer = new MutationObserver(revealRestingBot);
+  observer.observe(html, { attributes: true, attributeFilter: ["class"] });
+  revealRestingBot();
+})();
+</script>
