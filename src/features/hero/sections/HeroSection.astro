@@ -15,7 +15,7 @@ const base=import.meta.env.BASE_URL;
       <div class="hero-portrait__ring hero-portrait__ring--one"></div>
       <div class="hero-portrait__ring hero-portrait__ring--two"></div>
       <div class="hero-portrait__frame">
-        <img id="guru-portrait-source" src={base + "images/profile.jpeg?v=4"} alt="" width="640" height="800" fetchpriority="high" decoding="async" />
+        <img id="guru-portrait-source" src={base + "images/profile.jpeg?v=6"} alt="" width="640" height="800" fetchpriority="high" decoding="async" />
         <canvas class="hero-portrait__particles" aria-hidden="true"></canvas>
         <div class="hero-portrait__binary" aria-hidden="true"></div>
         <span class="hero-portrait__scan"></span>
@@ -40,6 +40,11 @@ const startReveal=()=>{ hero?.classList.add("is-revealed","is-hero-stage"); };
 if(hero){
   const seen=(()=>{try{return sessionStorage.getItem("guruverse-intro-seen")==="true"}catch{return false}})();
   if(seen) window.setTimeout(startReveal,40);
+  // Safety reveal: never leave the identity panel looking like an empty screen
+  // if an intro event is interrupted or session state is stale.
+  window.setTimeout(() => {
+    if(hero && !hero.classList.contains("is-hero-stage")) startReveal();
+  }, 3200);
   window.addEventListener("guruverse:portrait-build-start",()=>addStage("is-portrait-stage"),{once:true});
   window.addEventListener("guruverse:identity-scan",()=>addStage("is-scan-stage"),{once:true});
   window.addEventListener("guruverse:identity-verified",()=>addStage("is-verified-stage"),{once:true});
