@@ -313,6 +313,52 @@ function resetIdleState() {
   );
 }
 
+function flyToDockAfterIdle() {
+  if (!launcher || !dock) return;
+  const point = dockPoint();
+  if (!point) {
+    setLauncherAtDock(false);
+    return;
+  }
+
+  if (returnAnimationFrame) cancelAnimationFrame(returnAnimationFrame);
+
+  const rect = launcher.getBoundingClientRect();
+  const startX = rect.left;
+  const startY = rect.top;
+  const targetX = point.left - rect.width / 2;
+  const targetY = point.top - rect.height / 2;
+  const started = performance.now();
+  const duration = 950;
+
+  document.documentElement.classList.add("guruverse-docking");
+  launcher.classList.add("guru-bot--returning");
+
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    setLauncherPosition(
+      startX + (targetX - startX) * eased,
+      startY + (targetY - startY) * eased,
+      false
+    );
+
+    if (progress < 1) {
+      returnAnimationFrame = requestAnimationFrame(step);
+      return;
+    }
+
+    returnAnimationFrame = undefined;
+    launcher.classList.remove("guru-bot--returning");
+    launcher.style.removeProperty("--guru-bot-flight-transform");
+    document.documentElement.classList.remove("guruverse-docking");
+    document.documentElement.classList.add("guruverse-docked");
+    setLauncherAtDock(false);
+  };
+
+  returnAnimationFrame = requestAnimationFrame(step);
+}
+
 function cancelIdleInteraction(returnToDockNow = true) {
   sleepTransitionToken += 1;
   clearScreenIdleTimers();
@@ -329,7 +375,7 @@ function cancelIdleInteraction(returnToDockNow = true) {
   launcher?.classList.remove("guru-bot--screen-hidden");
 
   if (returnToDockNow && launcher && bootRoot.classList.contains("guruverse-docked")) {
-    setLauncherAtDock(false);
+    flyToDockAfterIdle();
   }
 }
 
@@ -488,7 +534,7 @@ function noteScreenActivity() {
 
   if (screenIdleStage !== "active") {
     const wasSleeping = screenIdleStage === "sleep";
-    cancelIdleInteraction(true);
+    cancelIdleInteraction(!wasSleeping);
     if (wasSleeping && dockPoint()) {
       setLauncherAtDock(false);
       bootRoot.classList.add("guruverse-docked");
