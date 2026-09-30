@@ -1679,3 +1679,88 @@ html.guru-bot-screen-repaired:after{
   0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}
   100%{opacity:0;transform:translate(-50%,-50%) scale(4.5)}
 }
+
+/* ==========================================================
+   LONG-IDLE SLEEP / CHARGING STATE
+   ========================================================== */
+.guru-bot-dock--screen-hidden,
+.guru-bot--screen-hidden{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+.guru-bot-dock--screen-hidden{transform:translateY(12px) scale(.94)!important}
+.guru-bot-screen-sleeping::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:calc(var(--z-robot) + 1);
+  pointer-events:none;
+  background:rgba(2,7,12,.58);
+  backdrop-filter:blur(7px) saturate(.72);
+  -webkit-backdrop-filter:blur(7px) saturate(.72);
+  animation:guru-bot-sleep-blur .8s ease-out both;
+}
+.guru-bot-screen-sleeping .guru-bot-sleep-message{
+  opacity:1;
+  visibility:visible;
+  transform:translate(-50%,0) scale(1);
+}
+.guru-bot-sleep-message{
+  position:absolute;
+  left:50%;
+  top:calc(50% + 150px);
+  opacity:0;
+  visibility:hidden;
+  transform:translate(-50%,10px) scale(.94);
+  padding:.7rem .9rem;
+  border:1px solid rgba(0,229,255,.22);
+  border-radius:10px;
+  background:rgba(3,10,16,.9);
+  color:#dffcff;
+  font:700 .58rem var(--font-code);
+  letter-spacing:.12em;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,229,255,.08);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s ease;
+}
+.guru-bot-sleep-message span{
+  display:block;
+  margin-top:.3rem;
+  color:rgba(150,238,250,.5);
+  font:600 .42rem var(--font-code);
+  letter-spacing:.1em;
+}
+html.guru-bot-screen-sleeping .guru-bot-dock{
+  opacity:1!important;
+  visibility:visible!important;
+}
+html.guru-bot-screen-sleeping .guru-bot__pulse{
+  animation:guru-bot-sleep-pulse 2.6s ease-in-out infinite!important;
+}
+html.guru-bot-screen-sleeping .guru-bot__eye{
+  opacity:.18!important;
+  animation:none!important;
+}
+html.guru-bot-screen-sleeping .guru-bot__torso{
+  animation:guru-bot-sleep-breath 4s ease-in-out infinite!important;
+}
+html.guru-bot-screen-sleeping .guru-bot-dock__battery i{
+  animation:guru-bot-battery-charge 4s ease-in-out infinite!important;
+}
+@keyframes guru-bot-sleep-blur{
+  from{opacity:0;backdrop-filter:blur(0) saturate(1);-webkit-backdrop-filter:blur(0) saturate(1)}
+  to{opacity:1;backdrop-filter:blur(7px) saturate(.72);-webkit-backdrop-filter:blur(7px) saturate(.72)}
+}
+@keyframes guru-bot-sleep-pulse{
+  0%,100%{opacity:.3;transform:scale(.78)}
+  50%{opacity:.9;transform:scale(1.15)}
+}
+@keyframes guru-bot-sleep-breath{
+  0%,100%{transform:translate(-50%,-1%) scaleY(1)}
+  50%{transform:translate(-50%,-1%) scaleY(.97)}
+}
+@media(prefers-reduced-motion:reduce){
+  .guru-bot-screen-sleeping::before{animation:none}
+  .guru-bot-screen-sleeping .guru-bot__torso{animation:none!important}
+}
