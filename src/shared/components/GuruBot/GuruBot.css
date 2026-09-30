@@ -1799,3 +1799,7 @@ html.guru-bot-screen-sleeping .guru-bot-dock__battery i{
   .guru-bot-screen-sleeping::before{animation:none}
   .guru-bot-screen-sleeping .guru-bot__torso{animation:none!important}
 }
+
+/* Resting dock intentionally lives partly outside the viewport: ~3/4 visible, ~1/4 beyond the right edge. */
+.guru-bot-dock{right:-28px}
+@media(max-width:768px){.guru-bot-dock{right:-22px}}
