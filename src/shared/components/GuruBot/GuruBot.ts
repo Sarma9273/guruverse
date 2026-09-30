@@ -134,6 +134,14 @@ function armInactivityTimer() {
 function returnToDock(reason = "manual") {
   if (!launcher || launcher.classList.contains("guru-bot--returning")) return;
   clearInactivityTimer();
+
+  /* Inactivity can close an open GURU-BOT panel, but it must never create
+     a pointless dock-to-dock flight when the bot is already settled. */
+  if (bootRoot.classList.contains("guruverse-docked") && isLauncherAtDock()) {
+    closeBot();
+    return;
+  }
+
   closeBot();
   const point = dockPoint();
   if (!point) {
