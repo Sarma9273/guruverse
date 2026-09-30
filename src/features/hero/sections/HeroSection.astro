@@ -4,6 +4,7 @@ import HeroContent from "../components/HeroContent.astro";
 import HeroCTA from "../components/HeroCTA.astro";
 import HeroStats from "../components/HeroStats.astro";
 import "../styles/hero.css";
+import "../styles/hero-final.css";
 const base=import.meta.env.BASE_URL;
 ---
 <section id="hero" class="hero" aria-labelledby="hero-title">
@@ -15,7 +16,7 @@ const base=import.meta.env.BASE_URL;
       <div class="hero-portrait__ring hero-portrait__ring--one"></div>
       <div class="hero-portrait__ring hero-portrait__ring--two"></div>
       <div class="hero-portrait__frame">
-        <img id="guru-portrait-source" src={base + "images/profile.jpeg?v=6"} alt="" width="640" height="800" fetchpriority="high" decoding="async" />
+        <img id="guru-portrait-source" src={base + "images/profile.jpeg?v=7"} alt="" width="640" height="800" fetchpriority="high" decoding="async" />
         <canvas class="hero-portrait__particles" aria-hidden="true"></canvas>
         <div class="hero-portrait__binary" aria-hidden="true"></div>
         <span class="hero-portrait__scan"></span>
