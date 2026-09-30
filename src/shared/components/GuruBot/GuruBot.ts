@@ -534,6 +534,75 @@ function startIdleWatch() {
   }, 250);
 }
 
+function moveDockToRestingEdge() {
+  if (!dock) return;
+  const botWidth = launcher?.offsetWidth || 88;
+  const edgeShift = Math.round(botWidth * 0.25);
+  dock.style.setProperty("--guru-bot-rest-edge-shift", `${edgeShift}px`);
+  dock.classList.add("guru-bot-dock--resting-edge");
+}
+
+function flyBotToDockFromCurrentPosition() {
+  if (!launcher || !dock) return;
+  if (launcher.classList.contains("guru-bot--returning")) return;
+
+  moveDockToRestingEdge();
+  dock.classList.remove("guru-bot-dock--screen-hidden");
+  launcher.classList.remove("guru-bot--screen-hidden");
+
+  const point = dockPoint();
+  if (!point) {
+    setLauncherAtDock(false);
+    return;
+  }
+
+  const rect = launcher.getBoundingClientRect();
+  const startX = rect.left;
+  const startY = rect.top;
+  const targetX = point.left - rect.width / 2;
+  const targetY = point.top - rect.height / 2;
+
+  if (Math.hypot(startX - targetX, startY - targetY) <= 6) {
+    setLauncherAtDock(false);
+    bootRoot.classList.add("guruverse-docked");
+    return;
+  }
+
+  if (returnAnimationFrame) cancelAnimationFrame(returnAnimationFrame);
+
+  const started = performance.now();
+  const duration = 900;
+  launcher.classList.add("guru-bot--returning");
+  bootRoot.classList.add("guruverse-docking");
+
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - started) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const x = startX + (targetX - startX) * eased;
+    const y = startY + (targetY - startY) * eased;
+    const dx = Math.max(-18, Math.min(18, (targetX - x) * 0.08));
+
+    launcher.style.setProperty("--guru-bot-flight-transform", `scale(1) rotate(${dx}deg)`);
+    setLauncherPosition(x, y, false);
+
+    if (progress < 1) {
+      returnAnimationFrame = requestAnimationFrame(step);
+      return;
+    }
+
+    returnAnimationFrame = undefined;
+    launcher.classList.remove("guru-bot--returning");
+    launcher.style.removeProperty("--guru-bot-flight-transform");
+    bootRoot.classList.remove("guruverse-docking");
+    bootRoot.classList.add("guruverse-docked");
+    setLauncherAtDock(false);
+    dock.classList.add("is-active");
+    window.setTimeout(() => dock.classList.remove("is-active"), 700);
+  };
+
+  returnAnimationFrame = requestAnimationFrame(step);
+}
+
 function noteScreenActivity() {
   if (
     bootRoot.classList.contains("guruverse-booting") ||
@@ -544,25 +613,24 @@ function noteScreenActivity() {
 
   if (screenIdleStage !== "active") {
     const wasSleeping = screenIdleStage === "sleep";
-    cancelIdleInteraction(!wasSleeping);
-    if (wasSleeping && dockPoint()) {
-      setLauncherAtDock(false);
-      bootRoot.classList.add("guruverse-docked");
+    cancelIdleInteraction(false);
+    if (wasSleeping) {
+      bootRoot.classList.remove("guru-bot-screen-sleeping");
     }
+    flyBotToDockFromCurrentPosition();
     startIdleWatch();
     return;
   }
 
-  /* Keep the active bot and chat visible while the page itself scrolls.
-     The chat remains a fixed glass layer; only the underlying document moves. */
-  if (root?.classList.contains("guru-bot-panel--open")) {
-    dock?.classList.remove("guru-bot-dock--screen-hidden");
-    launcher?.classList.remove("guru-bot--screen-hidden");
-    return;
+  /* Every real screen activity immediately terminates the watchdog behavior.
+     The bot returns from wherever it currently is; Dock 01 then settles
+     slightly farther beyond the right edge so roughly 3/4 of the bot remains visible. */
+  if (
+    !bootRoot.classList.contains("guruverse-docking") &&
+    !launcher?.classList.contains("guru-bot--returning")
+  ) {
+    flyBotToDockFromCurrentPosition();
   }
-
-  hideDockForActivity();
-  scheduleDockReveal();
 }
 
 function animatePrankFlight(startX:number,startY:number,targetX:number,targetY:number,onDone:()=>void) {
