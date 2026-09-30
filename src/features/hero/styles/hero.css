@@ -85,3 +85,41 @@
 @media(prefers-reduced-motion:reduce){
   .hero-scene-orbit,.hero-scene-spiral,.hero-scene-node{animation:none!important}
 }
+
+/* FINAL HERO CLEANUP — the portrait is not a screen, card, monitor, or framed panel. */
+.hero-portrait__frame{
+  width:min(34vw,500px);
+  aspect-ratio:auto;
+  min-height:0;
+  overflow:visible;
+  clip-path:none;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.hero-portrait__frame::before{display:none}
+.hero-portrait__frame img{
+  display:block;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:min(76vh,760px);
+  object-fit:contain;
+  object-position:center;
+  opacity:1!important;
+  filter:saturate(.96) contrast(1.04) drop-shadow(0 30px 70px rgba(0,0,0,.52));
+}
+.hero-portrait__particles{opacity:.22}
+.hero-portrait__binary{opacity:.28}
+.hero-portrait__scan{opacity:.45}
+.hero-portrait__ring--one{width:min(42vw,570px)}
+.hero-portrait__ring--two{width:min(31vw,420px)}
+.hero.is-hero-stage .hero-portrait__frame{animation:none}
+@media(max-width:980px){
+  .hero-portrait__frame{width:min(62vw,430px)}
+  .hero-portrait__frame img{max-height:58vh}
+}
+@media(max-width:640px){
+  .hero-portrait__frame{width:min(78vw,350px)}
+  .hero-portrait__frame img{max-height:48vh}
+}
