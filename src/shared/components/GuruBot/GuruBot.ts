@@ -497,6 +497,14 @@ function noteScreenActivity() {
     return;
   }
 
+  /* Keep the active bot and chat visible while the page itself scrolls.
+     The chat remains a fixed glass layer; only the underlying document moves. */
+  if (root?.classList.contains("guru-bot-panel--open")) {
+    dock?.classList.remove("guru-bot-dock--screen-hidden");
+    launcher?.classList.remove("guru-bot--screen-hidden");
+    return;
+  }
+
   hideDockForActivity();
   scheduleDockReveal();
 }
