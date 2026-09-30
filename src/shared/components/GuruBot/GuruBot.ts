@@ -257,16 +257,35 @@ let returnAnimationFrame: number | undefined;
 let prankAnimationFrame: number | undefined;
 let idleWatchInterval: number | undefined;
 let lastInteractionAt = Date.now();
-let screenIdleStage: "active" | "help" | "prank" = "active";
+let screenIdleStage: "active" | "help" | "prank" | "sleep" = "active";
 const INACTIVITY_MS = 10000;
+const SCREEN_DOCK_APPEAR_MS = 5000;
 const SCREEN_IDLE_HELP_MS = 30000;
 const SCREEN_IDLE_PRANK_MS = 30000;
+const SCREEN_SLEEP_MS = 15 * 60 * 1000;
+let dockRevealTimer: number | undefined;
 
 function clearScreenIdleTimers() {
   if (idleWatchInterval) window.clearInterval(idleWatchInterval);
   idleWatchInterval = undefined;
   if (prankAnimationFrame) cancelAnimationFrame(prankAnimationFrame);
   prankAnimationFrame = undefined;
+  if (dockRevealTimer) window.clearTimeout(dockRevealTimer);
+  dockRevealTimer = undefined;
+}
+function hideDockForActivity() {
+  dock?.classList.add("guru-bot-dock--screen-hidden");
+  launcher?.classList.add("guru-bot--screen-hidden");
+}
+function scheduleDockReveal() {
+  if (dockRevealTimer) window.clearTimeout(dockRevealTimer);
+  dockRevealTimer = window.setTimeout(() => {
+    if (screenIdleStage === "active" && !root?.classList.contains("guru-bot-panel--open")) {
+      dock?.classList.remove("guru-bot-dock--screen-hidden");
+      launcher?.classList.remove("guru-bot--screen-hidden");
+      if (bootRoot.classList.contains("guruverse-docked")) setLauncherAtDock(false);
+    }
+  }, SCREEN_DOCK_APPEAR_MS);
 }
 
 function resetIdleState() {
@@ -278,7 +297,8 @@ function resetIdleState() {
     "guru-bot-prank-complete",
     "guru-bot-screen-tap-1",
     "guru-bot-screen-tap-2",
-    "guru-bot-screen-tap-3"
+    "guru-bot-screen-tap-3",
+    "guru-bot-screen-sleeping"
   );
   launcher?.classList.remove(
     "guru-bot--idle-help",
@@ -293,6 +313,8 @@ function resetIdleState() {
 function cancelIdleInteraction(returnToDockNow = true) {
   clearScreenIdleTimers();
   resetIdleState();
+  dock?.classList.remove("guru-bot-dock--screen-hidden");
+  launcher?.classList.remove("guru-bot--screen-hidden");
   if (returnToDockNow && launcher && bootRoot.classList.contains("guruverse-docked")) {
     setLauncherAtDock(false);
   }
@@ -302,6 +324,8 @@ function startIdleWatch() {
   clearScreenIdleTimers();
   lastInteractionAt = Date.now();
   screenIdleStage = "active";
+  hideDockForActivity();
+  scheduleDockReveal();
   idleWatchInterval = window.setInterval(() => {
     if (!launcher) return;
     if (
@@ -324,6 +348,14 @@ function startIdleWatch() {
       screenIdleStage = "prank";
       startScreenPrank();
     }
+
+    if (screenIdleStage === "prank" && idleFor >= SCREEN_SLEEP_MS) {
+      screenIdleStage = "sleep";
+      bootRoot.classList.add("guru-bot-screen-sleeping");
+      launcher.classList.remove("guru-bot--screen-prank","guru-bot--tap-1","guru-bot--tap-2","guru-bot--tap-3","guru-bot--repairing","guru-bot--idle-help");
+      bootRoot.classList.remove("guru-bot-idle-help","guru-bot-screen-broken","guru-bot-screen-tap-1","guru-bot-screen-tap-2","guru-bot-screen-tap-3","guru-bot-prank-complete");
+      if (bootRoot.classList.contains("guruverse-docked")) setLauncherAtDock(false);
+    }
   }, 250);
 }
 
@@ -334,11 +366,15 @@ function noteScreenActivity() {
   ) return;
 
   lastInteractionAt = Date.now();
+  hideDockForActivity();
 
   if (screenIdleStage !== "active") {
     cancelIdleInteraction(true);
     startIdleWatch();
+    return;
   }
+
+  scheduleDockReveal();
 }
 
 function animatePrankFlight(startX:number,startY:number,targetX:number,targetY:number,onDone:()=>void) {
