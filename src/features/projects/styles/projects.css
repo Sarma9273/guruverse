@@ -944,3 +944,25 @@
 .project-evolution-map__track p{margin:0;color:var(--color-text-muted);line-height:1.65}
 .project-evolution-map__track i{display:grid;place-items:center;color:var(--color-primary);font-style:normal;font-size:1.4rem}
 @media(max-width:800px){.project-evolution-map__track{grid-template-columns:1fr;gap:var(--space-3)}.project-evolution-map__track i{transform:rotate(90deg);min-height:20px}}
+
+/* Mobile safety: keep project cards visible if the reveal observer is delayed
+   or unavailable on touch browsers. */
+@media (max-width: 768px) {
+    .projects__grid .project-card.motion-reveal,
+    .projects__grid .project-card.motion-reveal-left,
+    .projects__grid .project-card.motion-reveal-right,
+    .projects__grid .project-card.motion-scale {
+        opacity: 1;
+        transform: none;
+    }
+
+    .projects__grid .project-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .project-card__image {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+}
